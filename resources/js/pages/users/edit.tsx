@@ -32,7 +32,7 @@ export default function UsersEdit() {
 
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div>
-                    <h1 className="text-2xl font-semibold tracking-tight">
+                    <h1 className="font-heading text-2xl font-semibold tracking-tight">
                         Modifier {user.name}
                     </h1>
                     <p className="text-muted-foreground mt-1 font-mono text-xs">

@@ -167,7 +167,73 @@
     }
 }
 
+/*
+ * Application shell (dashboard, auth, settings) — maps shadcn tokens to ArisTech palette.
+ * Activated via `html.app-page` in app/auth layouts.
+ */
+html.app-page {
+    --background: var(--aristech-bg);
+    --foreground: var(--aristech-heading);
+    --card: var(--aristech-surface);
+    --card-foreground: var(--aristech-heading);
+    --popover: var(--aristech-surface);
+    --popover-foreground: var(--aristech-heading);
+    --primary: var(--aristech-accent);
+    --primary-foreground: #ffffff;
+    --secondary: var(--aristech-surface-elevated);
+    --secondary-foreground: var(--aristech-heading);
+    --muted: var(--aristech-surface-elevated);
+    --muted-foreground: var(--aristech-muted);
+    --accent: var(--aristech-surface-elevated);
+    --accent-foreground: var(--aristech-heading);
+    --destructive: oklch(0.577 0.245 27.325);
+    --destructive-foreground: #ffffff;
+    --border: var(--aristech-border);
+    --input: var(--aristech-border);
+    --ring: var(--aristech-accent);
+    --sidebar: var(--aristech-surface);
+    --sidebar-foreground: var(--aristech-heading);
+    --sidebar-primary: var(--aristech-accent);
+    --sidebar-primary-foreground: #ffffff;
+    --sidebar-accent: var(--aristech-surface-elevated);
+    --sidebar-accent-foreground: var(--aristech-heading);
+    --sidebar-border: var(--aristech-border);
+    --sidebar-ring: var(--aristech-accent);
+    color-scheme: light;
+}
+
 @layer components {
+    .app-site {
+        @apply min-h-svh bg-background font-sans text-foreground antialiased;
+    }
+
+    .app-site h1,
+    .app-site h2,
+    .app-site h3,
+    .app-site h4 {
+        @apply font-heading tracking-tight text-foreground;
+    }
+
+    .app-site ::selection {
+        @apply bg-primary/20 text-foreground;
+    }
+
+    .app-panel {
+        @apply rounded-xl border border-border bg-card shadow-md shadow-slate-900/5 transition-colors duration-200;
+    }
+
+    .app-panel-interactive {
+        @apply cursor-pointer rounded-xl border border-border bg-card shadow-md shadow-slate-900/5 transition-colors duration-200 hover:border-primary/40 hover:shadow-lg hover:shadow-slate-900/10;
+    }
+
+    .app-auth-card {
+        @apply rounded-2xl border border-border bg-card p-6 shadow-lg shadow-slate-900/5 md:p-8;
+    }
+
+    .app-label {
+        @apply font-heading text-xs font-semibold tracking-widest text-primary uppercase;
+    }
+
     .marketing-site {
         @apply min-h-screen bg-aristech-bg font-marketing text-aristech-text antialiased;
     }

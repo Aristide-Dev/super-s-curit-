@@ -61,7 +61,7 @@ export default function UsersIndex() {
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="flex flex-wrap items-center justify-between gap-4">
                     <div>
-                        <h1 className="flex items-center gap-2 text-2xl font-semibold tracking-tight">
+                        <h1 className="flex items-center gap-2 font-heading text-2xl font-semibold tracking-tight">
                             <Users className="size-6" aria-hidden />
                             Utilisateurs
                         </h1>
@@ -77,7 +77,7 @@ export default function UsersIndex() {
                     </Button>
                 </div>
 
-                <div className="overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
+                <div className="app-panel overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full min-w-[640px] text-left text-sm">
                             <thead className="bg-muted/50 border-b text-xs uppercase tracking-wide text-muted-foreground">

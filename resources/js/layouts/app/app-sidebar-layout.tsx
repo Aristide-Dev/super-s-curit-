@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { AppContent } from '@/components/app-content';
 import { AppShell } from '@/components/app-shell';
 import { AppSidebar } from '@/components/app-sidebar';
@@ -8,13 +9,29 @@ export default function AppSidebarLayout({
     children,
     breadcrumbs = [],
 }: AppLayoutProps) {
+    useEffect(() => {
+        document.documentElement.classList.add('app-page');
+        document.documentElement.classList.remove('dark', 'marketing-page');
+        document.documentElement.style.colorScheme = 'light';
+
+        return () => {
+            document.documentElement.classList.remove('app-page');
+            document.documentElement.style.colorScheme = '';
+        };
+    }, []);
+
     return (
-        <AppShell variant="sidebar">
-            <AppSidebar />
-            <AppContent variant="sidebar" className="overflow-x-hidden">
-                <AppSidebarHeader breadcrumbs={breadcrumbs} />
-                {children}
-            </AppContent>
-        </AppShell>
+        <div className="app-site">
+            <AppShell variant="sidebar">
+                <AppSidebar />
+                <AppContent
+                    variant="sidebar"
+                    className="overflow-x-hidden bg-background"
+                >
+                    <AppSidebarHeader breadcrumbs={breadcrumbs} />
+                    <div className="flex flex-1 flex-col">{children}</div>
+                </AppContent>
+            </AppShell>
+        </div>
     );
 }

@@ -1,10 +1,10 @@
-import { Head, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
+import SeoHead from '@/components/marketing/seo-head';
 import ContactChannels from '@/components/marketing/contact-channels';
 import ContactFaq from '@/components/marketing/contact-faq';
 import ContactForm from '@/components/marketing/contact-form';
 import PageHero from '@/components/marketing/page-hero';
 import Reveal from '@/components/marketing/reveal';
-import { aristechImages } from '@/data/aristech-images';
 import { aristechStock } from '@/data/aristech-stock';
 import type { AristechConfig } from '@/types/aristech';
 
@@ -17,19 +17,7 @@ export default function MarketingContact() {
 
     return (
         <>
-            <Head>
-                <title>Contact — ArisTech</title>
-                <meta
-                    name="description"
-                    content="Contactez ArisTech pour discuter de votre projet web ou mobile. Réponse sous 24h ouvrées."
-                />
-                <meta property="og:title" content="Contact — ArisTech" />
-                <meta
-                    property="og:description"
-                    content="Parlons de votre projet. Réponse rapide et devis détaillé."
-                />
-                <meta property="og:image" content={aristechImages.ogDefault} />
-            </Head>
+            <SeoHead page="contact" />
 
             <PageHero
                 label="Contact"

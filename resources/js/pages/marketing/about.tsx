@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import SeoHead from '@/components/marketing/seo-head';
 import CtaBand from '@/components/marketing/cta-band';
 import FounderSection from '@/components/marketing/founder-section';
 import PageHero from '@/components/marketing/page-hero';
@@ -6,25 +6,12 @@ import ProcessTimeline from '@/components/marketing/process-timeline';
 import StatGrid from '@/components/marketing/stat-grid';
 import StorySection from '@/components/marketing/story-section';
 import ValuesSection from '@/components/marketing/values-section';
-import { aristechImages } from '@/data/aristech-images';
 import { aristechStock } from '@/data/aristech-stock';
 
 export default function MarketingAbout() {
     return (
         <>
-            <Head>
-                <title>À propos — ArisTech</title>
-                <meta
-                    name="description"
-                    content="ArisTech est un studio de développement web et mobile basé en Guinée. Découvrez notre histoire, nos valeurs et notre méthode de travail."
-                />
-                <meta property="og:title" content="À propos — ArisTech" />
-                <meta
-                    property="og:description"
-                    content="Studio de développement web et mobile. Sur mesure, transparent, agile."
-                />
-                <meta property="og:image" content={aristechImages.ogDefault} />
-            </Head>
+            <SeoHead page="about" />
 
             <PageHero
                 label="À propos"

@@ -116,20 +116,20 @@ export const aristechProjects: AristechProject[] = [
         featured: true,
     },
     {
-        title: '7 Makity',
-        description:
-            'E-commerce complet avec paiement sécurisé et gestion d\'inventaire en temps réel.',
-        image: '/images/aristech/projets/7makiti.png',
-        category: 'E-commerce',
-        href: 'https://7makiti.com',
-    },
-    {
         title: 'Short Link',
         description:
             'Raccourcissement d\'URL, analytics, QR codes et campagnes marketing.',
         image: '/images/aristech/projets/shortlink.png',
         category: 'Utilitaires',
-        href: 'https://str.aristech-dev.com/',
+        href: 'https://shortgn.click/',
+    },
+    {
+        title: '7 Makity',
+        description:
+            'E-commerce complet avec paiement sécurisé et gestion d\'inventaire en temps réel.',
+        image: '/images/aristech/projets/7makiti.png',
+        category: 'E-commerce',
+        href: '#projets',
     },
     {
         title: 'Drive Me',
@@ -145,6 +145,6 @@ export const aristechProjects: AristechProject[] = [
             'Suivi de grossesse, conseils personnalisés et rappels médicaux.',
         image: '/images/aristech/projets/eva.png',
         category: 'Santé & éducation',
-        href: 'https://eva.aristech-dev.com/',
+        href: '#projets',
     },
 ];

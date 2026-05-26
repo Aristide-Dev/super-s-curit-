@@ -107,9 +107,19 @@ class TrackVisit
                 'is_bounce' => true,
             ]);
 
-            // Set/refresh the visitor UUID cookie (1 year)
+            // Readable by JS (duration tracking) — secure only over HTTPS
             cookie()->queue(
-                cookie(self::VISITOR_COOKIE, $visitorUuid, 60 * 24 * self::COOKIE_TTL_DAYS, '/', null, true, false, false, 'Lax'),
+                cookie(
+                    self::VISITOR_COOKIE,
+                    $visitorUuid,
+                    60 * 24 * self::COOKIE_TTL_DAYS,
+                    '/',
+                    null,
+                    $request->isSecure(),
+                    false,
+                    false,
+                    'Lax',
+                ),
             );
         } catch (\Throwable) {
             // Never break the request because of tracking

@@ -184,6 +184,71 @@ test('analytics includes city breakdown', function () {
         );
 });
 
+test('analytics average duration divides by all page views', function () {
+    $admin = User::factory()->admin()->create();
+
+    Visit::factory()->create([
+        'is_bot' => false,
+        'duration_seconds' => 120,
+    ]);
+    Visit::factory()->create([
+        'is_bot' => false,
+        'duration_seconds' => null,
+    ]);
+    Visit::factory()->create([
+        'is_bot' => false,
+        'duration_seconds' => 60,
+    ]);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('kpis.avg_duration_seconds', 60)
+            ->where('kpis.duration_measured_views', 2)
+            ->where('kpis.duration_coverage', 66.7)
+        );
+});
+
+test('duration endpoint keeps the highest reported value', function () {
+    $visit = Visit::factory()->create([
+        'path' => '/test',
+        'duration_seconds' => 30,
+    ]);
+
+    $this->postJson(route('analytics.duration'), [
+        'visitor_uuid' => $visit->visitor_uuid,
+        'path' => '/test',
+        'duration' => 20,
+    ])->assertOk();
+
+    expect($visit->fresh()->duration_seconds)->toBe(30);
+
+    $this->postJson(route('analytics.duration'), [
+        'visitor_uuid' => $visit->visitor_uuid,
+        'path' => '/test',
+        'duration' => 90,
+    ])->assertOk();
+
+    expect($visit->fresh()->duration_seconds)->toBe(90)
+        ->and($visit->fresh()->is_bounce)->toBeFalse();
+});
+
+test('duration endpoint normalizes path', function () {
+    $visit = Visit::factory()->create([
+        'path' => '/contact',
+        'duration_seconds' => null,
+    ]);
+
+    $this->postJson(route('analytics.duration'), [
+        'visitor_uuid' => $visit->visitor_uuid,
+        'path' => 'contact',
+        'duration' => 45,
+    ])->assertOk();
+
+    expect($visit->fresh()->duration_seconds)->toBe(45);
+});
+
 test('duration endpoint updates visit by visitor uuid', function () {
     $visit = Visit::factory()->create([
         'path' => '/test',

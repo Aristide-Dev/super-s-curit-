@@ -46,6 +46,8 @@ type KpiData = {
     sessions: number;
     sessions_change: number | null;
     avg_duration_seconds: number;
+    duration_measured_views: number;
+    duration_coverage: number;
     bounce_rate: number;
 };
 
@@ -124,13 +126,29 @@ type PageProps = {
 /* ------------------------------------------------------------------ */
 
 function formatDuration(seconds: number): string {
-    if (seconds < 1) {
+    if (!Number.isFinite(seconds) || seconds < 1) {
         return '—';
     }
-    if (seconds < 60) {
-        return `${seconds}s`;
+
+    const total = Math.round(seconds);
+
+    if (total < 60) {
+        return `${total} s`;
     }
-    return `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
+
+    const minutes = Math.floor(total / 60);
+    const remainingSeconds = total % 60;
+
+    if (minutes < 60) {
+        return remainingSeconds > 0
+            ? `${minutes} min ${remainingSeconds} s`
+            : `${minutes} min`;
+    }
+
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+
+    return remainingMinutes > 0 ? `${hours} h ${remainingMinutes} min` : `${hours} h`;
 }
 
 function formatNumber(n: number): string {
@@ -533,9 +551,13 @@ export default function AnalyticsIndex() {
                     />
                     <KpiCard
                         icon={Clock}
-                        label="Durée moy."
+                        label="Durée moy. / page"
                         value={formatDuration(kpis.avg_duration_seconds)}
-                        sub={`Taux de rebond : ${kpis.bounce_rate}%`}
+                        sub={
+                            kpis.duration_measured_views > 0
+                                ? `${formatNumber(kpis.duration_measured_views)} pages mesurées (${kpis.duration_coverage}%) · rebond ${kpis.bounce_rate}%`
+                                : `Aucune durée enregistrée · rebond ${kpis.bounce_rate}%`
+                        }
                     />
                 </div>
 
@@ -662,8 +684,11 @@ export default function AnalyticsIndex() {
                                                 {page.path}
                                             </button>
                                             <div className="flex items-center gap-3">
-                                                <span className="text-muted-foreground text-xs tabular-nums">
-                                                    {formatDuration(page.avg_duration)}
+                                                <span
+                                                    className="text-muted-foreground text-xs tabular-nums"
+                                                    title="Temps moyen par page vue"
+                                                >
+                                                    {formatDuration(page.avg_duration)} / vue
                                                 </span>
                                                 <Badge variant="outline">
                                                     {formatNumber(page.views)} vues

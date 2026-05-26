@@ -70,6 +70,9 @@ class HandleInertiaRequests extends Middleware
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
             ],
+            'tracking' => [
+                'visitor_uuid' => $request->cookie('aristech_vid'),
+            ],
         ];
     }
 

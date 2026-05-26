@@ -69,7 +69,9 @@ class AnalyticsController extends Controller
             return response()->json(['ok' => true]);
         }
 
-        $query = Visit::query()->where('path', $validated['path']);
+        $path = '/'.ltrim($validated['path'], '/');
+
+        $query = Visit::query()->where('path', $path);
 
         if (! empty($validated['visitor_uuid'])) {
             $query->where('visitor_uuid', $validated['visitor_uuid']);
@@ -82,9 +84,11 @@ class AnalyticsController extends Controller
         $visit = $query->latest('id')->first();
 
         if ($visit !== null) {
+            $duration = max((int) ($visit->duration_seconds ?? 0), $validated['duration']);
+
             $visit->update([
-                'duration_seconds' => $validated['duration'],
-                'is_bounce' => $validated['duration'] < 30,
+                'duration_seconds' => $duration,
+                'is_bounce' => $duration < 30,
             ]);
         }
 
@@ -271,7 +275,9 @@ class AnalyticsController extends Controller
         $sessions = (clone $current)->distinct('session_id')->count('session_id');
         $prevSessions = (clone $previous)->distinct('session_id')->count('session_id');
 
-        $avgDuration = (int) ((clone $current)->whereNotNull('duration_seconds')->avg('duration_seconds') ?? 0);
+        $durationSum = (int) ((clone $current)->sum('duration_seconds') ?? 0);
+        $measuredViews = (clone $current)->where('duration_seconds', '>', 0)->count();
+        $avgDuration = $total > 0 ? (int) round($durationSum / $total) : 0;
         $bounceRate = $total > 0
             ? round((clone $current)->where('is_bounce', true)->count() * 100 / $total, 1)
             : 0;
@@ -284,6 +290,8 @@ class AnalyticsController extends Controller
             'sessions' => $sessions,
             'sessions_change' => $this->percentChange($prevSessions, $sessions),
             'avg_duration_seconds' => $avgDuration,
+            'duration_measured_views' => $measuredViews,
+            'duration_coverage' => $total > 0 ? round($measuredViews * 100 / $total, 1) : 0,
             'bounce_rate' => $bounceRate,
         ];
     }
@@ -330,7 +338,7 @@ class AnalyticsController extends Controller
                 'path',
                 DB::raw('COUNT(*) as views'),
                 DB::raw('COUNT(DISTINCT visitor_uuid) as visitors'),
-                DB::raw('COALESCE(AVG(duration_seconds), 0) as avg_duration'),
+                DB::raw($this->avgDurationPerViewSql().' as avg_duration'),
             )
             ->groupBy('path')
             ->orderByDesc('views')
@@ -489,6 +497,14 @@ class AnalyticsController extends Controller
         }
 
         return round(($new - $old) * 100 / $old, 1);
+    }
+
+    /**
+     * Average seconds per page view (null durations count as 0).
+     */
+    private function avgDurationPerViewSql(): string
+    {
+        return 'CAST(ROUND(COALESCE(SUM(duration_seconds), 0) / NULLIF(COUNT(*), 0)) AS UNSIGNED)';
     }
 
     /**

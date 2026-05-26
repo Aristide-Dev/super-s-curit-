@@ -8,7 +8,9 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('visits', function (Blueprint $table) {
+        $driver = Schema::getConnection()->getDriverName();
+
+        Schema::create('visits', function (Blueprint $table) use ($driver) {
             $table->id();
             $table->uuid('visitor_uuid')->index();
             $table->string('session_id', 64)->index();
@@ -32,7 +34,12 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index(['created_at', 'is_bot']);
-            $table->index(['path', 'created_at']);
+
+            if ($driver === 'mysql') {
+                $table->rawIndex('path(191), created_at', 'visits_path_created_at_index');
+            } else {
+                $table->index(['path', 'created_at']);
+            }
         });
     }
 

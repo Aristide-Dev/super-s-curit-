@@ -1,6 +1,31 @@
 import { aristechFaqs } from '@/data/aristech-contact';
 import type { SeoPageKey, SeoPageMeta } from '@/data/aristech-seo';
-import type { SeoSharedProps } from '@/types/seo';
+import type { SeoService, SeoSharedProps } from '@/types/seo';
+
+/**
+ * OfferCatalog items use ListItem + position (valid on ListItem),
+ * not position on Offer (invalid per schema.org).
+ */
+export function buildOfferCatalogItems(
+    services: SeoService[],
+    orgId: string,
+    areaServed: string,
+): Record<string, unknown>[] {
+    return services.map((service, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+            '@type': 'Offer',
+            itemOffered: {
+                '@type': 'Service',
+                name: service.name,
+                description: service.description,
+                provider: { '@id': orgId },
+                areaServed,
+            },
+        },
+    }));
+}
 
 export function buildPageJsonLd(
     page: SeoPageKey,
@@ -45,8 +70,8 @@ export function buildPageJsonLd(
                 addressLocality: organization.addressLocality,
                 addressCountry: organization.addressCountry,
             },
-            ...(seo.sameAs.length > 0 ? { sameAs: seo.sameAs } : {}),
-            ...(seo.knowsAbout.length > 0 ? { knowsAbout: seo.knowsAbout } : {}),
+            ...(seo.sameAs?.length ? { sameAs: seo.sameAs } : {}),
+            ...(seo.knowsAbout?.length ? { knowsAbout: seo.knowsAbout } : {}),
         },
         {
             '@type': 'Person',
@@ -72,21 +97,15 @@ export function buildPageJsonLd(
                 addressLocality: organization.addressLocality,
                 addressCountry: organization.addressCountry,
             },
-            provider: { '@id': orgId },
+            parentOrganization: { '@id': orgId },
             hasOfferCatalog: {
                 '@type': 'OfferCatalog',
                 name: 'Services ArisTech',
-                itemListElement: seo.services.map((service, index) => ({
-                    '@type': 'Offer',
-                    position: index + 1,
-                    itemOffered: {
-                        '@type': 'Service',
-                        name: service.name,
-                        description: service.description,
-                        provider: { '@id': orgId },
-                        areaServed: organization.areaServed,
-                    },
-                })),
+                itemListElement: buildOfferCatalogItems(
+                    seo.services,
+                    orgId,
+                    organization.areaServed,
+                ),
             },
         },
         {

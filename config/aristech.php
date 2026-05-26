@@ -12,6 +12,8 @@ return [
         'facebook' => env('ARISTECH_FACEBOOK_URL'),
         'twitter' => env('ARISTECH_TWITTER_URL'),
         'instagram' => env('ARISTECH_INSTAGRAM_URL'),
+        'linkedin' => env('ARISTECH_LINKEDIN_URL'),
+        'github' => env('ARISTECH_GITHUB_URL', 'https://github.com/Aristech-Dev'),
     ],
 
     'mail_to' => env('ARISTECH_MAIL_TO', env('ARISTECH_CONTACT_EMAIL', 'contact@aristechguinee.com')),

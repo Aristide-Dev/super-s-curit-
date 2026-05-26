@@ -1,6 +1,7 @@
 import { usePage } from '@inertiajs/react';
 import { aristechImages } from '@/data/aristech-images';
 import type { AristechConfig } from '@/types/aristech';
+import { GithubIcon } from 'lucide-react';
 
 type SharedPageProps = {
     aristech: AristechConfig;
@@ -62,7 +63,9 @@ export default function MarketingFooter() {
                         </h3>
                         {(aristech.social.facebook ||
                             aristech.social.twitter ||
-                            aristech.social.instagram) && (
+                            aristech.social.instagram ||
+                            aristech.social.linkedin ||
+                            aristech.social.github) && (
                             <ul className="mt-4 flex gap-4">
                                 {aristech.social.facebook && (
                                     <li>
@@ -97,6 +100,31 @@ export default function MarketingFooter() {
                                             className="cursor-pointer text-sm text-aristech-muted transition-colors duration-200 hover:text-aristech-accent"
                                         >
                                             Instagram
+                                        </a>
+                                    </li>
+                                )}
+                                {aristech.social.linkedin && (
+                                    <li>
+                                        <a
+                                            href={aristech.social.linkedin}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="cursor-pointer text-sm text-aristech-muted transition-colors duration-200 hover:text-aristech-accent"
+                                        >
+                                            LinkedIn
+                                        </a>
+                                    </li>
+                                )}
+                                {aristech.social.github && (
+                                    <li>
+                                        <a
+                                            href={aristech.social.github}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center gap-2 cursor-pointer text-sm text-aristech-muted transition-colors duration-200 hover:text-aristech-accent"
+                                        >
+                                            <GithubIcon className="h-4 w-4" />
+                                            <span>Aristech-Dev</span>
                                         </a>
                                     </li>
                                 )}

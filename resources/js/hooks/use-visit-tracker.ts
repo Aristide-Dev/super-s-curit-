@@ -2,19 +2,20 @@ import { router } from '@inertiajs/react';
 import { useEffect, useRef } from 'react';
 import { duration as durationRoute } from '@/routes/analytics';
 
+const VISITOR_COOKIE = 'aristech_vid';
+const SESSION_KEY = 'aristech_sid';
+
 /**
  * Sends page duration to the server when the user leaves.
- * Attached to every page via the app layout.
+ * Attached to every page via the marketing layout.
  */
 export function useVisitTracker() {
     const startedAt = useRef<number>(Date.now());
     const path = useRef<string>(window.location.pathname);
-    const sessionId = useRef<string>(getOrCreateSessionId());
 
-    // Reset timer on every Inertia navigation
     useEffect(() => {
         const unsubscribe = router.on('navigate', () => {
-            sendDuration(path.current, startedAt.current, sessionId.current);
+            sendDuration(path.current, startedAt.current);
             startedAt.current = Date.now();
             path.current = window.location.pathname;
         });
@@ -22,47 +23,47 @@ export function useVisitTracker() {
         return () => unsubscribe();
     }, []);
 
-    // Also flush when the browser tab closes / navigates away
     useEffect(() => {
         const flush = () => {
-            sendDuration(path.current, startedAt.current, sessionId.current);
+            sendDuration(path.current, startedAt.current);
         };
 
-        window.addEventListener('beforeunload', flush);
-        document.addEventListener('visibilitychange', () => {
+        const onVisibility = () => {
             if (document.visibilityState === 'hidden') {
                 flush();
             }
-        });
+        };
+
+        window.addEventListener('beforeunload', flush);
+        document.addEventListener('visibilitychange', onVisibility);
 
         return () => {
             window.removeEventListener('beforeunload', flush);
+            document.removeEventListener('visibilitychange', onVisibility);
         };
     }, []);
 }
 
-function sendDuration(
-    currentPath: string,
-    startedAt: number,
-    sessionId: string,
-): void {
+function sendDuration(currentPath: string, startedAt: number): void {
     const duration = Math.round((Date.now() - startedAt) / 1000);
     if (duration < 2) {
         return;
     }
 
     const payload = JSON.stringify({
-        session_id: sessionId,
+        visitor_uuid: readCookie(VISITOR_COOKIE),
+        session_id: readSessionId(),
         path: currentPath,
         duration,
     });
 
-    // Use sendBeacon when available (non-blocking, survives page unload)
+    const url = durationRoute.url();
+
     if (navigator.sendBeacon) {
         const blob = new Blob([payload], { type: 'application/json' });
-        navigator.sendBeacon(durationRoute.url(), blob);
+        navigator.sendBeacon(url, blob);
     } else {
-        fetch(durationRoute.url(), {
+        fetch(url, {
             method: 'POST',
             body: payload,
             headers: { 'Content-Type': 'application/json' },
@@ -71,13 +72,23 @@ function sendDuration(
     }
 }
 
-function getOrCreateSessionId(): string {
-    const key = 'aristech_sid';
-    let id = sessionStorage.getItem(key);
+function readCookie(name: string): string | null {
+    const prefix = `${name}=`;
+    const cookies = document.cookie.split(';');
+    for (const raw of cookies) {
+        const cookie = raw.trim();
+        if (cookie.startsWith(prefix)) {
+            return decodeURIComponent(cookie.substring(prefix.length));
+        }
+    }
+    return null;
+}
+
+function readSessionId(): string {
+    let id = sessionStorage.getItem(SESSION_KEY);
     if (!id) {
         id = crypto.randomUUID();
-        sessionStorage.setItem(key, id);
+        sessionStorage.setItem(SESSION_KEY, id);
     }
-
     return id;
 }

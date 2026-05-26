@@ -3,6 +3,7 @@
 use App\Models\User;
 use App\Models\Visit;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Inertia\Testing\AssertableInertia as Assert;
 
 uses(RefreshDatabase::class);
@@ -107,7 +108,7 @@ test('duration endpoint ignores admin paths', function () {
     ]);
 
     $this->postJson(route('analytics.duration'), [
-        'session_id' => $visit->session_id,
+        'visitor_uuid' => $visit->visitor_uuid,
         'path' => '/dashboard',
         'duration' => 120,
     ])->assertOk();
@@ -125,7 +126,7 @@ test('geoip resolves country from cloudflare header', function () {
         ->and($visit->country)->not->toBeEmpty();
 });
 
-test('duration endpoint updates visit', function () {
+test('duration endpoint updates visit by visitor uuid', function () {
     $visit = Visit::factory()->create([
         'path' => '/test',
         'is_bounce' => true,
@@ -133,11 +134,136 @@ test('duration endpoint updates visit', function () {
     ]);
 
     $this->postJson(route('analytics.duration'), [
-        'session_id' => $visit->session_id,
+        'visitor_uuid' => $visit->visitor_uuid,
         'path' => '/test',
         'duration' => 120,
     ])->assertOk()->assertJson(['ok' => true]);
 
     expect($visit->fresh()->duration_seconds)->toBe(120)
         ->and($visit->fresh()->is_bounce)->toBeFalse();
+});
+
+test('duration endpoint falls back to session id', function () {
+    $visit = Visit::factory()->create([
+        'path' => '/test',
+        'duration_seconds' => null,
+    ]);
+
+    $this->postJson(route('analytics.duration'), [
+        'session_id' => $visit->session_id,
+        'path' => '/test',
+        'duration' => 45,
+    ])->assertOk();
+
+    expect($visit->fresh()->duration_seconds)->toBe(45);
+});
+
+test('duration endpoint targets latest visit when visitor returns to same page', function () {
+    $uuid = (string) Str::uuid();
+
+    $first = Visit::factory()->create([
+        'visitor_uuid' => $uuid,
+        'path' => '/contact',
+        'duration_seconds' => 10,
+        'created_at' => now()->subMinutes(10),
+    ]);
+
+    $second = Visit::factory()->create([
+        'visitor_uuid' => $uuid,
+        'path' => '/contact',
+        'duration_seconds' => null,
+        'created_at' => now(),
+    ]);
+
+    $this->postJson(route('analytics.duration'), [
+        'visitor_uuid' => $uuid,
+        'path' => '/contact',
+        'duration' => 200,
+    ])->assertOk();
+
+    expect($first->fresh()->duration_seconds)->toBe(10)
+        ->and($second->fresh()->duration_seconds)->toBe(200);
+});
+
+test('analytics filters by page', function () {
+    $admin = User::factory()->admin()->create();
+
+    Visit::factory()->count(3)->create(['is_bot' => false, 'path' => '/contact']);
+    Visit::factory()->count(5)->create(['is_bot' => false, 'path' => '/a-propos']);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index', ['pages' => ['/contact']]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('kpis.total_views', 3)
+            ->where('filters.pages', ['/contact'])
+        );
+});
+
+test('analytics filters by country', function () {
+    $admin = User::factory()->admin()->create();
+
+    Visit::factory()->count(2)->create(['is_bot' => false, 'country_code' => 'FR']);
+    Visit::factory()->count(4)->create(['is_bot' => false, 'country_code' => 'GN']);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index', ['countries' => ['FR']]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('kpis.total_views', 2)
+            ->where('filters.countries', ['FR'])
+        );
+});
+
+test('analytics filters by browser and device combined', function () {
+    $admin = User::factory()->admin()->create();
+
+    Visit::factory()->create([
+        'is_bot' => false,
+        'browser' => 'Chrome',
+        'device' => 'mobile',
+    ]);
+    Visit::factory()->count(3)->create([
+        'is_bot' => false,
+        'browser' => 'Chrome',
+        'device' => 'desktop',
+    ]);
+    Visit::factory()->create([
+        'is_bot' => false,
+        'browser' => 'Firefox',
+        'device' => 'mobile',
+    ]);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index', [
+            'browsers' => ['Chrome'],
+            'devices' => ['desktop'],
+        ]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('kpis.total_views', 3)
+        );
+});
+
+test('analytics exposes filter options', function () {
+    $admin = User::factory()->admin()->create();
+
+    Visit::factory()->create([
+        'is_bot' => false,
+        'path' => '/contact',
+        'country_code' => 'FR',
+        'country' => 'France',
+        'browser' => 'Chrome',
+    ]);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('filterOptions.pages')
+            ->has('filterOptions.countries')
+            ->has('filterOptions.browsers')
+            ->where('filterOptions.pages', fn ($pages) => collect($pages)->contains('/contact'))
+            ->where('filterOptions.browsers', fn ($browsers) => collect($browsers)->contains('Chrome'))
+        );
 });

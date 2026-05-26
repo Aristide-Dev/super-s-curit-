@@ -1,8 +1,8 @@
 export const aristechProjectTypes = [
-    'Site WordPress (vitrine)',
+    'Site vitrine / institutionnel',
+    'Application web sur mesure',
     'E-commerce WordPress (WooCommerce)',
     'Boutique Shopify',
-    'Application web sur mesure',
     'Application mobile',
     'Intégration d\u2019API',
     'Refonte / Migration',
@@ -24,6 +24,11 @@ export type AristechFaq = {
 };
 
 export const aristechFaqs: readonly AristechFaq[] = [
+    {
+        question: 'Combien coûte la création d\'un site internet en Guinée ?',
+        answer:
+            'Le prix dépend du type de projet : site internet sur mesure, boutique WooCommerce/Shopify ou application web. Après analyse de votre besoin, nous envoyons un devis forfaitaire détaillé (design, développement, SEO de base et mise en ligne).',
+    },
     {
         question: 'Sous combien de temps répondez-vous ?',
         answer:

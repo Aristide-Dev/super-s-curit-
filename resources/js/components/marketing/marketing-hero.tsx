@@ -97,9 +97,9 @@ export default function MarketingHero() {
 
                     <Reveal delay={260} className="mt-8 max-w-xl">
                         <p className="text-base leading-relaxed md:text-lg">
-                            Applications web et mobiles, sites sur mesure et
-                            intégrations API. Une expertise technique claire,
-                            livrée avec rigueur — du design au déploiement.
+                            Agence web à Conakry : sites internet sur mesure,
+                            applications web et boutiques en ligne (WooCommerce,
+                            Shopify)
                         </p>
                     </Reveal>
 
@@ -136,10 +136,10 @@ export default function MarketingHero() {
                         </div>
                         <div>
                             <dt className="text-xs text-aristech-muted">
-                                CMS
+                                E-commerce
                             </dt>
                             <dd className="mt-1 font-heading text-sm font-semibold text-aristech-heading">
-                                WordPress · Shopify
+                                WooCommerce · Shopify
                             </dd>
                         </div>
                         <div>

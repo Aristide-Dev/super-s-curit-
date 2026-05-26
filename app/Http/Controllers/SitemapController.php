@@ -13,12 +13,16 @@ class SitemapController extends Controller
         $sitemap = Sitemap::create();
 
         foreach (config('seo.pages', []) as $page) {
-            $sitemap->add(
-                Url::create($page['path'])
-                    ->setLastModificationDate(now())
-                    ->setChangeFrequency($page['changefreq'])
-                    ->setPriority($page['priority']),
-            );
+            $url = Url::create($page['path'])
+                ->setLastModificationDate(now())
+                ->setChangeFrequency($page['changefreq'])
+                ->setPriority($page['priority']);
+
+            if (! empty($page['image'])) {
+                $url->addImage(url($page['image']));
+            }
+
+            $sitemap->add($url);
         }
 
         return $sitemap->toResponse(request());

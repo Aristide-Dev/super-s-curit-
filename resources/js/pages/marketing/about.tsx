@@ -23,7 +23,7 @@ export default function MarketingAbout() {
                         </span>
                     </>
                 }
-                description="ArisTech conçoit, développe et déploie des produits numériques sur mesure pour des entreprises ambitieuses. Plus qu'un prestataire : un partenaire technique de confiance."
+                description="Studio web en Guinée : création de sites internet sur mesure, applications web et e-commerce (WooCommerce). Basés à Conakry, nous accompagnons PME, institutions et startups en Afrique de l'Ouest et en Europe."
                 media={
                     <div className="relative mx-auto w-full max-w-lg">
                         <div

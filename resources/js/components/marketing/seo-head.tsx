@@ -19,7 +19,7 @@ export default function SeoHead({ page }: { page: SeoPageKey }) {
             ? meta.image
             : `${seo.siteUrl}${meta.image}`
         : seo.defaultImage;
-    const jsonLd = buildPageJsonLd(meta, seo, canonical);
+    const jsonLd = buildPageJsonLd(page, meta, seo, canonical);
 
     return (
         <Head>
@@ -37,12 +37,34 @@ export default function SeoHead({ page }: { page: SeoPageKey }) {
                 />
             )}
             <link head-key="canonical" rel="canonical" href={canonical} />
+            <link
+                head-key="hreflang"
+                rel="alternate"
+                hrefLang={seo.language}
+                href={canonical}
+            />
+            <link
+                head-key="hreflang-x-default"
+                rel="alternate"
+                hrefLang="x-default"
+                href={canonical}
+            />
             <meta
                 head-key="robots"
                 name="robots"
                 content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
             />
-            <meta head-key="author" name="author" content={seo.siteName} />
+            <meta head-key="author" name="author" content={seo.organization.founder} />
+            <meta
+                head-key="geo.region"
+                name="geo.region"
+                content={seo.geo.region}
+            />
+            <meta
+                head-key="geo.placename"
+                name="geo.placename"
+                content={seo.geo.placename}
+            />
 
             <meta head-key="og:type" property="og:type" content={meta.type ?? 'website'} />
             <meta head-key="og:locale" property="og:locale" content={seo.locale} />
@@ -60,9 +82,24 @@ export default function SeoHead({ page }: { page: SeoPageKey }) {
             <meta head-key="og:url" property="og:url" content={canonical} />
             <meta head-key="og:image" property="og:image" content={image} />
             <meta
+                head-key="og:image:width"
+                property="og:image:width"
+                content={String(seo.ogImage.width)}
+            />
+            <meta
+                head-key="og:image:height"
+                property="og:image:height"
+                content={String(seo.ogImage.height)}
+            />
+            <meta
+                head-key="og:image:type"
+                property="og:image:type"
+                content={seo.ogImage.type}
+            />
+            <meta
                 head-key="og:image:alt"
                 property="og:image:alt"
-                content={`${seo.siteName} — développement web et mobile`}
+                content={`${seo.siteName} — développement web et mobile en Guinée`}
             />
 
             <meta
@@ -84,6 +121,12 @@ export default function SeoHead({ page }: { page: SeoPageKey }) {
                 content={meta.description}
             />
             <meta head-key="twitter:image" name="twitter:image" content={image} />
+            <meta
+                head-key="twitter:image:alt"
+                name="twitter:image:alt"
+                content={`${seo.siteName} — développement web et mobile en Guinée`}
+            />
+            <meta head-key="twitter:url" name="twitter:url" content={canonical} />
 
             <script
                 head-key="jsonld"

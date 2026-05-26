@@ -4,23 +4,23 @@ export const aristechServices = [
     {
         icon: '/images/aristech/services/responsive_icon.svg',
         cover: aristechStock.services.applications,
-        title: 'Applications',
+        title: 'Applications web & mobiles',
         description:
-            'Nous développons des applications web et mobiles robustes, basées sur les dernières technologies, optimisées pour des performances élevées, des interfaces utilisateur conviviales et des fonctionnalités innovantes.',
+            'Applications web et mobiles sur mesure : tableaux de bord, espaces clients, API et produits SaaS pour entreprises en Guinée et à l\'international.',
     },
     {
         icon: '/images/aristech/stack/wordpress.svg',
         cover: aristechStock.services.ecommerce,
-        title: 'E-commerce',
+        title: 'E-commerce & boutique en ligne',
         description:
-            'Boutiques en ligne avant tout sur WordPress (WooCommerce) : catalogue, paiement, stocks et tunnel d\u2019achat. Nous intervenons aussi ponctuellement sur Shopify pour des besoins plus simples.',
+            'Création de boutique en ligne avec WooCommerce (WordPress) : paiement, catalogue, stocks et SEO produits. Mise en place Shopify pour les projets plus simples ou internationaux.',
     },
     {
-        icon: '/images/aristech/stack/wordpress.svg',
+        icon: '/images/aristech/services/responsive_icon.svg',
         cover: aristechStock.services.websites,
-        title: 'Sites Internet',
+        title: 'Création de site internet',
         description:
-            'Sites vitrines et institutionnels sur WordPress : thèmes sur mesure, SEO, performances et administration simple pour gérer votre contenu en autonomie.',
+            'Sites vitrines et institutionnels sur mesure à Conakry : design soigné, référencement naturel (SEO), performances et gestion de contenu simple.',
     },
     {
         icon: '/images/aristech/services/seo_icon.svg',
@@ -35,12 +35,12 @@ export const aristechMissionBlocks = [
     {
         title: 'Qui sommes-nous ?',
         content:
-            'Aristide Gnimassou, fondateur et développeur principal, dirige Aristech. Bien que je travaille principalement en solo, je collabore régulièrement avec des experts pour répondre à des besoins spécifiques ou de plus grande envergure. Cette flexibilité me permet d\'offrir des solutions personnalisées tout en maintenant une qualité optimale.',
+            'ArisTech est une agence web basée à Conakry, Guinée. Aristide Gnimassou, fondateur et développeur principal, conçoit des sites internet, des applications web et des boutiques en ligne (WordPress/WooCommerce pour l\'e-commerce). En solo ou avec des experts partenaires, nous livrons des solutions fiables pour le marché local et international.',
     },
     {
         title: 'Notre Mission',
         content:
-            'Notre mission est de simplifier le monde numérique pour vous. Que ce soit à travers des applications web et mobiles performantes, la création de sites web modernes, ou encore la gestion efficace de votre présence en ligne, nous nous efforçons de vous offrir des solutions adaptées à vos besoins spécifiques.',
+            'Rendre le développement web accessible aux entreprises guinéennes : site internet professionnel, e-commerce rentable, visibilité Google (SEO) et accompagnement après la mise en ligne. Chaque projet est cadré avec transparence, des délais réalistes et un code maintenable.',
     },
 ] as const;
 

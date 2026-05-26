@@ -9,9 +9,16 @@ export default function ServiceCards() {
                 <Reveal className="mb-14 max-w-2xl">
                     <p className="marketing-label mb-3">Services</p>
                     <h2 className="marketing-heading-section">
-                        Ce que nous construisons{' '}
-                        <span className="marketing-text-gradient">pour vous</span>
+                        Sites web, applications &{' '}
+                        <span className="marketing-text-gradient">
+                            e-commerce
+                        </span>
                     </h2>
+                    <p className="mt-4 text-sm leading-relaxed text-aristech-muted md:text-base">
+                        Création de site internet sur mesure, produits web et
+                        boutiques en ligne (WooCommerce, Shopify) pour
+                        entreprises en Guinée.
+                    </p>
                 </Reveal>
 
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

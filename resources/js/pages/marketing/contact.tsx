@@ -29,7 +29,7 @@ export default function MarketingContact() {
                         </span>
                     </>
                 }
-                description="Une idée, une refonte, un produit à lancer ? Décrivez-nous votre besoin et nous vous répondons avec une proposition technique claire et un devis adapté."
+                description="Besoin d'un devis pour un site internet, une application web ou une boutique en ligne à Conakry ? Décrivez votre projet : réponse sous 24 h ouvrées, cadrage gratuit et proposition technique détaillée."
                 media={
                     <div className="relative mx-auto w-full max-w-lg">
                         <div

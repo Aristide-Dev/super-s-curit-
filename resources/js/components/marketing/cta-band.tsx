@@ -45,9 +45,10 @@ export default function CtaBand() {
                                     </span>
                                 </h2>
                                 <p className="mt-4 text-sm leading-relaxed md:text-base">
-                                    Décrivez votre besoin — nous vous répondons
-                                    avec une approche technique claire et un
-                                    devis adapté.
+                                    Devis gratuit pour site internet,
+                                    application web ou boutique en ligne à
+                                    Conakry. Réponse sous 24 h avec un plan de
+                                    livraison clair.
                                 </p>
                             </div>
                             <Link

@@ -10,6 +10,15 @@ test('robots.txt is served dynamically with sitemap reference', function () {
     $response->assertSeeText('User-agent: *');
     $response->assertSeeText('Sitemap: '.url('/sitemap.xml'));
     $response->assertSeeText('Disallow: /dashboard');
+    $response->assertSeeText('Disallow: /analytics');
+});
+
+test('robots.txt allows ai crawlers for aeo', function () {
+    $response = $this->get(route('robots'));
+
+    $response->assertOk()
+        ->assertSeeText('User-agent: GPTBot')
+        ->assertSeeText('User-agent: PerplexityBot');
 });
 
 test('sitemap.xml lists public marketing pages', function () {
@@ -27,6 +36,21 @@ test('sitemap.xml lists public marketing pages', function () {
         ->toContain(url('/contact'));
 });
 
+test('sitemap.xml includes images for pages', function () {
+    $response = $this->get(route('sitemap'));
+
+    expect($response->getContent())->toContain('<image:image>');
+});
+
+test('home seo meta includes local search terms', function () {
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('seo.organization.addressLocality', 'Conakry')
+            ->has('seo.knowsAbout')
+        );
+});
+
 test('marketing pages share seo defaults', function () {
     $response = $this->get(route('home'));
 
@@ -34,14 +58,14 @@ test('marketing pages share seo defaults', function () {
 
     $response->assertInertia(fn (Assert $page) => $page
         ->component('marketing/home')
-        ->has('seo', fn (Assert $seo) => $seo
-            ->where('siteName', config('seo.site_name'))
-            ->where('siteUrl', rtrim((string) config('app.url'), '/'))
-            ->where('locale', config('seo.locale'))
-            ->where('language', config('seo.language'))
-            ->has('defaultImage')
-            ->has('twitterSite')
-            ->has('organization')
-        )
+        ->has('seo.siteName')
+        ->has('seo.siteUrl')
+        ->has('seo.ogImage')
+        ->has('seo.geo')
+        ->has('seo.sameAs')
+        ->has('seo.services')
+        ->has('seo.organization.founderJobTitle')
+        ->where('seo.siteName', config('seo.site_name'))
+        ->where('seo.organization.addressLocality', config('seo.organization.address_locality'))
     );
 });

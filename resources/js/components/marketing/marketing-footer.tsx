@@ -25,6 +25,11 @@ export default function MarketingFooter() {
                         <p className="mt-4 text-sm text-aristech-muted">
                             © {year} ArisTech. Tous droits réservés.
                         </p>
+                        {aristech.rccm && (
+                            <p className="mt-2 text-xs text-aristech-muted">
+                                RCCM : {aristech.rccm}
+                            </p>
+                        )}
                     </div>
 
                     <div>

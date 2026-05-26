@@ -47,6 +47,7 @@ class HandleInertiaRequests extends Middleware
                 'email' => config('aristech.email'),
                 'phone' => config('aristech.phone'),
                 'phone_href' => config('aristech.phone_href'),
+                'rccm' => config('aristech.rccm'),
                 'social' => config('aristech.social'),
             ],
             'seo' => [

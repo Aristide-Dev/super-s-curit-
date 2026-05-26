@@ -8,5 +8,6 @@ export type AristechConfig = {
     email: string;
     phone: string;
     phone_href: string;
+    rccm: string;
     social: AristechSocialLinks;
 };

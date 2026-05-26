@@ -56,7 +56,7 @@ test('contact form accepts submission without phone', function () {
     Mail::assertSent(ContactMessageMailable::class);
 });
 
-test('contact form accepts optional company project type and budget', function () {
+test('contact form accepts optional company and project type', function () {
     Mail::fake();
 
     $payload = [
@@ -65,7 +65,6 @@ test('contact form accepts optional company project type and budget', function (
         'phone' => '+224621630916',
         'company' => 'ARISTECH',
         'project_type' => 'Application web sur mesure',
-        'budget' => '5 000 – 15 000 €',
         'message' => 'Refonte complète de notre plateforme.',
     ];
 
@@ -76,7 +75,6 @@ test('contact form accepts optional company project type and budget', function (
 
     Mail::assertSent(ContactMessageMailable::class, function (ContactMessageMailable $mail) use ($payload) {
         return $mail->contact['company'] === $payload['company']
-            && $mail->contact['project_type'] === $payload['project_type']
-            && $mail->contact['budget'] === $payload['budget'];
+            && $mail->contact['project_type'] === $payload['project_type'];
     });
 });

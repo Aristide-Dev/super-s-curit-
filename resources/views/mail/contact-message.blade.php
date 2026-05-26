@@ -17,10 +17,6 @@
 **Type de projet :** {{ $contact['project_type'] }}
 @endif
 
-@if (! empty($contact['budget']))
-**Budget estimé :** {{ $contact['budget'] }}
-@endif
-
 **Message :**
 
 {{ $contact['message'] }}

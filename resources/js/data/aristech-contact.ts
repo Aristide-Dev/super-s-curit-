@@ -9,15 +9,6 @@ export const aristechProjectTypes = [
     'Autre',
 ] as const;
 
-export const aristechBudgets = [
-    'Moins de 2 000 €',
-    '2 000 – 5 000 €',
-    '5 000 – 15 000 €',
-    '15 000 – 40 000 €',
-    'Plus de 40 000 €',
-    'À discuter',
-] as const;
-
 export type AristechFaq = {
     question: string;
     answer: string;

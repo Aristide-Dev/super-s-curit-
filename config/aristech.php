@@ -16,4 +16,6 @@ return [
 
     'mail_to' => env('ARISTECH_MAIL_TO', env('ARISTECH_CONTACT_EMAIL', 'contact@aristechguinee.com')),
 
+    'rccm' => env('ARISTECH_RCCM', 'GN.TCC.2024.A.04948'),
+
 ];

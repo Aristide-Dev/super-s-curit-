@@ -5,10 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
 import { Textarea } from '@/components/ui/textarea';
-import {
-    aristechBudgets,
-    aristechProjectTypes,
-} from '@/data/aristech-contact';
+import { aristechProjectTypes } from '@/data/aristech-contact';
 import { store } from '@/routes/contact';
 import { cn } from '@/lib/utils';
 
@@ -148,82 +145,38 @@ export default function ContactForm() {
                                 </div>
                             </div>
 
-                            <div className="grid gap-5 sm:grid-cols-2">
-                                <div className="grid gap-2">
-                                    <Label
-                                        htmlFor="project_type"
-                                        className="text-aristech-heading"
+                            <div className="grid gap-2">
+                                <Label
+                                    htmlFor="project_type"
+                                    className="text-aristech-heading"
+                                >
+                                    Type de projet
+                                </Label>
+                                <div className="relative">
+                                    <select
+                                        id="project_type"
+                                        name="project_type"
+                                        defaultValue=""
+                                        className={cn(
+                                            fieldClasses,
+                                            'h-9 w-full appearance-none rounded-md border bg-aristech-surface-elevated px-3 pr-9 text-sm shadow-xs focus-visible:ring-[3px] focus-visible:outline-none disabled:opacity-50',
+                                        )}
                                     >
-                                        Type de projet
-                                    </Label>
-                                    <div className="relative">
-                                        <select
-                                            id="project_type"
-                                            name="project_type"
-                                            defaultValue=""
-                                            className={cn(
-                                                fieldClasses,
-                                                'h-9 w-full appearance-none rounded-md border bg-aristech-surface-elevated px-3 pr-9 text-sm shadow-xs focus-visible:ring-[3px] focus-visible:outline-none disabled:opacity-50',
-                                            )}
-                                        >
-                                            <option value="">
-                                                Sélectionner...
+                                        <option value="">
+                                            Sélectionner...
+                                        </option>
+                                        {aristechProjectTypes.map((type) => (
+                                            <option key={type} value={type}>
+                                                {type}
                                             </option>
-                                            {aristechProjectTypes.map(
-                                                (type) => (
-                                                    <option
-                                                        key={type}
-                                                        value={type}
-                                                    >
-                                                        {type}
-                                                    </option>
-                                                ),
-                                            )}
-                                        </select>
-                                        <ChevronDown
-                                            className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-aristech-muted"
-                                            aria-hidden
-                                        />
-                                    </div>
-                                    <InputError message={errors.project_type} />
+                                        ))}
+                                    </select>
+                                    <ChevronDown
+                                        className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-aristech-muted"
+                                        aria-hidden
+                                    />
                                 </div>
-
-                                <div className="grid gap-2">
-                                    <Label
-                                        htmlFor="budget"
-                                        className="text-aristech-heading"
-                                    >
-                                        Budget estimé
-                                    </Label>
-                                    <div className="relative">
-                                        <select
-                                            id="budget"
-                                            name="budget"
-                                            defaultValue=""
-                                            className={cn(
-                                                fieldClasses,
-                                                'h-9 w-full appearance-none rounded-md border bg-aristech-surface-elevated px-3 pr-9 text-sm shadow-xs focus-visible:ring-[3px] focus-visible:outline-none disabled:opacity-50',
-                                            )}
-                                        >
-                                            <option value="">
-                                                Sélectionner...
-                                            </option>
-                                            {aristechBudgets.map((budget) => (
-                                                <option
-                                                    key={budget}
-                                                    value={budget}
-                                                >
-                                                    {budget}
-                                                </option>
-                                            ))}
-                                        </select>
-                                        <ChevronDown
-                                            className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 text-aristech-muted"
-                                            aria-hidden
-                                        />
-                                    </div>
-                                    <InputError message={errors.budget} />
-                                </div>
+                                <InputError message={errors.project_type} />
                             </div>
 
                             <div className="grid gap-2">

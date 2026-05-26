@@ -68,6 +68,17 @@ export default function MarketingContact() {
                     </Reveal>
 
                     <ContactChannels aristech={aristech} />
+
+                    {aristech.rccm && (
+                        <Reveal delay={200} className="mt-10">
+                            <p className="text-sm text-aristech-muted">
+                                <span className="font-medium text-aristech-heading">
+                                    ArisTech
+                                </span>{' '}
+                                · Conakry, Guinée · RCCM : {aristech.rccm}
+                            </p>
+                        </Reveal>
+                    )}
                 </div>
             </section>
 
@@ -153,6 +164,20 @@ export default function MarketingContact() {
                                         ))}
                                     </ol>
                                 </div>
+
+                                {aristech.rccm && (
+                                    <div className="marketing-card bg-aristech-surface-elevated">
+                                        <p className="marketing-label mb-3">
+                                            Informations légales
+                                        </p>
+                                        <p className="text-sm leading-relaxed text-aristech-text">
+                                            ArisTech · Conakry, Guinée
+                                        </p>
+                                        <p className="mt-2 font-heading text-sm font-semibold text-aristech-heading">
+                                            RCCM : {aristech.rccm}
+                                        </p>
+                                    </div>
+                                )}
 
                                 <div className="marketing-card bg-aristech-surface-elevated">
                                     <p className="marketing-label mb-3">

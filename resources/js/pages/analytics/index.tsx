@@ -4,11 +4,14 @@ import {
     ArrowDown,
     ArrowUp,
     BarChart3,
+    CalendarClock,
+    CalendarDays,
     Clock,
     Eraser,
     FileText,
     Globe,
     Laptop,
+    MapPin,
     Monitor,
     MousePointerClick,
     Smartphone,
@@ -16,10 +19,14 @@ import {
     Users,
 } from 'lucide-react';
 import { useMemo } from 'react';
+import CityStatRow from '@/components/analytics/city-stat-row';
 import CountryFlag from '@/components/analytics/country-flag';
 import FilterMultiselect, {
     FilterChip,
 } from '@/components/analytics/filter-multiselect';
+import PeriodDistributionChart, {
+    type DistributionRow,
+} from '@/components/analytics/period-distribution-chart';
 import TrafficChart, {
     type ChartPoint,
 } from '@/components/analytics/traffic-chart';
@@ -61,9 +68,20 @@ type CountryRow = {
     percentage: number;
 };
 
+type CityRow = {
+    value: string;
+    city: string;
+    country_code: string;
+    country: string;
+    views: number;
+    visitors: number;
+    percentage: number;
+};
+
 type Filters = {
     pages: string[];
     countries: string[];
+    cities: string[];
     browsers: string[];
     devices: string[];
     platforms: string[];
@@ -72,6 +90,12 @@ type Filters = {
 type FilterOptions = {
     pages: string[];
     countries: { code: string; label: string }[];
+    cities: {
+        value: string;
+        label: string;
+        city: string;
+        country_code: string;
+    }[];
     browsers: string[];
     devices: string[];
     platforms: string[];
@@ -86,9 +110,13 @@ type PageProps = {
     topPages: TopPage[];
     topReferrers: TopReferrer[];
     countries: CountryRow[];
+    cities: CityRow[];
     browsers: GroupRow[];
     devices: GroupRow[];
     platforms: GroupRow[];
+    weekdayStats: DistributionRow[];
+    hourlyStats: DistributionRow[];
+    timezone: string;
 };
 
 /* ------------------------------------------------------------------ */
@@ -249,15 +277,29 @@ export default function AnalyticsIndex() {
         topPages,
         topReferrers,
         countries,
+        cities,
         browsers,
         devices,
         platforms,
+        weekdayStats,
+        hourlyStats,
+        timezone,
     } = usePage<PageProps>().props;
+
+    const peakWeekday = useMemo(
+        () => weekdayStats.find((d) => d.is_peak) ?? null,
+        [weekdayStats],
+    );
+    const peakHour = useMemo(
+        () => hourlyStats.find((d) => d.is_peak) ?? null,
+        [hourlyStats],
+    );
 
     const activeFilterCount = useMemo(
         () =>
             filters.pages.length +
             filters.countries.length +
+            filters.cities.length +
             filters.browsers.length +
             filters.devices.length +
             filters.platforms.length,
@@ -270,11 +312,18 @@ export default function AnalyticsIndex() {
         return map;
     }, [filterOptions.countries]);
 
+    const cityByValue = useMemo(() => {
+        const map = new Map<string, string>();
+        filterOptions.cities.forEach((c) => map.set(c.value, c.label));
+        return map;
+    }, [filterOptions.cities]);
+
     const applyFilters = (next: Partial<Filters>) => {
         const merged: Filters = { ...filters, ...next };
         const query: Record<string, string | string[]> = { period: String(period) };
         if (merged.pages.length) query.pages = merged.pages;
         if (merged.countries.length) query.countries = merged.countries;
+        if (merged.cities.length) query.cities = merged.cities;
         if (merged.browsers.length) query.browsers = merged.browsers;
         if (merged.devices.length) query.devices = merged.devices;
         if (merged.platforms.length) query.platforms = merged.platforms;
@@ -328,6 +377,7 @@ export default function AnalyticsIndex() {
                                             period: p.value,
                                             ...(filters.pages.length && { pages: filters.pages }),
                                             ...(filters.countries.length && { countries: filters.countries }),
+                                            ...(filters.cities.length && { cities: filters.cities }),
                                             ...(filters.browsers.length && { browsers: filters.browsers }),
                                             ...(filters.devices.length && { devices: filters.devices }),
                                             ...(filters.platforms.length && { platforms: filters.platforms }),
@@ -362,6 +412,18 @@ export default function AnalyticsIndex() {
                         selected={filters.countries}
                         onChange={(values) => applyFilters({ countries: values })}
                         searchPlaceholder="Rechercher un pays..."
+                    />
+                    <FilterMultiselect
+                        label="Villes"
+                        icon={MapPin}
+                        options={filterOptions.cities.map((c) => ({
+                            value: c.value,
+                            label: c.label,
+                        }))}
+                        selected={filters.cities}
+                        onChange={(values) => applyFilters({ cities: values })}
+                        searchPlaceholder="Rechercher une ville..."
+                        emptyLabel="Aucune ville enregistrée"
                     />
                     <FilterMultiselect
                         label="Navigateurs"
@@ -404,6 +466,13 @@ export default function AnalyticsIndex() {
                                         key={`c-${c}`}
                                         label={countryByCode.get(c) ?? c}
                                         onRemove={() => removeFilter('countries', c)}
+                                    />
+                                ))}
+                                {filters.cities.map((c) => (
+                                    <FilterChip
+                                        key={`ci-${c}`}
+                                        label={cityByValue.get(c) ?? c}
+                                        onRemove={() => removeFilter('cities', c)}
                                     />
                                 ))}
                                 {filters.browsers.map((b) => (
@@ -497,6 +566,66 @@ export default function AnalyticsIndex() {
                     <TrafficChart data={chartData} />
                 </div>
 
+                {/* Weekday + hourly distribution */}
+                <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div className="app-panel p-5">
+                        <div className="mb-4 flex flex-wrap items-start justify-between gap-2">
+                            <div>
+                                <h2 className="font-heading flex items-center gap-2 text-sm font-semibold">
+                                    <CalendarDays
+                                        className="text-primary size-4"
+                                        aria-hidden
+                                    />
+                                    Jours les plus visités
+                                </h2>
+                                {peakWeekday && (
+                                    <p className="text-muted-foreground mt-1 text-xs">
+                                        Pic :{' '}
+                                        <span className="text-foreground font-medium">
+                                            {peakWeekday.label}
+                                        </span>{' '}
+                                        ({formatNumber(peakWeekday.views)} vues)
+                                    </p>
+                                )}
+                            </div>
+                            <span className="text-muted-foreground text-[10px]">
+                                Fuseau : {timezone}
+                            </span>
+                        </div>
+                        <PeriodDistributionChart data={weekdayStats} />
+                    </div>
+
+                    <div className="app-panel p-5">
+                        <div className="mb-4 flex flex-wrap items-start justify-between gap-2">
+                            <div>
+                                <h2 className="font-heading flex items-center gap-2 text-sm font-semibold">
+                                    <CalendarClock
+                                        className="text-primary size-4"
+                                        aria-hidden
+                                    />
+                                    Heures de pointe
+                                </h2>
+                                {peakHour && (
+                                    <p className="text-muted-foreground mt-1 text-xs">
+                                        Pic :{' '}
+                                        <span className="text-foreground font-medium">
+                                            {peakHour.label}
+                                        </span>{' '}
+                                        ({formatNumber(peakHour.views)} vues)
+                                    </p>
+                                )}
+                            </div>
+                            <span className="text-muted-foreground text-[10px]">
+                                Fuseau : {timezone}
+                            </span>
+                        </div>
+                        <PeriodDistributionChart
+                            data={hourlyStats}
+                            emptyMessage="Aucune visite enregistrée sur cette période."
+                        />
+                    </div>
+                </div>
+
                 {/* Bottom grid */}
                 <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                     {/* Top pages */}
@@ -582,6 +711,46 @@ export default function AnalyticsIndex() {
                                             className={`hover:bg-accent/40 rounded-md p-1 text-left transition ${isSelected ? 'bg-primary/5 ring-primary ring-1' : ''}`}
                                         >
                                             <CountryStatRow {...country} />
+                                        </button>
+                                    );
+                                })
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Cities */}
+                    <div className="app-panel p-5 lg:col-span-2">
+                        <h2 className="font-heading mb-4 flex items-center gap-2 text-sm font-semibold">
+                            <MapPin className="text-primary size-4" aria-hidden />
+                            Villes des visiteurs
+                        </h2>
+                        <div className="grid gap-4 sm:grid-cols-2">
+                            {cities.length === 0 ? (
+                                <p className="text-muted-foreground col-span-full py-6 text-center text-sm">
+                                    Aucune ville identifiée pour cette période. Les nouvelles
+                                    visites seront géolocalisées automatiquement.
+                                </p>
+                            ) : (
+                                cities.map((cityRow) => {
+                                    const isSelected = filters.cities.includes(
+                                        cityRow.value,
+                                    );
+                                    return (
+                                        <button
+                                            type="button"
+                                            key={cityRow.value}
+                                            onClick={() =>
+                                                applyFilters({
+                                                    cities: isSelected
+                                                        ? filters.cities.filter(
+                                                              (c) => c !== cityRow.value,
+                                                          )
+                                                        : [...filters.cities, cityRow.value],
+                                                })
+                                            }
+                                            className={`hover:bg-accent/40 rounded-md p-1 text-left transition ${isSelected ? 'bg-primary/5 ring-primary ring-1' : ''}`}
+                                        >
+                                            <CityStatRow {...cityRow} />
                                         </button>
                                     );
                                 })

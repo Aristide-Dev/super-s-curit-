@@ -9,6 +9,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -45,9 +46,13 @@ class AnalyticsController extends Controller
             'topPages' => $this->topPages(clone $base),
             'topReferrers' => $this->topReferrers(clone $base),
             'countries' => $this->topCountries(clone $base),
+            'cities' => $this->topCities(clone $base),
             'browsers' => $this->groupBy(clone $base, 'browser'),
             'devices' => $this->groupBy(clone $base, 'device'),
             'platforms' => $this->groupBy(clone $base, 'platform'),
+            'weekdayStats' => $this->weekdayStats(clone $base),
+            'hourlyStats' => $this->hourlyStats(clone $base),
+            'timezone' => config('app.timezone'),
         ]);
     }
 
@@ -87,13 +92,14 @@ class AnalyticsController extends Controller
     }
 
     /**
-     * @return array{pages: list<string>, countries: list<string>, browsers: list<string>, devices: list<string>, platforms: list<string>}
+     * @return array{pages: list<string>, countries: list<string>, cities: list<string>, browsers: list<string>, devices: list<string>, platforms: list<string>}
      */
     private function resolveFilters(Request $request): array
     {
         return [
             'pages' => $this->stringArray($request->query('pages')),
             'countries' => $this->stringArray($request->query('countries')),
+            'cities' => $this->stringArray($request->query('cities')),
             'browsers' => $this->stringArray($request->query('browsers')),
             'devices' => $this->stringArray($request->query('devices')),
             'platforms' => $this->stringArray($request->query('platforms')),
@@ -118,7 +124,7 @@ class AnalyticsController extends Controller
     }
 
     /**
-     * @param  array{pages: list<string>, countries: list<string>, browsers: list<string>, devices: list<string>, platforms: list<string>}  $filters
+     * @param  array{pages: list<string>, countries: list<string>, cities: list<string>, browsers: list<string>, devices: list<string>, platforms: list<string>}  $filters
      * @param  Builder<Visit>  $query
      * @return Builder<Visit>
      */
@@ -130,6 +136,22 @@ class AnalyticsController extends Controller
 
         if ($filters['countries'] !== []) {
             $query->whereIn('country_code', $filters['countries']);
+        }
+
+        if ($filters['cities'] !== []) {
+            $query->where(function (Builder $cityQuery) use ($filters): void {
+                foreach ($filters['cities'] as $token) {
+                    $parsed = $this->parseCityToken($token);
+                    if ($parsed === null) {
+                        continue;
+                    }
+
+                    [$countryCode, $city] = $parsed;
+                    $cityQuery->orWhere(function (Builder $match) use ($countryCode, $city): void {
+                        $match->where('country_code', $countryCode)->where('city', $city);
+                    });
+                }
+            });
         }
 
         if ($filters['browsers'] !== []) {
@@ -148,7 +170,7 @@ class AnalyticsController extends Controller
     }
 
     /**
-     * @param  array{pages: list<string>, countries: list<string>, browsers: list<string>, devices: list<string>, platforms: list<string>}  $filters
+     * @param  array{pages: list<string>, countries: list<string>, cities: list<string>, browsers: list<string>, devices: list<string>, platforms: list<string>}  $filters
      * @return Builder<Visit>
      */
     private function baseQuery(array $filters): Builder
@@ -160,7 +182,7 @@ class AnalyticsController extends Controller
     }
 
     /**
-     * @return array{pages: list<string>, countries: list<array{code: string, label: string}>, browsers: list<string>, devices: list<string>, platforms: list<string>}
+     * @return array{pages: list<string>, countries: list<array{code: string, label: string}>, cities: list<array{value: string, label: string, city: string, country_code: string}>, browsers: list<string>, devices: list<string>, platforms: list<string>}
      */
     private function filterOptions(): array
     {
@@ -179,9 +201,27 @@ class AnalyticsController extends Controller
             ->values()
             ->all();
 
+        $cities = (clone $base)
+            ->whereNotNull('city')
+            ->where('city', '!=', '')
+            ->whereNotNull('country_code')
+            ->select('city', 'country_code', 'country')
+            ->distinct()
+            ->orderBy('city')
+            ->get()
+            ->map(fn ($row) => [
+                'value' => $this->cityToken((string) $row->country_code, (string) $row->city),
+                'label' => (string) $row->city.', '.($row->country ?? $row->country_code),
+                'city' => (string) $row->city,
+                'country_code' => (string) $row->country_code,
+            ])
+            ->values()
+            ->all();
+
         return [
             'pages' => $this->distinctValues(clone $base, 'path'),
             'countries' => $countries,
+            'cities' => $cities,
             'browsers' => $this->distinctValues(clone $base, 'browser'),
             'devices' => $this->distinctValues(clone $base, 'device'),
             'platforms' => $this->distinctValues(clone $base, 'platform'),
@@ -360,6 +400,66 @@ class AnalyticsController extends Controller
 
     /**
      * @param  Builder<Visit>  $base
+     * @return list<array{value: string, city: string, country_code: string, country: string, views: int, visitors: int, percentage: float}>
+     */
+    private function topCities(Builder $base): array
+    {
+        $rows = (clone $base)
+            ->select(
+                'city',
+                'country_code',
+                'country',
+                DB::raw('COUNT(*) as views'),
+                DB::raw('COUNT(DISTINCT visitor_uuid) as visitors'),
+            )
+            ->whereNotNull('city')
+            ->where('city', '!=', '')
+            ->whereNotNull('country_code')
+            ->groupBy('city', 'country_code', 'country')
+            ->orderByDesc('views')
+            ->limit(15)
+            ->get();
+
+        $total = (int) $rows->sum('views');
+
+        return $rows->map(fn ($row) => [
+            'value' => $this->cityToken((string) $row->country_code, (string) $row->city),
+            'city' => (string) $row->city,
+            'country_code' => (string) $row->country_code,
+            'country' => (string) ($row->country ?? $row->country_code),
+            'views' => (int) $row->views,
+            'visitors' => (int) $row->visitors,
+            'percentage' => $total > 0 ? round($row->views * 100 / $total, 1) : 0,
+        ])->all();
+    }
+
+    private function cityToken(string $countryCode, string $city): string
+    {
+        return strtoupper($countryCode).':'.$city;
+    }
+
+    /**
+     * @return array{0: string, 1: string}|null
+     */
+    private function parseCityToken(string $token): ?array
+    {
+        if (! str_contains($token, ':')) {
+            return null;
+        }
+
+        [$countryCode, $city] = explode(':', $token, 2);
+        $countryCode = strtoupper(trim($countryCode));
+        $city = trim($city);
+
+        if (strlen($countryCode) !== 2 || $city === '') {
+            return null;
+        }
+
+        return [$countryCode, $city];
+    }
+
+    /**
+     * @param  Builder<Visit>  $base
      * @return list<array{label: string, count: int, percentage: float}>
      */
     private function groupBy(Builder $base, string $column): array
@@ -389,5 +489,127 @@ class AnalyticsController extends Controller
         }
 
         return round(($new - $old) * 100 / $old, 1);
+    }
+
+    /**
+     * @param  Builder<Visit>  $base
+     * @return list<array{day: int, label: string, views: int, visitors: int, percentage: float, is_peak: bool}>
+     */
+    private function weekdayStats(Builder $base): array
+    {
+        $grouped = $this->aggregateByDimension(clone $base, $this->weekdaySqlExpression());
+
+        return $this->buildDistribution(
+            keys: range(1, 7),
+            labels: self::WEEKDAY_LABELS,
+            grouped: $grouped,
+            keyToIndex: static fn (int $key) => $key,
+        );
+    }
+
+    /**
+     * @param  Builder<Visit>  $base
+     * @return list<array{hour: int, label: string, views: int, visitors: int, percentage: float, is_peak: bool}>
+     */
+    private function hourlyStats(Builder $base): array
+    {
+        $grouped = $this->aggregateByDimension(clone $base, $this->hourSqlExpression());
+
+        return $this->buildDistribution(
+            keys: range(0, 23),
+            labels: array_map(static fn (int $h) => sprintf('%02dh', $h), range(0, 23)),
+            grouped: $grouped,
+            keyToIndex: static fn (int $key) => $key,
+            labelKey: 'hour',
+        );
+    }
+
+    /** @var array<int, string> ISO weekday: 1 = Monday … 7 = Sunday */
+    private const WEEKDAY_LABELS = [
+        1 => 'Lundi',
+        2 => 'Mardi',
+        3 => 'Mercredi',
+        4 => 'Jeudi',
+        5 => 'Vendredi',
+        6 => 'Samedi',
+        7 => 'Dimanche',
+    ];
+
+    /**
+     * @return array<int, array{views: int, visitors: int}>
+     */
+    private function aggregateByDimension(Builder $base, string $dimensionSql): array
+    {
+        $rows = (clone $base)
+            ->select(
+                DB::raw("{$dimensionSql} as bucket"),
+                DB::raw('COUNT(*) as views'),
+                DB::raw('COUNT(DISTINCT visitor_uuid) as visitors'),
+            )
+            ->groupBy('bucket')
+            ->get();
+
+        $grouped = [];
+        foreach ($rows as $row) {
+            $grouped[(int) $row->bucket] = [
+                'views' => (int) $row->views,
+                'visitors' => (int) $row->visitors,
+            ];
+        }
+
+        return $grouped;
+    }
+
+    /**
+     * @param  list<int>  $keys
+     * @param  array<int, string>  $labels
+     * @param  array<int, array{views: int, visitors: int}>  $grouped
+     * @return list<array<string, mixed>>
+     */
+    private function buildDistribution(
+        array $keys,
+        array $labels,
+        array $grouped,
+        callable $keyToIndex,
+        string $labelKey = 'day',
+    ): array {
+        $total = array_sum(array_column($grouped, 'views'));
+        $peakViews = $total > 0 ? max(array_column($grouped, 'views')) : 0;
+
+        $result = [];
+        foreach ($keys as $key) {
+            $index = $keyToIndex($key);
+            $row = $grouped[$index] ?? ['views' => 0, 'visitors' => 0];
+            $views = $row['views'];
+
+            $result[] = [
+                $labelKey => $key,
+                'label' => $labels[$key],
+                'views' => $views,
+                'visitors' => $row['visitors'],
+                'percentage' => $total > 0 ? round($views * 100 / $total, 1) : 0.0,
+                'is_peak' => $views > 0 && $views === $peakViews,
+            ];
+        }
+
+        return $result;
+    }
+
+    private function weekdaySqlExpression(): string
+    {
+        if (Schema::getConnection()->getDriverName() === 'sqlite') {
+            return "CASE WHEN strftime('%w', created_at) = '0' THEN 7 ELSE CAST(strftime('%w', created_at) AS INTEGER) END";
+        }
+
+        return 'WEEKDAY(created_at) + 1';
+    }
+
+    private function hourSqlExpression(): string
+    {
+        if (Schema::getConnection()->getDriverName() === 'sqlite') {
+            return "CAST(strftime('%H', created_at) AS INTEGER)";
+        }
+
+        return 'HOUR(created_at)';
     }
 }

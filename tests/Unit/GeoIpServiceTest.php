@@ -15,12 +15,27 @@ test('geoip uses cloudflare header without http call', function () {
     expect($result)->toBe([
         'country_code' => 'GN',
         'country' => 'Guinée',
+        'city' => null,
     ]);
 
     Http::assertNothingSent();
 });
 
-test('geoip caches api lookup', function () {
+test('geoip uses cloudflare city when provided', function () {
+    Http::fake();
+
+    $result = app(GeoIpService::class)->resolve('127.0.0.1', 'GN', 'Conakry');
+
+    expect($result)->toBe([
+        'country_code' => 'GN',
+        'country' => 'Guinée',
+        'city' => 'Conakry',
+    ]);
+
+    Http::assertNothingSent();
+});
+
+test('geoip caches api lookup with city', function () {
     Cache::flush();
 
     Http::fake([
@@ -28,6 +43,7 @@ test('geoip caches api lookup', function () {
             'status' => 'success',
             'country' => 'France',
             'countryCode' => 'FR',
+            'city' => 'Paris',
         ]),
     ]);
 
@@ -36,8 +52,11 @@ test('geoip caches api lookup', function () {
     $first = $service->resolve('8.8.8.8');
     $second = $service->resolve('8.8.8.8');
 
-    expect($first)->toBe(['country_code' => 'FR', 'country' => 'France'])
-        ->and($second)->toBe($first);
+    expect($first)->toBe([
+        'country_code' => 'FR',
+        'country' => 'France',
+        'city' => 'Paris',
+    ])->and($second)->toBe($first);
 
     Http::assertSentCount(1);
 });

@@ -38,6 +38,7 @@ class VisitFactory extends Factory
             'device' => fake()->randomElement($devices),
             'country_code' => fake()->randomElement(['GN', 'FR', 'SN', 'CI', 'US']),
             'country' => fake()->randomElement(['Guinée', 'France', 'Sénégal', "Côte d'Ivoire", 'États-Unis']),
+            'city' => fake()->optional(0.7)->city(),
             'duration_seconds' => fake()->optional(0.6)->numberBetween(5, 600),
             'is_bot' => false,
             'is_bounce' => fake()->boolean(30),

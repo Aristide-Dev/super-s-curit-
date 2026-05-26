@@ -82,6 +82,7 @@ class TrackVisit
             $geo = $this->geoIp->resolve(
                 $request->ip(),
                 $request->header('CF-IPCountry'),
+                $request->header('CF-IPCity'),
             );
 
             Visit::create([
@@ -101,6 +102,7 @@ class TrackVisit
                 'device' => $device,
                 'country_code' => $geo !== null ? $geo['country_code'] : null,
                 'country' => $geo !== null ? $geo['country'] : null,
+                'city' => $geo !== null ? $geo['city'] : null,
                 'is_bot' => $isBot,
                 'is_bounce' => true,
             ]);

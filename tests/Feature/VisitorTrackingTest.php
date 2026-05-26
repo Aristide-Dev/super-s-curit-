@@ -126,6 +126,64 @@ test('geoip resolves country from cloudflare header', function () {
         ->and($visit->country)->not->toBeEmpty();
 });
 
+test('geoip resolves city from cloudflare header', function () {
+    $this->withHeaders([
+        'CF-IPCountry' => 'GN',
+        'CF-IPCity' => 'Conakry',
+    ])->get('/');
+
+    $visit = Visit::query()->first();
+
+    expect($visit)->not->toBeNull()
+        ->and($visit->city)->toBe('Conakry');
+});
+
+test('analytics filters by city', function () {
+    $admin = User::factory()->admin()->create();
+
+    Visit::factory()->count(3)->create([
+        'is_bot' => false,
+        'city' => 'Conakry',
+        'country_code' => 'GN',
+        'country' => 'Guinée',
+    ]);
+    Visit::factory()->count(2)->create([
+        'is_bot' => false,
+        'city' => 'Paris',
+        'country_code' => 'FR',
+        'country' => 'France',
+    ]);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index', ['cities' => ['GN:Conakry']]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('kpis.total_views', 3)
+            ->where('filters.cities', ['GN:Conakry'])
+            ->has('cities')
+        );
+});
+
+test('analytics includes city breakdown', function () {
+    $admin = User::factory()->admin()->create();
+
+    Visit::factory()->count(4)->create([
+        'is_bot' => false,
+        'city' => 'Conakry',
+        'country_code' => 'GN',
+        'country' => 'Guinée',
+    ]);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('cities.0.city', 'Conakry')
+            ->where('cities.0.views', 4)
+            ->has('filterOptions.cities')
+        );
+});
+
 test('duration endpoint updates visit by visitor uuid', function () {
     $visit = Visit::factory()->create([
         'path' => '/test',
@@ -242,6 +300,75 @@ test('analytics filters by browser and device combined', function () {
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->where('kpis.total_views', 3)
+        );
+});
+
+test('analytics includes weekday and hourly distribution', function () {
+    $admin = User::factory()->admin()->create();
+
+    Visit::factory()->create([
+        'is_bot' => false,
+        'created_at' => now()->startOfWeek()->setHour(14),
+    ]);
+    Visit::factory()->count(3)->create([
+        'is_bot' => false,
+        'created_at' => now()->startOfWeek()->addDay()->setHour(10),
+    ]);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('weekdayStats', 7)
+            ->has('hourlyStats', 24)
+            ->where('weekdayStats', fn ($days) => collect($days)->contains('is_peak', true))
+            ->where('hourlyStats', fn ($hours) => collect($hours)->contains('is_peak', true))
+        );
+});
+
+test('weekday stats mark the busiest day as peak', function () {
+    $admin = User::factory()->admin()->create();
+    $monday = now()->startOfWeek();
+
+    Visit::factory()->count(5)->create([
+        'is_bot' => false,
+        'created_at' => $monday->copy()->setHour(9),
+    ]);
+    Visit::factory()->create([
+        'is_bot' => false,
+        'created_at' => $monday->copy()->addDays(2)->setHour(9),
+    ]);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('weekdayStats.0.label', 'Lundi')
+            ->where('weekdayStats.0.views', 5)
+            ->where('weekdayStats.0.is_peak', true)
+        );
+});
+
+test('hourly stats mark the busiest hour as peak', function () {
+    $admin = User::factory()->admin()->create();
+    $at = now()->startOfWeek()->setHour(15);
+
+    Visit::factory()->count(4)->create([
+        'is_bot' => false,
+        'created_at' => $at,
+    ]);
+    Visit::factory()->create([
+        'is_bot' => false,
+        'created_at' => $at->copy()->setHour(8),
+    ]);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('hourlyStats.15.hour', 15)
+            ->where('hourlyStats.15.views', 4)
+            ->where('hourlyStats.15.is_peak', true)
         );
 });
 

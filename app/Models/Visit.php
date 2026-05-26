@@ -29,6 +29,7 @@ class Visit extends Model
         'device',
         'country_code',
         'country',
+        'city',
         'duration_seconds',
         'is_bot',
         'is_bounce',

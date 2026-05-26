@@ -20,16 +20,20 @@ class GeoIpService
     ];
 
     /**
-     * @return array{country_code: string, country: string}|null
+     * @return array{country_code: string, country: string, city: string|null}|null
      */
-    public function resolve(?string $ip, ?string $cloudflareCountry = null): ?array
-    {
+    public function resolve(
+        ?string $ip,
+        ?string $cloudflareCountry = null,
+        ?string $cloudflareCity = null,
+    ): ?array {
         if ($cloudflareCountry !== null && strlen($cloudflareCountry) === 2) {
             $code = strtoupper($cloudflareCountry);
 
             return [
                 'country_code' => $code,
                 'country' => $this->countryNameFromCode($code),
+                'city' => $this->normalizeCity($cloudflareCity),
             ];
         }
 
@@ -41,14 +45,14 @@ class GeoIpService
     }
 
     /**
-     * @return array{country_code: string, country: string}|null
+     * @return array{country_code: string, country: string, city: string|null}|null
      */
     private function lookup(string $ip): ?array
     {
         try {
             $response = Http::timeout(3)
                 ->get("http://ip-api.com/json/{$ip}", [
-                    'fields' => 'status,country,countryCode',
+                    'fields' => 'status,country,countryCode,city',
                 ]);
 
             if (! $response->successful() || $response->json('status') !== 'success') {
@@ -64,6 +68,7 @@ class GeoIpService
             return [
                 'country_code' => strtoupper($code),
                 'country' => $response->json('country') ?? $this->countryNameFromCode($code),
+                'city' => $this->normalizeCity($response->json('city')),
             ];
         } catch (\Throwable) {
             return null;
@@ -88,5 +93,16 @@ class GeoIpService
         }
 
         return self::COUNTRY_NAMES[$code] ?? $code;
+    }
+
+    private function normalizeCity(mixed $city): ?string
+    {
+        if (! is_string($city)) {
+            return null;
+        }
+
+        $city = trim($city);
+
+        return $city !== '' ? $city : null;
     }
 }

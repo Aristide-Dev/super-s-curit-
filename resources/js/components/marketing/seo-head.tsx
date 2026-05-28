@@ -55,6 +55,7 @@ export default function SeoHead({ page }: { page: SeoPageKey }) {
                 content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
             />
             <meta head-key="author" name="author" content={seo.organization.founder} />
+            <meta head-key="copyright" name="copyright" content={seo.organization.name} />
             <meta
                 head-key="geo.region"
                 name="geo.region"
@@ -65,6 +66,20 @@ export default function SeoHead({ page }: { page: SeoPageKey }) {
                 name="geo.placename"
                 content={seo.geo.placename}
             />
+            {seo.organization.geoLatitude && (
+                <meta
+                    head-key="geo.position"
+                    name="geo.position"
+                    content={`${seo.organization.geoLatitude};${seo.organization.geoLongitude}`}
+                />
+            )}
+            {seo.organization.geoLatitude && (
+                <meta
+                    head-key="ICBM"
+                    name="ICBM"
+                    content={`${seo.organization.geoLatitude}, ${seo.organization.geoLongitude}`}
+                />
+            )}
 
             <meta head-key="og:type" property="og:type" content={meta.type ?? 'website'} />
             <meta head-key="og:locale" property="og:locale" content={seo.locale} />

@@ -1,6 +1,9 @@
 export type SeoOrganization = {
     name: string;
     legalName: string;
+    alternateName: string;
+    slogan: string;
+    foundingDate: string;
     founder: string;
     founderJobTitle: string;
     description: string;
@@ -9,6 +12,11 @@ export type SeoOrganization = {
     areaServed: string;
     addressCountry: string;
     addressLocality: string;
+    addressStreet: string;
+    geoLatitude: string;
+    geoLongitude: string;
+    openingHours: string;
+    rccm: string;
 };
 
 export type SeoService = {

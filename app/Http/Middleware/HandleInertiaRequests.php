@@ -69,6 +69,9 @@ class HandleInertiaRequests extends Middleware
                 'organization' => [
                     'name' => config('seo.organization.name'),
                     'legalName' => config('seo.organization.legal_name'),
+                    'alternateName' => config('seo.organization.alternate_name'),
+                    'slogan' => config('seo.organization.slogan'),
+                    'foundingDate' => config('seo.organization.founding_date'),
                     'founder' => config('seo.organization.founder'),
                     'founderJobTitle' => config('seo.organization.founder_job_title'),
                     'description' => config('seo.organization.description'),
@@ -77,6 +80,11 @@ class HandleInertiaRequests extends Middleware
                     'areaServed' => config('seo.organization.area_served'),
                     'addressCountry' => config('seo.organization.address_country'),
                     'addressLocality' => config('seo.organization.address_locality'),
+                    'addressStreet' => config('seo.organization.address_street'),
+                    'geoLatitude' => config('seo.organization.geo_latitude'),
+                    'geoLongitude' => config('seo.organization.geo_longitude'),
+                    'openingHours' => config('seo.organization.opening_hours'),
+                    'rccm' => config('aristech.rccm'),
                 ],
             ],
             'flash' => [

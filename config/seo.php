@@ -29,14 +29,21 @@ return [
     ],
 
     'organization' => [
-        'name' => 'ARISTECH',
+        'name' => 'ArisTech',
         'legal_name' => 'ARISTECH',
+        'alternate_name' => 'ArisTech Guinée',
+        'slogan' => 'Votre agence web à Conakry, Guinée',
+        'founding_date' => '2020',
         'founder' => 'Aristide Gnimassou',
         'founder_job_title' => 'Fondateur & développeur web',
-        'description' => 'Agence web et studio digital à Conakry — sites internet sur mesure, e-commerce (WooCommerce, Shopify), applications web et mobiles, SEO et maintenance en Guinée.',
+        'description' => 'ArisTech est une agence web fondée à Conakry (Guinée) par Aristide Gnimassou. Développement de sites internet sur mesure, applications web, e-commerce (WooCommerce, Shopify) et maintenance en Guinée et à l\'international.',
         'area_served' => 'Guinée',
         'address_country' => 'GN',
         'address_locality' => 'Conakry',
+        'address_street' => 'Kaporo, Ratoma',
+        'geo_latitude' => '9.6412',
+        'geo_longitude' => '-13.5784',
+        'opening_hours' => 'Mo-Fr 09:00-18:00',
     ],
 
     'services' => [
@@ -59,6 +66,9 @@ return [
     ],
 
     'knows_about' => [
+        'ArisTech Guinée',
+        'agence web Conakry',
+        'développement web Guinée',
         'WordPress',
         'WooCommerce',
         'Shopify',
@@ -68,6 +78,7 @@ return [
         'création site internet',
         'développement web',
         'e-commerce',
+        'Aristide Gnimassou',
     ],
 
     'pages' => [

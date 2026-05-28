@@ -4,12 +4,22 @@
  * E-commerce : WordPress / WooCommerce / Shopify explicitement.
  */
 export const aristechSearchTerms = {
-    brand: ['ArisTech', 'ARISTECH', 'Aristide Gnimassou'],
+    brand: [
+        'ArisTech',
+        'ARISTECH',
+        'ArisTech Guinée',
+        'aristech guinée',
+        'aristechguinee',
+        'aristechguinee.com',
+        'Aristide Gnimassou',
+        'agence ArisTech',
+    ],
 
     location: [
         'Guinée',
         'Conakry',
         'Afrique de l\'Ouest',
+        'Guinée Conakry',
     ],
 
     /** Sites web, applications — sans mention CMS. */

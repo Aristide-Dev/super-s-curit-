@@ -46,17 +46,29 @@ export function buildPageJsonLd(
             '@id': orgId,
             name: organization.name,
             legalName: organization.legalName,
+            alternateName: organization.alternateName,
+            slogan: organization.slogan,
+            foundingDate: organization.foundingDate,
             url: seo.siteUrl,
             logo: {
                 '@type': 'ImageObject',
+                '@id': `${seo.siteUrl}/#logo`,
+                url: seo.defaultImage,
+                caption: `${organization.name} — agence web Conakry, Guinée`,
+            },
+            image: {
+                '@type': 'ImageObject',
                 url: seo.defaultImage,
             },
-            image: seo.defaultImage,
             description: organization.description,
             email: organization.email,
             telephone: organization.phone,
+            identifier: organization.rccm
+                ? { '@type': 'PropertyValue', name: 'RCCM', value: organization.rccm }
+                : undefined,
             founder: {
                 '@type': 'Person',
+                '@id': `${seo.siteUrl}/#founder`,
                 name: organization.founder,
                 jobTitle: organization.founderJobTitle,
                 worksFor: { '@id': orgId },
@@ -64,9 +76,11 @@ export function buildPageJsonLd(
             areaServed: {
                 '@type': 'Country',
                 name: organization.areaServed,
+                '@id': 'https://www.wikidata.org/wiki/Q1006',
             },
             address: {
                 '@type': 'PostalAddress',
+                streetAddress: organization.addressStreet,
                 addressLocality: organization.addressLocality,
                 addressCountry: organization.addressCountry,
             },
@@ -85,22 +99,30 @@ export function buildPageJsonLd(
             '@type': 'ProfessionalService',
             '@id': businessId,
             name: organization.name,
+            alternateName: organization.alternateName,
             url: seo.siteUrl,
             image,
             description: organization.description,
             email: organization.email,
             telephone: organization.phone,
             priceRange: '$$',
+            openingHours: organization.openingHours,
             areaServed: organization.areaServed,
             address: {
                 '@type': 'PostalAddress',
+                streetAddress: organization.addressStreet,
                 addressLocality: organization.addressLocality,
                 addressCountry: organization.addressCountry,
+            },
+            geo: {
+                '@type': 'GeoCoordinates',
+                latitude: organization.geoLatitude,
+                longitude: organization.geoLongitude,
             },
             parentOrganization: { '@id': orgId },
             hasOfferCatalog: {
                 '@type': 'OfferCatalog',
-                name: 'Services ArisTech',
+                name: 'Services ArisTech Guinée',
                 itemListElement: buildOfferCatalogItems(
                     seo.services,
                     orgId,
@@ -113,9 +135,18 @@ export function buildPageJsonLd(
             '@id': websiteId,
             url: seo.siteUrl,
             name: seo.siteName,
+            alternateName: organization.alternateName,
             description: organization.description,
             inLanguage: seo.language,
             publisher: { '@id': orgId },
+            potentialAction: {
+                '@type': 'SearchAction',
+                target: {
+                    '@type': 'EntryPoint',
+                    urlTemplate: `${seo.siteUrl}/?q={search_term_string}`,
+                },
+                'query-input': 'required name=search_term_string',
+            },
         },
         {
             '@type': meta.schemaType,

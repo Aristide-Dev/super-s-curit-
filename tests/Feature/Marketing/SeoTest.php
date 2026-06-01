@@ -33,8 +33,30 @@ test('sitemap.xml lists public marketing pages', function () {
         ->toContain('<urlset')
         ->toContain(url('/'))
         ->toContain(url('/a-propos'))
+        ->toContain(url('/creation-site'))
+        ->toContain(url('/integrateur-solutions'))
+        ->toContain(url('/woocommerce'))
+        ->toContain(url('/application-web'))
+        ->toContain(url('/seo'))
         ->toContain(url('/contact'));
 });
+
+test('legacy site-wordpress url redirects to creation-site', function () {
+    $this->get('/site-wordpress')
+        ->assertRedirect('/creation-site');
+});
+
+test('dedicated service pages are available for seo landing traffic', function (string $routeName, string $component) {
+    $this->get(route($routeName))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page->component($component));
+})->with([
+    'creation site' => ['creation-site', 'marketing/creation-site'],
+    'integrateur solutions' => ['integrateur-solutions', 'marketing/integrateur-solutions'],
+    'woocommerce' => ['woocommerce', 'marketing/woocommerce'],
+    'application web' => ['application-web', 'marketing/application-web'],
+    'seo' => ['seo', 'marketing/referencement-seo'],
+]);
 
 test('sitemap.xml includes images for pages', function () {
     $response = $this->get(route('sitemap'));
@@ -51,8 +73,9 @@ test('home seo meta includes local search terms', function () {
             ->where('seo.knowsAbout', fn ($terms): bool => $terms->contains('agence web Conakry')
                 && $terms->contains('prix création site web Guinée')
                 && $terms->contains('agence web Afrique de l\'Ouest')
-                && $terms->contains('maintenance site WordPress Guinée'))
-            ->where('seo.services.1.name', 'Boutique WooCommerce en Guinée')
+                && $terms->contains('Intégrateur de solutions')
+                && $terms->contains('Référencement SEO'))
+            ->where('seo.services.3.name', 'Intégrateur de solutions')
         );
 });
 

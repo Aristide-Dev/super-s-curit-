@@ -1,7 +1,7 @@
 /**
  * Termes de recherche cibles — source unique pour SEO, AEO et contenu marketing.
- * Sites vitrines/apps : formulation neutre (sans stack imposée).
- * E-commerce : WordPress / WooCommerce / Shopify explicitement.
+ * Stack par défaut : sites et apps sur mesure (Laravel, React).
+ * E-commerce : boutique en ligne, WooCommerce ou Shopify si pertinent.
  */
 export const aristechSearchTerms = {
     brand: [
@@ -17,7 +17,6 @@ export const aristechSearchTerms = {
 
     location: ['Guinée', 'Conakry', "Afrique de l'Ouest", 'Guinée Conakry'],
 
-    /** Sites web, applications — sans mention CMS. */
     web: [
         'création site internet',
         'création site web',
@@ -42,28 +41,50 @@ export const aristechSearchTerms = {
         'développement sur mesure',
         'site sur mesure Guinée',
         'développement application web sur mesure',
-        'refonte site internet',
-        'refonte site web Conakry',
+        'intégrateur de solutions',
+        'Intégrateur de solutions',
         'intégration API',
+        'intégration API Conakry',
         'référencement SEO',
         'maintenance site web',
-        'maintenance site WordPress Guinée',
+        'maintenance site web Guinée',
     ],
 
-    /** Boutiques en ligne uniquement. */
     ecommerce: [
         'boutique en ligne',
         'e-commerce',
+        'boutique en ligne Guinée',
+        'création boutique en ligne',
+        'création boutique en ligne Guinée',
+        'Site e-commerce',
         'WooCommerce',
         'boutique WooCommerce Guinée',
         'Shopify',
-        'site WordPress Guinée',
-        'WordPress e-commerce',
-        'développeur WordPress Conakry',
-        'intégration WooCommerce Guinée',
-        'création boutique en ligne',
-        'création boutique en ligne Guinée',
-        'site e-commerce Guinée prix',
+    ],
+
+    seo: [
+        'référencement SEO',
+        'Référencement SEO',
+        'référencement naturel Guinée',
+        'référencement naturel Afrique',
+        "référencement naturel Afrique de l'Ouest",
+        'référencement Google Afrique',
+        'référencement Google Guinée',
+        "référencement Google Afrique de l'Ouest",
+        'SEO local Afrique',
+        "SEO local Afrique de l'Ouest",
+        'SEO local',
+        'agence SEO Guinée',
+        'agence SEO Afrique',
+        "agence SEO Afrique de l'Ouest",
+        'Audit SEO',
+        'consultant SEO Conakry',
+        'optimisation SEO site web',
+        'visibilité Google Guinée',
+        'expert SEO Afrique',
+        'référencement site internet',
+        'positionnement Google Guinée',
+        'optimisation Google My Business',
     ],
 
     intent: [
@@ -91,6 +112,7 @@ export const aristechMetaKeywords = {
         aristechSearchTerms.location,
         aristechSearchTerms.web,
         aristechSearchTerms.ecommerce,
+        aristechSearchTerms.seo,
         aristechSearchTerms.intent,
     ),
     about: buildMetaKeywords(
@@ -110,10 +132,58 @@ export const aristechMetaKeywords = {
         aristechSearchTerms.location,
         aristechSearchTerms.web,
         aristechSearchTerms.ecommerce,
+        aristechSearchTerms.seo,
         [
             'devis site web Guinée',
             'contact agence web Conakry',
             'devis gratuit',
+        ],
+    ),
+    seo: buildMetaKeywords(
+        aristechSearchTerms.brand,
+        aristechSearchTerms.location,
+        aristechSearchTerms.seo,
+        [
+            'agence web Conakry',
+            'Référencement SEO',
+            'Audit SEO',
+            'SEO local',
+        ],
+    ),
+    applicationWeb: buildMetaKeywords(
+        aristechSearchTerms.brand,
+        aristechSearchTerms.location,
+        aristechSearchTerms.web,
+        [
+            'application web Conakry',
+            'développement application web sur mesure',
+            'développeur web Guinée',
+        ],
+    ),
+    creationSite: buildMetaKeywords(
+        aristechSearchTerms.brand,
+        aristechSearchTerms.location,
+        aristechSearchTerms.web,
+        ['création site internet Guinée', 'site sur mesure Guinée'],
+    ),
+    woocommerce: buildMetaKeywords(
+        aristechSearchTerms.brand,
+        aristechSearchTerms.location,
+        aristechSearchTerms.ecommerce,
+        [
+            'boutique en ligne Guinée',
+            'création boutique en ligne Guinée',
+            'Site e-commerce Guinée',
+        ],
+    ),
+    integrateurSolutions: buildMetaKeywords(
+        aristechSearchTerms.brand,
+        aristechSearchTerms.location,
+        aristechSearchTerms.web,
+        [
+            'intégrateur de solutions Guinée',
+            'intégration API Conakry',
+            'développement sur mesure',
         ],
     ),
 } as const;

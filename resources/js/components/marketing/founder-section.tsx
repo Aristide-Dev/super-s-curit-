@@ -4,7 +4,7 @@ import { aristechImages } from '@/data/aristech-images';
 
 export default function FounderSection() {
     return (
-        <section className="py-24 md:py-32">
+        <section className="py-10">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <Reveal>
                     <div className="relative overflow-hidden rounded-3xl border border-aristech-border bg-aristech-surface px-6 py-12 shadow-lg shadow-slate-900/5 md:px-12 md:py-16">

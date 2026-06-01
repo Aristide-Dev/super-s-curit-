@@ -22,17 +22,20 @@ export const aristechStock = {
         websites: '/images/aristech/services/Sites-Internet.jpg',
         ecommerce: '/images/aristech/services/E-commerce.jpg',
         api: '/images/aristech/services/API.jpg',
+        seo: '/images/aristech/services/seo.jpg',
     },
 
     about: {
         heroSide: '/images/aristech/about/hero.jpg',
-        story: unsplash('1559028012-481c04fa702d', 1200),
+        story: '/images/aristech/about/approche.jpg',
+        // story: unsplash('1559028012-481c04fa702d', 1200),
         valuesBanner: '/images/aristech/about/Happy-young-woman-pointing-fingers.png',
         processBanner: unsplash('1552664730-d307ca884978', 1800),
     },
 
     contact: {
         heroSide: '/images/aristech/hero/Vision-thinking-and-black-woman-with-schedule-planning-and-agenda.jpg',
-        sidePanel: unsplash('1521737711867-e3b97375f902', 900),
+        sidePanel: '/images/aristech/contact.jpg',
+        // sidePanel: unsplash('1521737711867-e3b97375f902', 900),
     },
 } as const;

@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import { ArrowUpRight } from 'lucide-react';
 import { aristechServices } from '@/data/aristech-content';
 import Reveal from '@/components/marketing/reveal';
@@ -15,20 +16,26 @@ export default function ServiceCards() {
                         </span>
                     </h2>
                     <p className="mt-4 text-sm leading-relaxed text-aristech-muted md:text-base">
-                        Création de site internet en Guinée, applications web à
-                        Conakry, refonte SEO et boutiques en ligne WooCommerce
-                        pour entreprises locales et régionales.
+                        {aristechServices
+                            .map((service) => service.title)
+                            .slice(0, -1)
+                            .join(', ')}{' '}
+                        et {aristechServices.at(-1)?.title} pour entreprises en
+                        Guinée et en Afrique de l&apos;Ouest.
                     </p>
                 </Reveal>
 
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {aristechServices.map((service, index) => (
                         <Reveal
                             key={service.title}
                             delay={index * 120}
                             className="h-full"
                         >
-                            <article className="marketing-card-interactive group relative flex h-full flex-col overflow-hidden !p-0">
+                            <Link
+                                href={service.href}
+                                className="marketing-card-interactive group relative flex h-full flex-col overflow-hidden !p-0"
+                            >
                                 <div className="relative aspect-[16/9] overflow-hidden bg-aristech-surface-elevated">
                                     <img
                                         src={service.cover}
@@ -60,7 +67,7 @@ export default function ServiceCards() {
                                         {service.description}
                                     </p>
                                 </div>
-                            </article>
+                            </Link>
                         </Reveal>
                     ))}
                 </div>

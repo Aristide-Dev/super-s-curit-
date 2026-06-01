@@ -1,41 +1,32 @@
-import { aristechStock } from '@/data/aristech-stock';
+import {
+    aristechServiceDefinitions,
+    type AristechServiceId,
+} from '@/data/aristech-services';
 
-export const aristechServices = [
-    {
-        icon: '/images/aristech/services/responsive_icon.svg',
-        cover: aristechStock.services.applications,
-        title: 'Application web sur mesure',
-        description:
-            "Développement d'application web à Conakry : tableaux de bord, espaces clients, API et produits SaaS sur mesure pour entreprises en Guinée et en Afrique francophone.",
-    },
-    {
-        icon: '/images/aristech/stack/wordpress.svg',
-        cover: aristechStock.services.ecommerce,
-        title: 'Boutique WooCommerce Guinée',
-        description:
-            "Création de boutique en ligne en Guinée avec WooCommerce (WordPress) : paiement, catalogue, stocks, SEO produits et parcours d'achat optimisé.",
-    },
-    {
-        icon: '/images/aristech/services/responsive_icon.svg',
-        cover: aristechStock.services.websites,
-        title: 'Création site internet Guinée',
-        description:
-            'Sites vitrines, sites WordPress et sites institutionnels sur mesure à Conakry : design soigné, référencement naturel, performances et gestion de contenu simple.',
-    },
-    {
-        icon: '/images/aristech/services/seo_icon.svg',
-        cover: aristechStock.services.api,
-        title: 'Refonte & maintenance WordPress',
-        description:
-            'Refonte de site web à Conakry, intégration WooCommerce, maintenance WordPress en Guinée et connexions API pour faire évoluer votre plateforme.',
-    },
-] as const;
+export type AristechServiceCard = {
+    icon: string;
+    cover: string;
+    title: string;
+    href: string;
+    description: string;
+};
+
+export const aristechServices: readonly AristechServiceCard[] =
+    aristechServiceDefinitions.map((service) => ({
+        icon: service.icon,
+        cover: service.cover,
+        title: service.title,
+        href: service.path,
+        description: service.cardDescription,
+    }));
+
+export type { AristechServiceId };
 
 export const aristechMissionBlocks = [
     {
         title: 'Qui sommes-nous ?',
         content:
-            "ArisTech est une agence web basée à Conakry, Guinée. Aristide Gnimassou, fondateur et développeur principal, conçoit des sites internet, des applications web et des boutiques en ligne WordPress/WooCommerce. En solo ou avec des experts partenaires, nous livrons des solutions fiables pour la Guinée, l'Afrique de l'Ouest et l'Afrique francophone.",
+            "ArisTech est une agence web basée à Conakry, Guinée. Aristide Gnimassou, fondateur et développeur principal, conçoit des sites internet sur mesure, des applications web et des boutiques en ligne. En solo ou avec des experts partenaires, nous livrons des solutions fiables pour la Guinée, l'Afrique de l'Ouest et l'Afrique francophone.",
     },
     {
         title: 'Notre Mission',
@@ -73,7 +64,6 @@ export const aristechTechStack: Record<TechStackCategory, TechStackItem[]> = {
         { path: '/images/aristech/stack/python.svg', label: 'Python' },
         { path: '/images/aristech/stack/django.svg', label: 'Django' },
         { path: '/images/aristech/tech/flask.svg', label: 'Flask' },
-        // { path: '/images/aristech/stack/Symfony.svg', label: 'Symfony' },
     ],
     cms: [
         { path: '/images/aristech/stack/wordpress.svg', label: 'WordPress' },

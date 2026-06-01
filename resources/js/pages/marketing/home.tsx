@@ -4,7 +4,7 @@ import LatestProjects from '@/components/marketing/latest-projects';
 import MarketingHero from '@/components/marketing/marketing-hero';
 import ServiceCards from '@/components/marketing/service-cards';
 import TechMarquee from '@/components/marketing/tech-marquee';
-import TechStack from '@/components/marketing/tech-stack';
+// import TechStack from '@/components/marketing/tech-stack';
 
 export default function MarketingHome() {
     return (
@@ -15,7 +15,7 @@ export default function MarketingHome() {
             <TechMarquee />
             <ServiceCards />
             <LatestProjects />
-            <TechStack />
+            {/* <TechStack /> */}
             <CtaBand />
         </>
     );

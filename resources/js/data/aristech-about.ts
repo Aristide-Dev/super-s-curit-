@@ -1,8 +1,10 @@
 import {
     Compass,
+    Code2,
     Eye,
     Heart,
     Lightbulb,
+    LineChart,
     Rocket,
     ShieldCheck,
     Sparkles,
@@ -113,35 +115,29 @@ export const aristechProcess: readonly AristechProcessStep[] = [
     },
 ] as const;
 
-export type AristechStoryChapter = {
-    year: string;
+export type AristechApproachPillar = {
+    icon: LucideIcon;
     title: string;
     description: string;
 };
 
-export const aristechStory: readonly AristechStoryChapter[] = [
+export const aristechApproachPillars: readonly AristechApproachPillar[] = [
     {
-        year: '2020',
-        title: 'Les premiers pas',
+        icon: Compass,
+        title: 'Comprendre avant de construire',
         description:
-            "Aristide démarre en freelance, livrant ses premiers sites pour des entrepreneurs guinéens en quête d'une présence en ligne.",
+            'Nous clarifions vos objectifs, vos utilisateurs et vos contraintes avant d’écrire la première ligne de code. Chaque décision technique s’appuie sur un cadrage produit partagé.',
     },
     {
-        year: '2022',
-        title: 'Lancement d\'ArisTech',
+        icon: Code2,
+        title: 'Ingénierie aux standards du marché',
         description:
-            "Création officielle de la marque ArisTech et structuration de l'offre autour du web, du mobile et de l'intégration d'API.",
+            'Architecture claire, tests, performances et sécurité : nos livrables suivent les bonnes pratiques reconnues pour rester évolutifs dans la durée.',
     },
     {
-        year: '2024',
-        title: 'Projets phares',
+        icon: LineChart,
+        title: 'Livrer, mesurer, faire évoluer',
         description:
-            "Livraison de plateformes complètes (Sily Link, 7 Makity, Eva, Drive Me) pour des clients en Afrique et à l'international.",
-    },
-    {
-        year: '2026',
-        title: 'Une expertise reconnue',
-        description:
-            "ArisTech accompagne aujourd'hui startups et PME sur des projets sur mesure, avec un réseau d'experts pour les missions plus larges.",
+            'Démos régulières, environnements de préproduction et documentation à la clé. Après la mise en ligne, nous restons disponibles pour la maintenance et les évolutions.',
     },
 ] as const;

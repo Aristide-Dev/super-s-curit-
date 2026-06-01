@@ -29,7 +29,7 @@ export default function MarketingContact() {
                         </span>
                     </>
                 }
-                description="Besoin d'un prix pour la création d'un site web en Guinée, une application web à Conakry ou une boutique WooCommerce ? Décrivez votre projet : réponse sous 24 h ouvrées et cadrage gratuit."
+                description="Besoin d'un devis pour un site web, une application ou une intégration de solutions à Conakry ? Décrivez votre projet : réponse sous 24 h ouvrées et cadrage gratuit."
                 media={
                     <div className="relative mx-auto w-full max-w-lg">
                         <div
@@ -90,14 +90,14 @@ export default function MarketingContact() {
 
                         <Reveal delay={150} className="lg:col-span-2">
                             <div className="sticky top-28 flex flex-col gap-6">
-                                <div className="relative overflow-hidden rounded-2xl border border-aristech-border shadow-md shadow-slate-900/5">
+                                {/* <div className="relative overflow-hidden rounded-2xl border border-aristech-border shadow-md shadow-slate-900/5">
                                     <img
                                         src={aristechStock.contact.sidePanel}
                                         alt="Équipe ArisTech disponible pour répondre"
                                         width={900}
                                         height={600}
                                         loading="lazy"
-                                        className="aspect-[3/2] h-auto w-full object-cover"
+                                        className="aspect-[3/3] h-auto w-full object-cover"
                                     />
                                     <div
                                         className="pointer-events-none absolute inset-0 bg-linear-to-t from-aristech-heading/60 via-aristech-heading/10 to-transparent"
@@ -112,7 +112,7 @@ export default function MarketingContact() {
                                             d&apos;appel.
                                         </p>
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="marketing-card">
                                     <p className="marketing-label mb-3">

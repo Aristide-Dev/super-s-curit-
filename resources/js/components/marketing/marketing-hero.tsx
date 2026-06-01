@@ -101,9 +101,9 @@ export default function MarketingHero() {
 
                     <Reveal delay={260} className="mt-8 max-w-xl">
                         <p className="text-base leading-relaxed md:text-lg">
-                            Agence web à Conakry pour créer un site internet en
-                            Guinée, développer une application web sur mesure ou
-                            lancer une boutique WooCommerce performante.
+                            Agence web à Conakry : création de site internet,
+                            applications web & mobile, boutique en ligne et
+                            intégration de solutions sur mesure.
                         </p>
                     </Reveal>
 
@@ -146,7 +146,7 @@ export default function MarketingHero() {
                                 E-commerce
                             </dt>
                             <dd className="mt-1 font-heading text-sm font-semibold text-aristech-heading">
-                                WooCommerce · Shopify
+                                Laravel · React
                             </dd>
                         </div>
                         <div>

@@ -12,6 +12,12 @@ Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
 Route::inertia('/', 'marketing/home')->name('home');
 Route::inertia('/a-propos', 'marketing/about')->name('about');
+Route::redirect('/site-wordpress', '/creation-site', 301);
+Route::inertia('/creation-site', 'marketing/creation-site')->name('creation-site');
+Route::inertia('/integrateur-solutions', 'marketing/integrateur-solutions')->name('integrateur-solutions');
+Route::inertia('/woocommerce', 'marketing/woocommerce')->name('woocommerce');
+Route::inertia('/application-web', 'marketing/application-web')->name('application-web');
+Route::inertia('/seo', 'marketing/referencement-seo')->name('seo');
 Route::inertia('/contact', 'marketing/contact')->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 Route::post('/analytics/duration', [AnalyticsController::class, 'updateDuration'])->name('analytics.duration');

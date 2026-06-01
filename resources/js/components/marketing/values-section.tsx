@@ -4,7 +4,7 @@ import { aristechStock } from '@/data/aristech-stock';
 
 export default function ValuesSection() {
     return (
-        <section className="py-24 md:py-32">
+        <section className="py-10">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
                 {/* ── Header ── */}
@@ -39,7 +39,7 @@ export default function ValuesSection() {
                             />
                         </div>
                         {/* Décoration en écho */}
-                        <div className="pointer-events-none absolute -bottom-4 -right-4 h-20 w-20 rounded-tl rounded-tr-3xl rounded-bl-3xl rounded-br border-2 border-aristech-accent/25" />
+                        <div className="pointer-events-none absolute -bottom-4 -right-4 h-20 w-20 rounded-tl rounded-tr-3xl rounded-bl-3xl rounded-br border-2 border-aristech-accent" />
                     </div>
                 </Reveal>
 

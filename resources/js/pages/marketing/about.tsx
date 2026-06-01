@@ -2,11 +2,9 @@ import SeoHead from '@/components/marketing/seo-head';
 import CtaBand from '@/components/marketing/cta-band';
 import FounderSection from '@/components/marketing/founder-section';
 import PageHero from '@/components/marketing/page-hero';
-import ProcessTimeline from '@/components/marketing/process-timeline';
-import StatGrid from '@/components/marketing/stat-grid';
-import StorySection from '@/components/marketing/story-section';
+import AboutApproachSection from '@/components/marketing/about-approach-section';
 import ValuesSection from '@/components/marketing/values-section';
-import { aristechStock } from '@/data/aristech-stock';
+import { aristechImages } from '@/data/aristech-images';
 
 export default function MarketingAbout() {
     return (
@@ -14,45 +12,43 @@ export default function MarketingAbout() {
             <SeoHead page="about" />
 
             <PageHero
-                label="À propos"
+                label="Qui sommes-nous"
                 title={
                     <>
-                        Un studio à taille humaine,{' '}
+                        Des standards internationaux,{' '}
                         <span className="marketing-text-gradient">
-                            une exigence d&apos;agence
+                            au service de vos projets
                         </span>
                     </>
                 }
-                description="Agence digitale à Conakry : création de sites internet sur mesure, applications web, refonte SEO et boutiques WooCommerce. Nous accompagnons PME, institutions et startups en Guinée et en Afrique de l'Ouest."
+                description="ArisTech conçoit et déploie des sites internet, applications web et outils métiers selon les bonnes pratiques du marché : performance, accessibilité, sécurité et code maintenable. Écoute, livrables clairs et exigence technique — pour une présence en ligne fiable, où que vous exerciez."
                 media={
                     <div className="relative mx-auto w-full max-w-lg">
                         <div
-                            className="absolute -inset-4 rounded-3xl border border-dashed border-aristech-border/60"
+                            className="absolute -inset-4 rounded-3xl bg-transparent"
                             aria-hidden
                         />
-                        <div className="relative overflow-hidden rounded-3xl border border-aristech-border bg-aristech-surface shadow-xl shadow-slate-900/10">
+                        <div className="relative overflow-hidden rounded-3xl bg-transparent">
                             <img
-                                src={aristechStock.about.heroSide}
-                                alt="Équipe ArisTech en collaboration sur un projet"
+                                src={aristechImages.brand}
+                                alt="ArisTech — agence web et développement sur mesure"
                                 width={1200}
                                 height={900}
                                 className="aspect-[4/4] h-auto w-full object-cover"
                                 fetchPriority="high"
                             />
                             <div
-                                className="pointer-events-none absolute inset-0 bg-linear-to-t from-aristech-heading/30 via-transparent to-transparent"
+                                className="pointer-events-none absolute inset-0 bg-transparent"
                                 aria-hidden
                             />
                         </div>
                     </div>
                 }
             >
-                <StatGrid />
             </PageHero>
 
-            <StorySection />
+            <AboutApproachSection />
             <ValuesSection />
-            {/* <ProcessTimeline /> */}
             <FounderSection />
             <CtaBand />
         </>

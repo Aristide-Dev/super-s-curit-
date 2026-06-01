@@ -178,8 +178,8 @@ export default function LatestProjects() {
                     <div className="max-w-2xl">
                         <p className="marketing-label mb-3">Portfolio</p>
                         <h2 className="marketing-heading-section">
-                            Produits livrés,{' '}
-                            <span className="marketing-text-gradient">résultats concrets</span>
+                            Nos{' '}
+                            <span className="marketing-text-gradient">Réalisations</span>
                         </h2>
                         <p className="mt-3 text-sm md:text-base">
                             Une sélection de plateformes web et mobiles conçues

@@ -48,6 +48,11 @@ test('home seo meta includes local search terms', function () {
         ->assertInertia(fn (Assert $page) => $page
             ->where('seo.organization.addressLocality', 'Conakry')
             ->has('seo.knowsAbout')
+            ->where('seo.knowsAbout', fn ($terms): bool => $terms->contains('agence web Conakry')
+                && $terms->contains('prix création site web Guinée')
+                && $terms->contains('agence web Afrique de l\'Ouest')
+                && $terms->contains('maintenance site WordPress Guinée'))
+            ->where('seo.services.1.name', 'Boutique WooCommerce en Guinée')
         );
 });
 

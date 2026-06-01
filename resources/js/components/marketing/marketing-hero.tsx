@@ -56,9 +56,7 @@ export default function MarketingHero() {
                     <Reveal delay={120} className="mt-6">
                         <h1 className="font-heading text-4xl leading-[1.05] font-bold tracking-tight text-aristech-heading md:text-5xl lg:text-6xl xl:text-7xl">
                             <span className="block">
-                                <RotatingWords words={verbs} />
-                                {' '}
-                                votre{' '}
+                                <RotatingWords words={verbs} /> votre{' '}
                                 <span className="relative inline-block">
                                     présence digitale
                                     <svg
@@ -82,8 +80,14 @@ export default function MarketingHero() {
                                                 x2="1"
                                                 y2="0"
                                             >
-                                                <stop offset="0" stopColor="#16a34a" />
-                                                <stop offset="1" stopColor="#0ea5e9" />
+                                                <stop
+                                                    offset="0"
+                                                    stopColor="#16a34a"
+                                                />
+                                                <stop
+                                                    offset="1"
+                                                    stopColor="#0ea5e9"
+                                                />
                                             </linearGradient>
                                         </defs>
                                     </svg>
@@ -97,13 +101,16 @@ export default function MarketingHero() {
 
                     <Reveal delay={260} className="mt-8 max-w-xl">
                         <p className="text-base leading-relaxed md:text-lg">
-                            Agence web à Conakry : sites internet sur mesure,
-                            applications web et boutiques en ligne (WooCommerce,
-                            Shopify)
+                            Agence web à Conakry pour créer un site internet en
+                            Guinée, développer une application web sur mesure ou
+                            lancer une boutique WooCommerce performante.
                         </p>
                     </Reveal>
 
-                    <Reveal delay={400} className="mt-10 flex flex-wrap items-center gap-4">
+                    <Reveal
+                        delay={400}
+                        className="mt-10 flex flex-wrap items-center gap-4"
+                    >
                         <Link
                             href={contact.url()}
                             className="marketing-cta-primary marketing-magnetic group inline-flex items-center gap-2"

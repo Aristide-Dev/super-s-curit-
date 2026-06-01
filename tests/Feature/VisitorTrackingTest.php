@@ -437,6 +437,57 @@ test('hourly stats mark the busiest hour as peak', function () {
         );
 });
 
+test('analytics filters by single date', function () {
+    $admin = User::factory()->admin()->create();
+    $target = now()->subDays(5)->startOfDay()->addHours(12);
+
+    Visit::factory()->count(4)->create([
+        'is_bot' => false,
+        'created_at' => $target,
+    ]);
+    Visit::factory()->count(2)->create([
+        'is_bot' => false,
+        'created_at' => now()->subDays(20),
+    ]);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index', ['date' => $target->toDateString()]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('dateFilter.mode', 'single')
+            ->where('dateFilter.date', $target->toDateString())
+            ->where('kpis.total_views', 4)
+        );
+});
+
+test('analytics filters by date range', function () {
+    $admin = User::factory()->admin()->create();
+    $from = now()->subDays(10)->startOfDay();
+    $to = now()->subDays(3)->endOfDay();
+
+    Visit::factory()->count(3)->create([
+        'is_bot' => false,
+        'created_at' => $from->copy()->addDays(2),
+    ]);
+    Visit::factory()->count(5)->create([
+        'is_bot' => false,
+        'created_at' => now()->subDay(),
+    ]);
+
+    $this->actingAs($admin)
+        ->get(route('analytics.index', [
+            'date_from' => $from->toDateString(),
+            'date_to' => $to->toDateString(),
+        ]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('dateFilter.mode', 'range')
+            ->where('kpis.total_views', 3)
+            ->where('dateRange.from', $from->toDateString())
+            ->where('dateRange.to', $to->toDateString())
+        );
+});
+
 test('analytics exposes filter options', function () {
     $admin = User::factory()->admin()->create();
 

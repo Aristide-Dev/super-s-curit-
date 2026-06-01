@@ -1,4 +1,5 @@
 import { useEffect, type ReactNode } from 'react';
+import BackToTop from '@/components/marketing/back-to-top';
 import MarketingFooter from '@/components/marketing/marketing-footer';
 import MarketingHeader from '@/components/marketing/marketing-header';
 import { useVisitTracker } from '@/hooks/use-visit-tracker';
@@ -35,6 +36,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
                 {children}
             </main>
             <MarketingFooter />
+            <BackToTop />
         </div>
     );
 }

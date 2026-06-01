@@ -17,8 +17,8 @@ export default function TechStack() {
                 <Reveal className="mb-10 max-w-2xl">
                     <p className="marketing-label mb-3">Technologies</p>
                     <h2 className="marketing-heading-section">
-                        Stack &amp; outils{' '}
-                        <span className="marketing-text-gradient">maîtrisés</span>
+                        Notre cœur de{' '}
+                        <span className="marketing-text-gradient">métier</span>
                     </h2>
                 </Reveal>
 

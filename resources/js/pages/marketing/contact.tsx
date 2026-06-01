@@ -29,7 +29,7 @@ export default function MarketingContact() {
                         </span>
                     </>
                 }
-                description="Besoin d'un devis pour un site internet, une application web ou une boutique en ligne à Conakry ? Décrivez votre projet : réponse sous 24 h ouvrées, cadrage gratuit et proposition technique détaillée."
+                description="Besoin d'un prix pour la création d'un site web en Guinée, une application web à Conakry ou une boutique WooCommerce ? Décrivez votre projet : réponse sous 24 h ouvrées et cadrage gratuit."
                 media={
                     <div className="relative mx-auto w-full max-w-lg">
                         <div
@@ -52,8 +52,7 @@ export default function MarketingContact() {
                         </div>
                     </div>
                 }
-            >
-            </PageHero>
+            ></PageHero>
 
             <section className="py-16 md:py-24">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

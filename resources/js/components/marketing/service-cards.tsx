@@ -15,9 +15,9 @@ export default function ServiceCards() {
                         </span>
                     </h2>
                     <p className="mt-4 text-sm leading-relaxed text-aristech-muted md:text-base">
-                        Création de site internet sur mesure, produits web et
-                        boutiques en ligne (WooCommerce, Shopify) pour
-                        entreprises en Guinée.
+                        Création de site internet en Guinée, applications web à
+                        Conakry, refonte SEO et boutiques en ligne WooCommerce
+                        pour entreprises locales et régionales.
                     </p>
                 </Reveal>
 
@@ -52,7 +52,7 @@ export default function ServiceCards() {
                                             {service.title}
                                         </h3>
                                         <ArrowUpRight
-                                            className="mt-1 size-5 shrink-0 text-aristech-muted opacity-0 transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-aristech-accent group-hover:opacity-100 motion-reduce:transition-none"
+                                            className="mt-1 size-5 shrink-0 text-aristech-muted opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-aristech-accent group-hover:opacity-100 motion-reduce:transition-none"
                                             aria-hidden
                                         />
                                     </div>

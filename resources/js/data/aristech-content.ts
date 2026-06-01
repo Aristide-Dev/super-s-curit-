@@ -4,30 +4,30 @@ export const aristechServices = [
     {
         icon: '/images/aristech/services/responsive_icon.svg',
         cover: aristechStock.services.applications,
-        title: 'Applications web & mobiles',
+        title: 'Application web sur mesure',
         description:
-            'Applications web et mobiles sur mesure : tableaux de bord, espaces clients, API et produits SaaS pour entreprises en Guinée et à l\'international.',
+            "Développement d'application web à Conakry : tableaux de bord, espaces clients, API et produits SaaS sur mesure pour entreprises en Guinée et en Afrique francophone.",
     },
     {
         icon: '/images/aristech/stack/wordpress.svg',
         cover: aristechStock.services.ecommerce,
-        title: 'E-commerce & boutique en ligne',
+        title: 'Boutique WooCommerce Guinée',
         description:
-            'Création de boutique en ligne avec WooCommerce (WordPress) : paiement, catalogue, stocks et SEO produits. Mise en place Shopify pour les projets plus simples ou internationaux.',
+            "Création de boutique en ligne en Guinée avec WooCommerce (WordPress) : paiement, catalogue, stocks, SEO produits et parcours d'achat optimisé.",
     },
     {
         icon: '/images/aristech/services/responsive_icon.svg',
         cover: aristechStock.services.websites,
-        title: 'Création de site internet',
+        title: 'Création site internet Guinée',
         description:
-            'Sites vitrines et institutionnels sur mesure à Conakry : design soigné, référencement naturel (SEO), performances et gestion de contenu simple.',
+            'Sites vitrines, sites WordPress et sites institutionnels sur mesure à Conakry : design soigné, référencement naturel, performances et gestion de contenu simple.',
     },
     {
         icon: '/images/aristech/services/seo_icon.svg',
         cover: aristechStock.services.api,
-        title: "Intégration d'API",
+        title: 'Refonte & maintenance WordPress',
         description:
-            'Nous intégrons des API tierces pour connecter votre application à d\'autres systèmes ou services (paiements, CRM, plugins ou autres). Améliorez les fonctionnalités de votre application en connectant des services externes.',
+            'Refonte de site web à Conakry, intégration WooCommerce, maintenance WordPress en Guinée et connexions API pour faire évoluer votre plateforme.',
     },
 ] as const;
 
@@ -35,7 +35,7 @@ export const aristechMissionBlocks = [
     {
         title: 'Qui sommes-nous ?',
         content:
-            'ArisTech est une agence web basée à Conakry, Guinée. Aristide Gnimassou, fondateur et développeur principal, conçoit des sites internet, des applications web et des boutiques en ligne (WordPress/WooCommerce pour l\'e-commerce). En solo ou avec des experts partenaires, nous livrons des solutions fiables pour le marché local et international.',
+            "ArisTech est une agence web basée à Conakry, Guinée. Aristide Gnimassou, fondateur et développeur principal, conçoit des sites internet, des applications web et des boutiques en ligne WordPress/WooCommerce. En solo ou avec des experts partenaires, nous livrons des solutions fiables pour la Guinée, l'Afrique de l'Ouest et l'Afrique francophone.",
     },
     {
         title: 'Notre Mission',
@@ -44,7 +44,12 @@ export const aristechMissionBlocks = [
     },
 ] as const;
 
-export type TechStackCategory = 'frontend' | 'backend' | 'cms' | 'database' | 'mobile';
+export type TechStackCategory =
+    | 'frontend'
+    | 'backend'
+    | 'cms'
+    | 'database'
+    | 'mobile';
 
 export type TechStackItem = {
     path: string;
@@ -83,7 +88,10 @@ export const aristechTechStack: Record<TechStackCategory, TechStackItem[]> = {
         { path: '/images/aristech/stack/MariaDB.svg', label: 'MariaDB' },
     ],
     mobile: [
-        { path: '/images/aristech/tech/react-native.svg', label: 'React Native' },
+        {
+            path: '/images/aristech/tech/react-native.svg',
+            label: 'React Native',
+        },
         { path: '/images/aristech/tech/flutter.svg', label: 'Flutter' },
     ],
 };
@@ -118,7 +126,7 @@ export const aristechProjects: AristechProject[] = [
     {
         title: 'Short Link',
         description:
-            'Raccourcissement d\'URL, analytics, QR codes et campagnes marketing.',
+            "Raccourcissement d'URL, analytics, QR codes et campagnes marketing.",
         image: '/images/aristech/projets/shortlink.png',
         category: 'Utilitaires',
         href: 'https://shortgn.click/',
@@ -126,7 +134,7 @@ export const aristechProjects: AristechProject[] = [
     {
         title: '7 Makity',
         description:
-            'E-commerce complet avec paiement sécurisé et gestion d\'inventaire en temps réel.',
+            "E-commerce complet avec paiement sécurisé et gestion d'inventaire en temps réel.",
         image: '/images/aristech/projets/7makiti.png',
         category: 'E-commerce',
         href: '#projets',

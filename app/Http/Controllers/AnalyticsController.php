@@ -22,13 +22,10 @@ class AnalyticsController extends Controller
     {
         $this->authorize('viewAny', Visit::class);
 
-        $period = (int) $request->query('period', 30);
-        $period = in_array($period, self::ALLOWED_PERIODS, strict: true) ? $period : 30;
-
         $filters = $this->resolveFilters($request);
-
-        $from = Carbon::now()->subDays($period)->startOfDay();
-        $to = Carbon::now()->endOfDay();
+        $dateRange = $this->resolveDateRange($request);
+        $from = $dateRange['from'];
+        $to = $dateRange['to'];
 
         $base = $this->applyFilters(
             Visit::query()
@@ -38,11 +35,21 @@ class AnalyticsController extends Controller
         );
 
         return Inertia::render('analytics/index', [
-            'period' => $period,
+            'period' => $dateRange['period'],
+            'dateFilter' => [
+                'mode' => $dateRange['mode'],
+                'date' => $dateRange['date'],
+                'date_from' => $dateRange['date_from'],
+                'date_to' => $dateRange['date_to'],
+            ],
+            'dateRange' => [
+                'from' => $from->toDateString(),
+                'to' => $to->toDateString(),
+            ],
             'filters' => $filters,
             'filterOptions' => $this->filterOptions(),
-            'kpis' => $this->kpis(fn () => $this->baseQuery($filters), $period),
-            'chartData' => $this->chartData(clone $base, $period, $from),
+            'kpis' => $this->kpis(fn () => $this->baseQuery($filters), $from, $to),
+            'chartData' => $this->chartData(clone $base, $from, $to),
             'topPages' => $this->topPages(clone $base),
             'topReferrers' => $this->topReferrers(clone $base),
             'countries' => $this->topCountries(clone $base),
@@ -249,22 +256,92 @@ class AnalyticsController extends Controller
     }
 
     /**
+     * @return array{from: Carbon, to: Carbon, days: int, mode: string, period: int, date: ?string, date_from: ?string, date_to: ?string}
+     */
+    private function resolveDateRange(Request $request): array
+    {
+        $period = (int) $request->query('period', 30);
+        $period = in_array($period, self::ALLOWED_PERIODS, strict: true) ? $period : 30;
+
+        if (($single = $this->parseDate($request->query('date'))) !== null) {
+            return [
+                'from' => $single->copy()->startOfDay(),
+                'to' => $single->copy()->endOfDay(),
+                'mode' => 'single',
+                'period' => $period,
+                'date' => $single->toDateString(),
+                'date_from' => null,
+                'date_to' => null,
+            ];
+        }
+
+        $fromParsed = $this->parseDate($request->query('date_from'));
+        $toParsed = $this->parseDate($request->query('date_to'));
+
+        if ($fromParsed !== null || $toParsed !== null) {
+            $from = ($fromParsed ?? $toParsed)->copy()->startOfDay();
+            $to = ($toParsed ?? Carbon::now())->copy()->endOfDay();
+
+            if ($from->gt($to)) {
+                [$from, $to] = [$to->copy()->startOfDay(), $from->copy()->endOfDay()];
+            }
+
+            if ($from->diffInDays($to) > 366) {
+                $from = $to->copy()->subDays(366)->startOfDay();
+            }
+
+            return [
+                'from' => $from,
+                'to' => $to,
+                'mode' => 'range',
+                'period' => $period,
+                'date' => null,
+                'date_from' => $from->toDateString(),
+                'date_to' => $to->toDateString(),
+            ];
+        }
+
+        return [
+            'from' => Carbon::now()->subDays($period)->startOfDay(),
+            'to' => Carbon::now()->endOfDay(),
+            'mode' => 'period',
+            'period' => $period,
+            'date' => null,
+            'date_from' => null,
+            'date_to' => null,
+        ];
+    }
+
+    private function parseDate(mixed $value): ?Carbon
+    {
+        if (! is_string($value) || $value === '') {
+            return null;
+        }
+
+        $parsed = Carbon::createFromFormat('Y-m-d', $value);
+
+        if ($parsed === false || $parsed->format('Y-m-d') !== $value) {
+            return null;
+        }
+
+        return $parsed;
+    }
+
+    /**
      * @param  callable(): Builder<Visit>  $base
      * @return array<string, mixed>
      */
-    private function kpis(callable $base, int $period): array
+    private function kpis(callable $base, Carbon $from, Carbon $to): array
     {
+        $days = (int) $from->copy()->startOfDay()->diffInDays($to->copy()->startOfDay()) + 1;
+        $previousTo = $from->copy()->subSecond();
+        $previousFrom = $from->copy()->subDays($days)->startOfDay();
+
         $current = $base()
-            ->whereBetween('created_at', [
-                Carbon::now()->subDays($period)->startOfDay(),
-                Carbon::now()->endOfDay(),
-            ]);
+            ->whereBetween('created_at', [$from, $to]);
 
         $previous = $base()
-            ->whereBetween('created_at', [
-                Carbon::now()->subDays($period * 2)->startOfDay(),
-                Carbon::now()->subDays($period)->endOfDay(),
-            ]);
+            ->whereBetween('created_at', [$previousFrom, $previousTo]);
 
         $total = (clone $current)->count();
         $prevTotal = (clone $previous)->count();
@@ -300,7 +377,7 @@ class AnalyticsController extends Controller
      * @param  Builder<Visit>  $base
      * @return list<array{date: string, views: int, visitors: int}>
      */
-    private function chartData(Builder $base, int $period, Carbon $from): array
+    private function chartData(Builder $base, Carbon $from, Carbon $to): array
     {
         $rows = (clone $base)
             ->select(
@@ -313,9 +390,11 @@ class AnalyticsController extends Controller
             ->get()
             ->keyBy('visit_date');
 
+        $span = (int) $from->copy()->startOfDay()->diffInDays($to->copy()->startOfDay());
+
         $days = [];
-        for ($i = 0; $i <= $period; $i++) {
-            $date = $from->copy()->addDays($i)->toDateString();
+        for ($i = 0; $i <= $span; $i++) {
+            $date = $from->copy()->startOfDay()->addDays($i)->toDateString();
             $row = $rows->get($date);
             $days[] = [
                 'date' => $date,

@@ -21,6 +21,7 @@ import {
 import { useMemo } from 'react';
 import CityStatRow from '@/components/analytics/city-stat-row';
 import CountryFlag from '@/components/analytics/country-flag';
+import DateRangeFilter from '@/components/analytics/date-range-filter';
 import FilterMultiselect, {
     FilterChip,
 } from '@/components/analytics/filter-multiselect';
@@ -103,8 +104,19 @@ type FilterOptions = {
     platforms: string[];
 };
 
+type DateFilterMode = 'period' | 'single' | 'range';
+
+type DateFilter = {
+    mode: DateFilterMode;
+    date: string | null;
+    date_from: string | null;
+    date_to: string | null;
+};
+
 type PageProps = {
     period: number;
+    dateFilter: DateFilter;
+    dateRange: { from: string; to: string };
     filters: Filters;
     filterOptions: FilterOptions;
     kpis: KpiData;
@@ -153,6 +165,71 @@ function formatDuration(seconds: number): string {
 
 function formatNumber(n: number): string {
     return n.toLocaleString('fr-FR');
+}
+
+function formatDisplayDate(iso: string): string {
+    return new Date(`${iso}T12:00:00`).toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+    });
+}
+
+function buildAnalyticsQuery(
+    period: number,
+    filters: Filters,
+    dateFilter: DateFilter,
+    overrides: {
+        period?: number;
+        date?: string | null;
+        date_from?: string | null;
+        date_to?: string | null;
+        clearDates?: boolean;
+    } = {},
+): Record<string, string | string[]> {
+    const query: Record<string, string | string[]> = {};
+
+    const usePeriod =
+        overrides.clearDates ||
+        (overrides.date === undefined &&
+            overrides.date_from === undefined &&
+            overrides.date_to === undefined &&
+            dateFilter.mode === 'period');
+
+    if (usePeriod) {
+        query.period = String(overrides.period ?? period);
+    }
+
+    const date =
+        overrides.date !== undefined ? overrides.date : dateFilter.date;
+    const dateFrom =
+        overrides.date_from !== undefined
+            ? overrides.date_from
+            : dateFilter.date_from;
+    const dateTo =
+        overrides.date_to !== undefined ? overrides.date_to : dateFilter.date_to;
+
+    if (!overrides.clearDates) {
+        if (date) {
+            query.date = date;
+        } else {
+            if (dateFrom) {
+                query.date_from = dateFrom;
+            }
+            if (dateTo) {
+                query.date_to = dateTo;
+            }
+        }
+    }
+
+    if (filters.pages.length) query.pages = filters.pages;
+    if (filters.countries.length) query.countries = filters.countries;
+    if (filters.cities.length) query.cities = filters.cities;
+    if (filters.browsers.length) query.browsers = filters.browsers;
+    if (filters.devices.length) query.devices = filters.devices;
+    if (filters.platforms.length) query.platforms = filters.platforms;
+
+    return query;
 }
 
 function ChangeChip({ value }: { value: number | null }) {
@@ -288,6 +365,8 @@ const DEVICE_LABELS: Record<string, string> = {
 export default function AnalyticsIndex() {
     const {
         period,
+        dateFilter,
+        dateRange,
         filters,
         filterOptions,
         kpis,
@@ -336,27 +415,54 @@ export default function AnalyticsIndex() {
         return map;
     }, [filterOptions.cities]);
 
-    const applyFilters = (next: Partial<Filters>) => {
-        const merged: Filters = { ...filters, ...next };
-        const query: Record<string, string | string[]> = { period: String(period) };
-        if (merged.pages.length) query.pages = merged.pages;
-        if (merged.countries.length) query.countries = merged.countries;
-        if (merged.cities.length) query.cities = merged.cities;
-        if (merged.browsers.length) query.browsers = merged.browsers;
-        if (merged.devices.length) query.devices = merged.devices;
-        if (merged.platforms.length) query.platforms = merged.platforms;
+    const periodLabel = useMemo(() => {
+        if (dateFilter.mode === 'single' && dateFilter.date) {
+            return formatDisplayDate(dateFilter.date);
+        }
+        if (dateFilter.mode === 'range') {
+            return `du ${formatDisplayDate(dateRange.from)} au ${formatDisplayDate(dateRange.to)}`;
+        }
+        return `${period} derniers jours`;
+    }, [dateFilter, dateRange, period]);
 
-        router.visit(index.url({ query }), {
-            preserveScroll: true,
-            preserveState: false,
-        });
+    const visitAnalytics = (
+        queryOverrides: Parameters<typeof buildAnalyticsQuery>[3] = {},
+        mergedFilters?: Filters,
+    ) => {
+        router.visit(
+            index.url({
+                query: buildAnalyticsQuery(
+                    period,
+                    mergedFilters ?? filters,
+                    dateFilter,
+                    queryOverrides,
+                ),
+            }),
+            {
+                preserveScroll: true,
+                preserveState: false,
+            },
+        );
+    };
+
+    const applyFilters = (next: Partial<Filters>) => {
+        visitAnalytics({}, { ...filters, ...next });
     };
 
     const resetFilters = () => {
-        router.visit(index.url({ query: { period: String(period) } }), {
-            preserveScroll: true,
-            preserveState: false,
-        });
+        visitAnalytics({ clearDates: true });
+    };
+
+    const applySingleDate = (date: string) => {
+        visitAnalytics({ date, date_from: null, date_to: null });
+    };
+
+    const applyDateRange = (dateFrom: string, dateTo: string) => {
+        visitAnalytics({ date: null, date_from: dateFrom, date_to: dateTo });
+    };
+
+    const clearDateFilter = () => {
+        visitAnalytics({ clearDates: true });
     };
 
     const removeFilter = (key: keyof Filters, value: string) => {
@@ -378,28 +484,29 @@ export default function AnalyticsIndex() {
                             Analytics
                         </h1>
                         <p className="text-muted-foreground mt-1 text-sm">
-                            Trafic réel — hors bots, {period} derniers jours
+                            Trafic réel — hors bots · {periodLabel}
                         </p>
                     </div>
-                    <div className="border-border bg-card flex items-center gap-1 rounded-lg border p-1">
+                    <div
+                        className={`border-border bg-card flex items-center gap-1 rounded-lg border p-1 ${dateFilter.mode !== 'period' ? 'opacity-60' : ''}`}
+                    >
                         {PERIODS.map((p) => (
                             <Button
                                 key={p.value}
-                                variant={period === p.value ? 'default' : 'ghost'}
+                                variant={
+                                    dateFilter.mode === 'period' && period === p.value
+                                        ? 'default'
+                                        : 'ghost'
+                                }
                                 size="sm"
                                 asChild
                             >
                                 <Link
                                     href={index.url({
-                                        query: {
+                                        query: buildAnalyticsQuery(p.value, filters, dateFilter, {
                                             period: p.value,
-                                            ...(filters.pages.length && { pages: filters.pages }),
-                                            ...(filters.countries.length && { countries: filters.countries }),
-                                            ...(filters.cities.length && { cities: filters.cities }),
-                                            ...(filters.browsers.length && { browsers: filters.browsers }),
-                                            ...(filters.devices.length && { devices: filters.devices }),
-                                            ...(filters.platforms.length && { platforms: filters.platforms }),
-                                        },
+                                            clearDates: true,
+                                        }),
                                     })}
                                     preserveScroll
                                 >
@@ -408,6 +515,16 @@ export default function AnalyticsIndex() {
                             </Button>
                         ))}
                     </div>
+                </div>
+
+                {/* Date filter */}
+                <div className="app-panel p-3">
+                    <DateRangeFilter
+                        dateFilter={dateFilter}
+                        onApplySingle={applySingleDate}
+                        onApplyRange={applyDateRange}
+                        onClear={clearDateFilter}
+                    />
                 </div>
 
                 {/* Filter bar */}

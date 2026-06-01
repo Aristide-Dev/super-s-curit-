@@ -24,11 +24,10 @@ export type SeoPageMeta = {
 
 export const aristechSeoPages: Record<SeoPageKey, SeoPageMeta> = {
     home: {
-        focusKeyword: 'aristech',
-        title:
-            'ArisTech Guinée — Agence web Conakry | Sites internet & e-commerce sur mesure',
+        focusKeyword: 'agence web Conakry',
+        title: 'ArisTech | Agence Web & Applications à Conakry, Guinée',
         description:
-            'ArisTech, agence web basée à Conakry (Guinée) : création de sites internet sur mesure, applications web et boutiques en ligne. Aristide Gnimassou, fondateur. Devis gratuit sous 24 h.',
+            'ArisTech, agence web à Conakry en Guinée : création de sites internet sur mesure, applications web, sites WordPress et boutiques WooCommerce. Devis gratuit sous 24 h.',
         path: '/',
         image: aristechImages.ogDefault,
         keywords: aristechMetaKeywords.home,
@@ -36,11 +35,10 @@ export const aristechSeoPages: Record<SeoPageKey, SeoPageMeta> = {
         breadcrumbs: [{ name: 'Accueil', path: '/' }],
     },
     about: {
-        focusKeyword: 'aristech guinée',
-        title:
-            'ArisTech Guinée | À propos — Aristide Gnimassou, développeur web à Conakry',
+        focusKeyword: 'développeur web Guinée',
+        title: 'ArisTech Guinée | Développeur web & agence digitale à Conakry',
         description:
-            'ArisTech est une agence web fondée à Conakry par Aristide Gnimassou. Développement de sites internet, applications web et e-commerce pour PME, institutions et startups en Guinée et à l\'international.',
+            'ArisTech est une agence digitale à Conakry fondée par Aristide Gnimassou. Développement web, sites sur mesure, refonte et e-commerce pour PME, institutions et startups en Guinée.',
         path: '/a-propos',
         image: aristechImages.ogDefault,
         keywords: aristechMetaKeywords.about,
@@ -51,11 +49,10 @@ export const aristechSeoPages: Record<SeoPageKey, SeoPageMeta> = {
         ],
     },
     contact: {
-        focusKeyword: 'contacter aristech guinée',
-        title:
-            'Contacter ArisTech Guinée | Devis gratuit — Site internet & application à Conakry',
+        focusKeyword: 'prix création site web Guinée',
+        title: 'Devis site web Guinée | Contacter ArisTech à Conakry',
         description:
-            'Contactez ArisTech à Conakry (Guinée) pour un devis gratuit : site internet, application web ou boutique en ligne. Aristide Gnimassou vous répond sous 24 h avec un cadrage technique détaillé.',
+            "Contactez ArisTech à Conakry pour connaître le prix d'un site web en Guinée : site internet, application web, WordPress ou boutique WooCommerce. Devis gratuit sous 24 h.",
         path: '/contact',
         image: aristechImages.ogDefault,
         keywords: aristechMetaKeywords.contact,

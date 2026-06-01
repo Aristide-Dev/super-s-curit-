@@ -23,7 +23,7 @@ export default function MarketingAbout() {
                         </span>
                     </>
                 }
-                description="Studio web en Guinée : création de sites internet sur mesure, applications web et e-commerce (WooCommerce). Basés à Conakry, nous accompagnons PME, institutions et startups en Afrique de l'Ouest et en Europe."
+                description="Agence digitale à Conakry : création de sites internet sur mesure, applications web, refonte SEO et boutiques WooCommerce. Nous accompagnons PME, institutions et startups en Guinée et en Afrique de l'Ouest."
                 media={
                     <div className="relative mx-auto w-full max-w-lg">
                         <div

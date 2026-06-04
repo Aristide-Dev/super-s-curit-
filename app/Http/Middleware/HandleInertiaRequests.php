@@ -59,7 +59,9 @@ class HandleInertiaRequests extends Middleware
             'aristech' => [
                 'email' => config('aristech.email'),
                 'phone' => config('aristech.phone'),
+                'phone_secondary' => config('aristech.phone_secondary'),
                 'phone_href' => config('aristech.phone_href'),
+                'address' => config('aristech.address'),
                 'rccm' => config('aristech.rccm'),
                 'social' => config('aristech.social'),
             ],
@@ -75,6 +77,7 @@ class HandleInertiaRequests extends Middleware
                 'sameAs' => array_values(array_filter([
                     config('aristech.social.facebook'),
                     config('aristech.social.twitter'),
+                    config('aristech.social.youtube'),
                     config('aristech.social.instagram'),
                     config('aristech.social.linkedin'),
                     config('aristech.social.github'),

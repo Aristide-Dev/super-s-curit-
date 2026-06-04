@@ -29,7 +29,7 @@ export default function ContactForm() {
             <div className="relative">
                 <p className="marketing-label mb-2">Formulaire de contact</p>
                 <h2 className="font-heading text-2xl font-semibold text-aristech-heading">
-                    Décrivez votre projet
+                    Décrivez votre besoin de sécurité
                 </h2>
                 <p className="mt-2 text-sm text-aristech-muted">
                     Les champs marqués d&apos;un{' '}

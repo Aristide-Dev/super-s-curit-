@@ -31,7 +31,7 @@ export default function ValuesSection() {
                         <div className="relative overflow-hidden rounded-tl rounded-tr-3xl rounded-bl-3xl rounded-br aspect-[4/3]">
                             <img
                                 src={aristechStock.about.valuesBanner}
-                                alt="Équipe ArisTech en réunion stratégique"
+                                alt="Équipe Super Sécurité"
                                 width={800}
                                 height={600}
                                 loading="lazy"

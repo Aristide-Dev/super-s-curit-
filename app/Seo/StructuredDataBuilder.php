@@ -29,7 +29,6 @@ class StructuredDataBuilder
 
         $graph = [
             $this->organizationNode($siteUrl, $orgId, $defaultImage, $organization, $email, $phone),
-            $this->founderNode($siteUrl, $orgId, $organization),
             $this->professionalServiceNode($siteUrl, $businessId, $orgId, $defaultImage, $organization, $email, $phone, $services),
             $this->websiteNode($siteUrl, $websiteId, $orgId),
             $this->servicesItemListNode($siteUrl, $services, $orgId),
@@ -41,6 +40,10 @@ class StructuredDataBuilder
 
         if ($faqs !== []) {
             $graph[] = $this->faqPageNode($canonical, $faqs);
+        }
+
+        if (! empty($organization['founder'])) {
+            array_splice($graph, 1, 0, [$this->founderNode($siteUrl, $orgId, $organization)]);
         }
 
         return [
@@ -64,6 +67,7 @@ class StructuredDataBuilder
         $sameAs = array_values(array_filter([
             config('aristech.social.facebook'),
             config('aristech.social.twitter'),
+            config('aristech.social.youtube'),
             config('aristech.social.instagram'),
             config('aristech.social.linkedin'),
             config('aristech.social.github'),
@@ -82,7 +86,7 @@ class StructuredDataBuilder
                 '@type' => 'ImageObject',
                 '@id' => "{$siteUrl}/#logo",
                 'url' => $defaultImage,
-                'caption' => "{$organization['name']} — agence web",
+                'caption' => "{$organization['name']} — sécurité privée",
             ],
             'image' => [
                 '@type' => 'ImageObject',
@@ -92,13 +96,6 @@ class StructuredDataBuilder
             'email' => $email,
             'telephone' => $phone,
             'contactPoint' => $this->contactPoints($email, $phone, $siteUrl),
-            'founder' => [
-                '@type' => 'Person',
-                '@id' => "{$siteUrl}/#founder",
-                'name' => $organization['founder'],
-                'jobTitle' => $organization['founder_job_title'],
-                'worksFor' => ['@id' => $orgId],
-            ],
             'areaServed' => [
                 [
                     '@type' => 'Country',

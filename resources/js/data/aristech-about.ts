@@ -1,29 +1,11 @@
 import {
-    Compass,
-    Code2,
-    Eye,
-    Heart,
-    Lightbulb,
-    LineChart,
-    Rocket,
+    Award,
+    Clock,
     ShieldCheck,
-    Sparkles,
-    Target,
+    Users,
     Zap,
     type LucideIcon,
 } from 'lucide-react';
-
-export type AristechStat = {
-    value: string;
-    label: string;
-};
-
-export const aristechStats: readonly AristechStat[] = [
-    { value: '5+', label: "Années d'expérience" },
-    { value: '25+', label: 'Projets livrés' },
-    { value: '15+', label: 'Clients accompagnés' },
-    { value: '3', label: 'Pays couverts' },
-] as const;
 
 export type AristechValue = {
     icon: LucideIcon;
@@ -33,111 +15,40 @@ export type AristechValue = {
 
 export const aristechValues: readonly AristechValue[] = [
     {
-        icon: ShieldCheck,
-        title: 'Excellence technique',
+        icon: Award,
+        title: 'Expérience et professionnalisme',
         description:
-            'Du code lisible, testé et maintenable. Nos livraisons reposent sur des standards éprouvés et une attention obsessionnelle aux détails.',
-    },
-    {
-        icon: Eye,
-        title: 'Transparence radicale',
-        description:
-            "Vous savez exactement où va chaque heure facturée. Reporting hebdomadaire, accès direct au code et aux environnements.",
+            'Des agents et superviseurs formés aux standards de la sécurité privée en environnement sensible.',
     },
     {
         icon: Zap,
-        title: 'Agilité réelle',
+        title: "Rapidité d'intervention",
         description:
-            "Des cycles courts, des démos régulières, des décisions rapides. Pas de bureaucratie — uniquement ce qui fait avancer votre produit.",
+            'Déploiement rapide sur vos sites, chantiers et événements selon vos contraintes opérationnelles.',
     },
     {
-        icon: Heart,
-        title: 'Proximité client',
+        icon: Clock,
+        title: 'Disponibilité 24/7',
         description:
-            "Vous parlez directement à ceux qui codent. Pas d'intermédiaire, pas de chef de projet qui ralentit l'information.",
-    },
-] as const;
-
-export type AristechProcessStep = {
-    number: string;
-    icon: LucideIcon;
-    title: string;
-    duration: string;
-    description: string;
-    deliverables: readonly string[];
-};
-
-export const aristechProcess: readonly AristechProcessStep[] = [
-    {
-        number: '01',
-        icon: Compass,
-        title: 'Cadrage',
-        duration: '3 à 5 jours',
-        description:
-            "Nous explorons votre vision, vos contraintes et vos utilisateurs pour aligner la solution sur vos objectifs métier.",
-        deliverables: ['Brief produit', 'Périmètre fonctionnel', 'Devis détaillé'],
+            'Une présence continue pour protéger vos biens, vos équipes et vos visiteurs.',
     },
     {
-        number: '02',
-        icon: Lightbulb,
-        title: 'Design',
-        duration: '1 à 3 semaines',
+        icon: Users,
+        title: 'Équipe certifiée et formée',
         description:
-            "Wireframes, parcours utilisateurs puis maquettes haute-fidélité. Vous validez chaque écran avant le développement.",
-        deliverables: ['Architecture UX', 'Design system', 'Maquettes interactives'],
-    },
-    {
-        number: '03',
-        icon: Sparkles,
-        title: 'Build',
-        duration: '2 à 8 semaines',
-        description:
-            "Développement itératif avec démos hebdomadaires. Vous voyez votre produit prendre forme en temps réel.",
-        deliverables: ['Sprints hebdomadaires', 'Tests automatisés', 'Accès staging'],
-    },
-    {
-        number: '04',
-        icon: Rocket,
-        title: 'Lancement',
-        duration: '3 à 5 jours',
-        description:
-            "Déploiement, monitoring, documentation et formation. Votre équipe est prête à prendre le relais.",
-        deliverables: ['Mise en production', 'Monitoring', 'Documentation'],
-    },
-    {
-        number: '05',
-        icon: Target,
-        title: 'Évolution',
-        duration: 'Continu',
-        description:
-            "Support, maintenance et nouvelles fonctionnalités. Nous restons à vos côtés pour faire grandir le produit.",
-        deliverables: ['Support réactif', 'Évolutions', 'Optimisations'],
+            'Personnel qualifié, habitué aux protocoles industriels, résidentiels et événementiels.',
     },
 ] as const;
 
-export type AristechApproachPillar = {
-    icon: LucideIcon;
-    title: string;
-    description: string;
-};
-
-export const aristechApproachPillars: readonly AristechApproachPillar[] = [
+export const aristechMissionBlocks = [
     {
-        icon: Compass,
-        title: 'Comprendre avant de construire',
-        description:
-            'Nous clarifions vos objectifs, vos utilisateurs et vos contraintes avant d’écrire la première ligne de code. Chaque décision technique s’appuie sur un cadrage produit partagé.',
+        title: 'Qui sommes-nous ?',
+        content:
+            'Super Sécurité est une entreprise de sécurité privée basée à Conakry, Guinée. Nous protégeons entreprises, sites industriels, chantiers et particuliers avec des solutions de gardiennage, surveillance et sécurité événementielle.',
     },
     {
-        icon: Code2,
-        title: 'Ingénierie aux standards du marché',
-        description:
-            'Architecture claire, tests, performances et sécurité : nos livrables suivent les bonnes pratiques reconnues pour rester évolutifs dans la durée.',
-    },
-    {
-        icon: LineChart,
-        title: 'Livrer, mesurer, faire évoluer',
-        description:
-            'Démos régulières, environnements de préproduction et documentation à la clé. Après la mise en ligne, nous restons disponibles pour la maintenance et les évolutions.',
+        title: 'Notre engagement',
+        content:
+            'Protéger ce qui compte le plus pour vous : vos installations, vos collaborateurs et votre tranquillité d’esprit. Intervention 24h/24 et 7j/7 avec des équipes professionnelles et réactives.',
     },
 ] as const;

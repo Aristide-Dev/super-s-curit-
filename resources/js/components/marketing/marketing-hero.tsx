@@ -2,10 +2,7 @@ import { Link } from '@inertiajs/react';
 import { ArrowRight } from 'lucide-react';
 import { aristechImages } from '@/data/aristech-images';
 import Reveal from '@/components/marketing/reveal';
-import RotatingWords from '@/components/marketing/rotating-words';
-import { contact } from '@/routes';
-
-const verbs = ['Créez', 'Renforcez', 'Optimisez', 'Propulsez'] as const;
+import { about, contact } from '@/routes';
 
 export default function MarketingHero() {
     return (
@@ -18,32 +15,20 @@ export default function MarketingHero() {
                         left: '-4rem',
                         width: '28rem',
                         height: '28rem',
-                        opacity: 0.18,
+                        opacity: 0.12,
                     }}
                     aria-hidden
                 />
                 <div
-                    className="marketing-blob bg-sky-400"
+                    className="marketing-blob bg-slate-600"
                     style={{
                         top: '20%',
                         right: '-6rem',
                         width: '24rem',
                         height: '24rem',
-                        opacity: 0.18,
+                        opacity: 0.1,
                         animationDelay: '-6s',
                         ['--blob-duration' as string]: '22s',
-                    }}
-                    aria-hidden
-                />
-                <div
-                    className="marketing-blob bg-indigo-400"
-                    style={{
-                        bottom: '-6rem',
-                        left: '30%',
-                        width: '22rem',
-                        height: '22rem',
-                        opacity: 0.15,
-                        animationDelay: '-12s',
                     }}
                     aria-hidden
                 />
@@ -53,58 +38,50 @@ export default function MarketingHero() {
 
             <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 py-24 sm:px-6 md:py-32 lg:grid-cols-12 lg:gap-16 lg:py-40">
                 <div className="lg:col-span-7">
-                    <Reveal delay={120} className="mt-6">
+                    <Reveal delay={80}>
+                        <p className="marketing-label mb-4">Super SÉCURITÉ</p>
+                    </Reveal>
+
+                    <Reveal delay={120} className="mt-2">
                         <h1 className="font-heading text-4xl leading-[1.05] font-bold tracking-tight text-aristech-heading md:text-5xl lg:text-6xl xl:text-7xl">
-                            <span className="block">
-                                {/* Agence web à Conakry —{' '} */}
-                                <RotatingWords words={verbs} /> votre{' '}
-                                <span className="relative inline-block">
-                                    présence digitale
-                                    <svg
-                                        viewBox="0 0 380 22"
-                                        className="marketing-underline-draw absolute -bottom-5 left-0 w-full"
-                                        fill="none"
-                                        preserveAspectRatio="none"
-                                        aria-hidden
-                                    >
-                                        <path
-                                            d="M2 16 C 100 1, 280 1, 378 16"
-                                            stroke="url(#hero-underline)"
-                                            strokeWidth="3"
-                                            strokeLinecap="round"
-                                        />
-                                        <defs>
-                                            <linearGradient
-                                                id="hero-underline"
-                                                x1="0"
-                                                y1="0"
-                                                x2="1"
-                                                y2="0"
-                                            >
-                                                <stop
-                                                    offset="0"
-                                                    stopColor="#16a34a"
-                                                />
-                                                <stop
-                                                    offset="1"
-                                                    stopColor="#0ea5e9"
-                                                />
-                                            </linearGradient>
-                                        </defs>
-                                    </svg>
-                                </span>
-                            </span>
-                            <span className="mt-2 block text-aristech-muted">
-                                avec ArisTech.
+                            Confiez votre sécurité{' '}
+                            <span className="relative inline-block">
+                                à l&apos;excellence
+                                <svg
+                                    viewBox="0 0 380 22"
+                                    className="marketing-underline-draw absolute -bottom-5 left-0 w-full"
+                                    fill="none"
+                                    preserveAspectRatio="none"
+                                    aria-hidden
+                                >
+                                    <path
+                                        d="M2 16 C 100 1, 280 1, 378 16"
+                                        stroke="url(#hero-underline)"
+                                        strokeWidth="3"
+                                        strokeLinecap="round"
+                                    />
+                                    <defs>
+                                        <linearGradient
+                                            id="hero-underline"
+                                            x1="0"
+                                            y1="0"
+                                            x2="1"
+                                            y2="0"
+                                        >
+                                            <stop offset="0" stopColor="#d32f2f" />
+                                            <stop offset="1" stopColor="#0f172a" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
                             </span>
                         </h1>
                     </Reveal>
 
                     <Reveal delay={260} className="mt-8 max-w-xl">
                         <p className="text-base leading-relaxed md:text-lg">
-                            Agence web à Conakry : création de site internet,
-                            applications web & mobile, boutique en ligne et
-                            intégration de solutions sur mesure.
+                            Sécurité privée à Conakry : gardiennage, sites
+                            industriels et miniers, sécurité événementielle.
+                            Intervention 24h/24 et 7j/7.
                         </p>
                     </Reveal>
 
@@ -116,17 +93,17 @@ export default function MarketingHero() {
                             href={contact.url()}
                             className="marketing-cta-primary marketing-magnetic group inline-flex items-center gap-2"
                         >
-                            Démarrer un projet
+                            Nous contacter
                             <ArrowRight
                                 className="size-4 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
                                 aria-hidden
                             />
                         </Link>
                         <a
-                            href="#projets"
+                            href="#services"
                             className="marketing-cta-secondary marketing-magnetic"
                         >
-                            Voir nos réalisations
+                            Nos offres
                         </a>
                     </Reveal>
 
@@ -137,26 +114,26 @@ export default function MarketingHero() {
                     >
                         <div>
                             <dt className="text-xs text-aristech-muted">
-                                Focus
+                                Disponibilité
                             </dt>
                             <dd className="mt-1 font-heading text-sm font-semibold text-aristech-heading">
-                                Web &amp; mobile
+                                24h/24 · 7j/7
                             </dd>
                         </div>
                         <div>
                             <dt className="text-xs text-aristech-muted">
-                                E-commerce
+                                Zone
                             </dt>
                             <dd className="mt-1 font-heading text-sm font-semibold text-aristech-heading">
-                                Laravel · React
+                                Conakry &amp; Guinée
                             </dd>
                         </div>
                         <div>
                             <dt className="text-xs text-aristech-muted">
-                                Modèle
+                                Expertise
                             </dt>
                             <dd className="mt-1 font-heading text-sm font-semibold text-aristech-heading">
-                                Sur mesure
+                                Sécurité privée
                             </dd>
                         </div>
                     </Reveal>
@@ -179,13 +156,13 @@ export default function MarketingHero() {
                         <div className="marketing-float relative flex h-full items-center justify-center">
                             <img
                                 src={aristechImages.brand}
-                                alt="Logo ArisTech"
+                                alt="Super Sécurité — sécurité privée à Conakry"
                                 width={320}
                                 height={320}
-                                loading="lazy"
+                                loading="eager"
                                 decoding="async"
-                                fetchPriority="low"
-                                className="relative z-10 h-auto w-3/4 max-w-xs object-contain drop-shadow-2xl"
+                                fetchPriority="high"
+                                className="relative z-10 h-auto w-full max-w-xs object-contain px-4 drop-shadow-2xl"
                             />
                         </div>
                     </div>

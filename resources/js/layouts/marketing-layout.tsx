@@ -12,7 +12,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
         document.documentElement.classList.add('marketing-page');
         document.documentElement.classList.remove('dark');
         document.documentElement.style.colorScheme = 'light';
-        document.documentElement.style.backgroundColor = '#dce3ec';
+        document.documentElement.style.backgroundColor = '#e8ecf1';
         document.documentElement.style.scrollBehavior = 'smooth';
 
         return () => {

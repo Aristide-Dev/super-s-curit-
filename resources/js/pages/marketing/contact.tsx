@@ -20,16 +20,16 @@ export default function MarketingContact() {
             <SeoHead />
 
             <PageHero
-                label="Contact"
+                label="Nous contacter"
                 title={
                     <>
-                        Parlons de{' '}
+                        Parlons de votre{' '}
                         <span className="marketing-text-gradient">
-                            votre projet
+                            sécurité
                         </span>
                     </>
                 }
-                description="Besoin d'un devis pour un site web, une application ou une intégration de solutions à Conakry ? Décrivez votre projet : réponse sous 24 h ouvrées et cadrage gratuit."
+                description="Besoin de gardiennage, surveillance industrielle ou sécurité événementielle à Conakry ? Décrivez votre besoin : notre équipe vous répond rapidement."
                 media={
                     <div className="relative mx-auto w-full max-w-lg">
                         <div
@@ -39,7 +39,7 @@ export default function MarketingContact() {
                         <div className="relative overflow-hidden rounded-3xl border border-aristech-border bg-aristech-surface shadow-xl shadow-slate-900/10">
                             <img
                                 src={aristechStock.contact.heroSide}
-                                alt="Réunion client chez ArisTech"
+                                alt="Contact Super Sécurité"
                                 width={1200}
                                 height={900}
                                 className="aspect-[4/3] h-auto w-full object-cover"
@@ -72,9 +72,9 @@ export default function MarketingContact() {
                         <Reveal delay={200} className="mt-10">
                             <p className="text-sm text-aristech-muted">
                                 <span className="font-medium text-aristech-heading">
-                                    ArisTech
+                                    Super Sécurité
                                 </span>{' '}
-                                · Conakry, Guinée · RCCM : {aristech.rccm}
+                                · {aristech.address}
                             </p>
                         </Reveal>
                     )}
@@ -126,22 +126,22 @@ export default function MarketingContact() {
                                             {
                                                 step: '01',
                                                 title: 'Réception',
-                                                desc: 'Nous lisons votre message attentivement.',
+                                                desc: 'Analyse de votre besoin de sécurité.',
                                             },
                                             {
                                                 step: '02',
-                                                title: 'Premier échange',
-                                                desc: 'Un appel de 30 min pour cadrer vos besoins.',
+                                                title: 'Évaluation',
+                                                desc: 'Visite ou échange pour comprendre le site.',
                                             },
                                             {
                                                 step: '03',
                                                 title: 'Proposition',
-                                                desc: 'Devis détaillé avec périmètre et planning.',
+                                                desc: 'Offre adaptée : effectifs, horaires, protocoles.',
                                             },
                                             {
                                                 step: '04',
-                                                title: 'Lancement',
-                                                desc: 'Démarrage du projet sous 1 à 2 semaines.',
+                                                title: 'Déploiement',
+                                                desc: 'Mise en place rapide de nos équipes.',
                                             },
                                         ].map((item) => (
                                             <li
@@ -170,7 +170,7 @@ export default function MarketingContact() {
                                             Informations légales
                                         </p>
                                         <p className="text-sm leading-relaxed text-aristech-text">
-                                            ArisTech · Conakry, Guinée
+                                            Super Sécurité · Conakry, Guinée
                                         </p>
                                         <p className="mt-2 font-heading text-sm font-semibold text-aristech-heading">
                                             RCCM : {aristech.rccm}

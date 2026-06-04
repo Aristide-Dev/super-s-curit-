@@ -18,7 +18,7 @@ export default function LegalPage() {
             <PageHero
                 label="Légal"
                 title="Mentions légales"
-                description="Informations légales relatives au site aristechguinee.com."
+                description="Informations légales relatives au site supersecurite.com."
                 align="center"
             />
 
@@ -27,7 +27,9 @@ export default function LegalPage() {
                     <Reveal>
                         <p>
                             <strong className="text-aristech-heading">Éditeur :</strong>{' '}
-                            ArisTech (ARISTECH) — agence web à Conakry, Guinée.
+                            Super Sécurité — sécurité privée à Conakry, Guinée.
+                            <br />
+                            {aristech.address}
                         </p>
                     </Reveal>
                     {aristech.rccm && (

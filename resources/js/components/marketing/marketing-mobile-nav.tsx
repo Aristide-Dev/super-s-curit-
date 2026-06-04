@@ -1,10 +1,9 @@
 import { Link } from '@inertiajs/react';
 import { ArrowRight, Mail, Menu, Phone, X } from 'lucide-react';
 import { aristechImages } from '@/data/aristech-images';
-import { aristechServiceNavLinks } from '@/data/aristech-nav';
+import { superSecuriteNavLinks } from '@/data/aristech-nav';
 import { about, contact, home } from '@/routes';
 import type { AristechConfig } from '@/types/aristech';
-import { cn } from '@/lib/utils';
 import {
     Sheet,
     SheetClose,
@@ -14,7 +13,6 @@ import {
 } from '@/components/ui/sheet';
 
 type MarketingMobileNavProps = {
-    pathname: string;
     aristech: AristechConfig;
     open: boolean;
     onOpenChange: (open: boolean) => void;
@@ -22,16 +20,11 @@ type MarketingMobileNavProps = {
 
 const primaryLinks = [
     { href: home.url(), label: 'Accueil' },
-    { href: about.url(), label: 'À propos' },
-    { href: contact.url(), label: 'Contact' },
+    { href: about.url(), label: 'Pourquoi nous' },
+    { href: contact.url(), label: 'Nous contacter' },
 ] as const;
 
-function isActive(pathname: string, href: string): boolean {
-    return pathname === href;
-}
-
 export default function MarketingMobileNav({
-    pathname,
     aristech,
     open,
     onOpenChange,
@@ -64,10 +57,10 @@ export default function MarketingMobileNav({
                     >
                         <img
                             src={aristechImages.brand}
-                            alt="ArisTech"
-                            className="h-9 w-auto"
-                            width={108}
-                            height={36}
+                            alt="Super Sécurité"
+                            className="h-10 w-auto max-w-[180px] object-contain object-left"
+                            width={180}
+                            height={40}
                         />
                     </Link>
                     <SheetClose asChild>
@@ -92,12 +85,7 @@ export default function MarketingMobileNav({
                                 <Link
                                     href={item.href}
                                     onClick={close}
-                                    className={cn(
-                                        'flex items-center justify-between rounded-2xl border px-4 py-3.5 font-heading text-base font-semibold transition-colors duration-200',
-                                        isActive(pathname, item.href)
-                                            ? 'border-aristech-accent/30 bg-aristech-accent/10 text-aristech-accent'
-                                            : 'border-aristech-border bg-aristech-surface text-aristech-heading hover:border-aristech-accent/30',
-                                    )}
+                                    className="flex items-center justify-between rounded-2xl border border-aristech-border bg-aristech-surface px-4 py-3.5 font-heading text-base font-semibold text-aristech-heading transition-colors duration-200 hover:border-aristech-accent/30"
                                 >
                                     {item.label}
                                     <ArrowRight
@@ -110,40 +98,16 @@ export default function MarketingMobileNav({
                     </ul>
 
                     <p className="marketing-label mt-8 mb-3">Services</p>
-                    <ul className="space-y-3">
-                        {aristechServiceNavLinks.map((service, index) => (
+                    <ul className="space-y-2">
+                        {superSecuriteNavLinks.map((service) => (
                             <li key={service.href}>
-                                <Link
+                                <a
                                     href={service.href}
                                     onClick={close}
-                                    className={cn(
-                                        'group block rounded-2xl border p-4 transition-all duration-200',
-                                        isActive(pathname, service.href)
-                                            ? 'border-aristech-accent/40 bg-aristech-accent/10'
-                                            : 'border-aristech-border bg-aristech-surface hover:border-aristech-accent/30 hover:shadow-md hover:shadow-slate-900/5',
-                                    )}
+                                    className="block rounded-2xl border border-aristech-border bg-aristech-surface px-4 py-3 font-heading text-sm font-semibold text-aristech-heading transition-colors hover:border-aristech-accent/30"
                                 >
-                                    <div className="flex items-start justify-between gap-3">
-                                        <div>
-                                            <span className="font-heading text-xs font-bold text-aristech-accent">
-                                                {String(index + 1).padStart(
-                                                    2,
-                                                    '0',
-                                                )}
-                                            </span>
-                                            <p className="mt-1 font-heading text-sm font-semibold text-aristech-heading">
-                                                {service.label}
-                                            </p>
-                                            <p className="mt-1 text-xs leading-relaxed text-aristech-muted">
-                                                {service.description}
-                                            </p>
-                                        </div>
-                                        <ArrowRight
-                                            className="mt-1 size-4 shrink-0 text-aristech-muted transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-aristech-accent"
-                                            aria-hidden
-                                        />
-                                    </div>
-                                </Link>
+                                    {service.label}
+                                </a>
                             </li>
                         ))}
                     </ul>
@@ -155,7 +119,7 @@ export default function MarketingMobileNav({
                         className="marketing-cta-primary flex w-full items-center justify-center gap-2"
                     >
                         <Phone className="size-4" aria-hidden />
-                        Appelez-nous
+                        {aristech.phone}
                     </a>
                     <a
                         href={`mailto:${aristech.email}`}
@@ -165,7 +129,7 @@ export default function MarketingMobileNav({
                         {aristech.email}
                     </a>
                     <p className="text-center text-xs text-aristech-muted">
-                        Conakry, Guinée · Lun – Ven, 9h – 18h
+                        {aristech.address}
                     </p>
                 </div>
             </SheetContent>

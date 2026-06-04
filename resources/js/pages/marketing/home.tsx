@@ -1,14 +1,10 @@
-import { lazy, Suspense } from 'react';
 import SeoHead from '@/components/marketing/seo-head';
 import CtaBand from '@/components/marketing/cta-band';
-import LatestProjects from '@/components/marketing/latest-projects';
 import MarketingHero from '@/components/marketing/marketing-hero';
 import ServiceCards from '@/components/marketing/service-cards';
-
-const TechMarquee = lazy(
-    () => import('@/components/marketing/tech-marquee'),
-);
-// import TechStack from '@/components/marketing/tech-stack';
+import TestimonialsSection from '@/components/marketing/testimonials-section';
+import WelcomeSection from '@/components/marketing/welcome-section';
+import WhyUsSection from '@/components/marketing/why-us-section';
 
 export default function MarketingHome() {
     return (
@@ -16,18 +12,10 @@ export default function MarketingHome() {
             <SeoHead />
 
             <MarketingHero />
-            <Suspense fallback={null}>
-                <div className="marketing-below-fold">
-                    <TechMarquee />
-                </div>
-            </Suspense>
-            <div className="marketing-below-fold">
-                <ServiceCards />
-            </div>
-            <div className="marketing-below-fold">
-                <LatestProjects />
-            </div>
-            {/* <TechStack /> */}
+            <WelcomeSection />
+            <ServiceCards />
+            <WhyUsSection />
+            <TestimonialsSection />
             <CtaBand />
         </>
     );

@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AnalyticsController;
-use App\Http\Controllers\CaseStudyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\SitemapController;
@@ -29,15 +28,16 @@ Route::get('/sitemap.xml', SitemapController::class)
 
 Route::inertia('/', 'marketing/home')->name('home');
 Route::inertia('/a-propos', 'marketing/about')->name('about');
-Route::redirect('/site-wordpress', '/creation-site', 301);
-Route::inertia('/creation-site', 'marketing/creation-site')->name('creation-site');
-Route::inertia('/integrateur-solutions', 'marketing/integrateur-solutions')->name('integrateur-solutions');
-Route::inertia('/woocommerce', 'marketing/woocommerce')->name('woocommerce');
-Route::inertia('/application-web', 'marketing/application-web')->name('application-web');
-Route::inertia('/seo', 'marketing/referencement-seo')->name('seo');
+Route::redirect('/pourquoi-nous', '/a-propos', 301);
+Route::redirect('/site-wordpress', '/', 301);
+Route::redirect('/creation-site', '/', 301);
+Route::redirect('/integrateur-solutions', '/', 301);
+Route::redirect('/woocommerce', '/', 301);
+Route::redirect('/application-web', '/', 301);
+Route::redirect('/seo', '/', 301);
+Route::redirect('/realisations', '/', 301);
+Route::redirect('/realisations/{slug}', '/', 301)->where('slug', '[a-z0-9\-]+');
 Route::inertia('/contact', 'marketing/contact')->name('contact');
-Route::inertia('/realisations', 'marketing/realisations')->name('realisations');
-Route::get('/realisations/{slug}', [CaseStudyController::class, 'show'])->name('realisations.show');
 Route::inertia('/politique-de-confidentialite', 'marketing/privacy')->name('privacy');
 Route::inertia('/mentions-legales', 'marketing/legal')->name('legal');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');

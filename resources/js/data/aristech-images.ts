@@ -1,7 +1,7 @@
 export const aristechImages = {
-    brand: '/images/aristech/aristech-brand.png',
-    brandAlt: '/images/aristech/aristech.png',
-    ogDefault: '/images/aristech/aristech.jpeg',
+    brand: '/logo.svg',
+    brandAlt: '/logo.svg',
+    ogDefault: '/web-app-manifest-512x512.png',
     founder: '/aristide.png',
     hero: {
         background: '/images/aristech/hero/1074435_7110.jpg',

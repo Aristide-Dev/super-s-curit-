@@ -1,10 +1,9 @@
 export const aristechProjectTypes = [
-    'Site vitrine / institutionnel',
-    'Application web sur mesure',
-    'Boutique en ligne (e-commerce)',
-    'Intégrateur de solutions / API',
-    'Application mobile',
-    'Référencement SEO',
+    'Gardiennage et surveillance',
+    'Site industriel ou minier',
+    'Sécurité événementielle',
+    'Vidéo / télésurveillance',
+    'Résidence ou bureau',
     'Autre',
 ] as const;
 
@@ -15,33 +14,28 @@ export type AristechFaq = {
 
 export const aristechFaqs: readonly AristechFaq[] = [
     {
-        question: 'Combien coûte la création d\'un site internet en Guinée ?',
+        question: 'Intervenez-vous en urgence ?',
         answer:
-            'Le prix dépend du type de projet : site internet sur mesure, boutique en ligne, application web ou intégration de solutions. Après analyse de votre besoin, nous envoyons un devis forfaitaire détaillé (design, développement, SEO de base et mise en ligne).',
+            'Oui, Super Sécurité assure une disponibilité 24h/24 et 7j/7. Précisez l’urgence dans votre message pour une prise en charge prioritaire.',
     },
     {
-        question: 'Sous combien de temps répondez-vous ?',
+        question: 'Quels types de sites sécurisez-vous ?',
         answer:
-            'Nous répondons à toutes les demandes sous 24 heures ouvrées. Pour les projets urgents, mentionnez-le dans votre message et nous priorisons votre dossier.',
+            'Résidences, bureaux, chantiers, zones minières, sites industriels et événements publics ou privés en Guinée.',
     },
     {
-        question: 'Travaillez-vous avec des clients hors Guinée ?',
+        question: 'Comment obtenir un devis ?',
         answer:
-            "Oui. Nous accompagnons régulièrement des clients en Afrique de l'Ouest, en Europe et en Amérique du Nord. Tout se passe à distance avec des points hebdomadaires.",
+            'Contactez-nous par formulaire, par téléphone au +224 612 13 13 14 ou par e-mail à contact@supersecurite.com. Nous évaluons votre besoin et vous proposons une offre adaptée.',
     },
     {
-        question: 'Quelle est la durée moyenne d\u2019un projet ?',
+        question: 'Vos agents sont-ils formés et certifiés ?',
         answer:
-            'Un site vitrine se livre en 2 à 4 semaines. Une application web sur mesure prend généralement 6 à 12 semaines selon la complexité. Nous communiquons un planning précis dès le cadrage.',
+            'Oui. Nos équipes suivent des protocoles stricts et sont habituées aux environnements industriels, résidentiels et événementiels.',
     },
     {
-        question: 'Comment se passe la facturation ?',
+        question: 'Couvrez-vous toute la Guinée ?',
         answer:
-            'Nous facturons au forfait pour les projets bien cadrés, ou en régie (TJM) pour les missions évolutives. Un acompte de 30 % est demandé au lancement.',
-    },
-    {
-        question: 'Proposez-vous de la maintenance après livraison ?',
-        answer:
-            'Oui. Nous offrons des contrats de support et de maintenance (correctifs, mises à jour, monitoring) avec différents niveaux de service selon vos besoins.',
+            'Notre base est à Conakry ; nous intervenons sur Conakry et selon vos besoins sur d’autres sites en Guinée.',
     },
 ] as const;

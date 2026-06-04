@@ -1,4 +1,4 @@
-import { aristechMissionBlocks } from '@/data/aristech-content';
+import { aristechMissionBlocks } from '@/data/aristech-about';
 
 export default function MissionSection() {
     return (

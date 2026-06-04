@@ -22,19 +22,6 @@ export const aristechServices: readonly AristechServiceCard[] =
 
 export type { AristechServiceId };
 
-export const aristechMissionBlocks = [
-    {
-        title: 'Qui sommes-nous ?',
-        content:
-            "ArisTech est une agence web basée à Conakry, Guinée. Aristide Gnimassou, fondateur et développeur principal, conçoit des sites internet sur mesure, des applications web et des boutiques en ligne. En solo ou avec des experts partenaires, nous livrons des solutions fiables pour la Guinée, l'Afrique de l'Ouest et l'Afrique francophone.",
-    },
-    {
-        title: 'Notre Mission',
-        content:
-            'Rendre le développement web accessible aux entreprises guinéennes : site internet professionnel, e-commerce rentable, visibilité Google (SEO) et accompagnement après la mise en ligne. Chaque projet est cadré avec transparence, des délais réalistes et un code maintenable.',
-    },
-] as const;
-
 export type TechStackCategory =
     | 'frontend'
     | 'backend'

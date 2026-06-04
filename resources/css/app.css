@@ -146,13 +146,13 @@
 }
 
 :root {
-    --aristech-bg: #dce3ec;
-    --aristech-surface: #f0f4f8;
-    --aristech-surface-elevated: #e4eaf0;
+    --aristech-bg: #e8ecf1;
+    --aristech-surface: #f4f6f9;
+    --aristech-surface-elevated: #e2e8f0;
     --aristech-text: #334155;
     --aristech-heading: #0f172a;
-    --aristech-accent: #16a34a;
-    --aristech-accent-hover: #15803d;
+    --aristech-accent: #d32f2f;
+    --aristech-accent-hover: #b71c1c;
     --aristech-muted: #4a5668;
     --aristech-border: #b8c5d4;
 }
@@ -286,7 +286,7 @@ html.app-page {
     }
 
     .marketing-text-gradient {
-        @apply bg-linear-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent;
+        @apply bg-linear-to-r from-[#d32f2f] to-[#0f172a] bg-clip-text text-transparent;
     }
 
     .marketing-reveal {

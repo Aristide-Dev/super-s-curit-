@@ -1,9 +1,17 @@
 import { Link } from '@inertiajs/react';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
+import { usePage } from '@inertiajs/react';
 import Reveal from '@/components/marketing/reveal';
 import { contact } from '@/routes';
+import type { AristechConfig } from '@/types/aristech';
+
+type SharedPageProps = {
+    aristech: AristechConfig;
+};
 
 export default function CtaBand() {
+    const { aristech } = usePage<SharedPageProps>().props;
+
     return (
         <section className="py-10">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -16,19 +24,7 @@ export default function CtaBand() {
                                 right: '-4rem',
                                 width: '20rem',
                                 height: '20rem',
-                                opacity: 0.18,
-                            }}
-                            aria-hidden
-                        />
-                        <div
-                            className="marketing-blob bg-sky-400"
-                            style={{
-                                bottom: '-6rem',
-                                left: '-4rem',
-                                width: '18rem',
-                                height: '18rem',
                                 opacity: 0.15,
-                                animationDelay: '-8s',
                             }}
                             aria-hidden
                         />
@@ -36,31 +32,41 @@ export default function CtaBand() {
                         <div className="relative flex flex-col items-start gap-8 md:flex-row md:items-center md:justify-between">
                             <div className="max-w-xl">
                                 <p className="marketing-label mb-3">
-                                    Prochaine étape
+                                    Contactez-nous
                                 </p>
                                 <h2 className="font-heading text-3xl font-bold tracking-tight text-aristech-heading md:text-4xl">
-                                    Un projet en tête ?{' '}
+                                    Besoin d&apos;une équipe de{' '}
                                     <span className="marketing-text-gradient">
-                                        Discutons-en.
+                                        sécurité ?
                                     </span>
                                 </h2>
                                 <p className="mt-4 text-sm leading-relaxed md:text-base">
-                                    Devis gratuit pour site internet,
-                                    application web ou boutique en ligne à
-                                    Conakry. Réponse sous 24 h avec un plan de
-                                    livraison clair.
+                                    Téléphone : {aristech.phone}
+                                    <br />
+                                    E-mail : {aristech.email}
+                                    <br />
+                                    {aristech.address}
                                 </p>
                             </div>
-                            <Link
-                                href={contact.url()}
-                                className="marketing-cta-primary marketing-magnetic group inline-flex shrink-0 items-center gap-2"
-                            >
-                                Démarrer la conversation
-                                <ArrowRight
-                                    className="size-4 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0"
-                                    aria-hidden
-                                />
-                            </Link>
+                            <div className="flex flex-wrap gap-3">
+                                <a
+                                    href={aristech.phone_href}
+                                    className="marketing-cta-primary marketing-magnetic inline-flex items-center gap-2"
+                                >
+                                    <Phone className="size-4" />
+                                    Appeler
+                                </a>
+                                <Link
+                                    href={contact.url()}
+                                    className="marketing-cta-secondary marketing-magnetic group inline-flex items-center gap-2"
+                                >
+                                    Formulaire
+                                    <ArrowRight
+                                        className="size-4 transition-transform duration-200 group-hover:translate-x-1"
+                                        aria-hidden
+                                    />
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </Reveal>

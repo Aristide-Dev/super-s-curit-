@@ -1,17 +1,25 @@
+import { usePage } from '@inertiajs/react';
 import SeoHead from '@/components/marketing/seo-head';
+import ServiceFaq from '@/components/marketing/service-faq';
 import CtaBand from '@/components/marketing/cta-band';
 import PageHero from '@/components/marketing/page-hero';
 import Reveal from '@/components/marketing/reveal';
 import type { ServicePageContent } from '@/data/aristech-service-pages';
+
+type PageProps = {
+    pageFaqs: { question: string; answer: string }[];
+};
 
 export default function ServicePage({
     content,
 }: {
     content: ServicePageContent;
 }) {
+    const { pageFaqs } = usePage<PageProps>().props;
+
     return (
         <>
-            <SeoHead page={content.seoPage} />
+            <SeoHead />
 
             <PageHero
                 label={content.label}
@@ -78,6 +86,8 @@ export default function ServicePage({
                     ))}
                 </div>
             </section>
+
+            <ServiceFaq faqs={pageFaqs} />
 
             <CtaBand />
         </>

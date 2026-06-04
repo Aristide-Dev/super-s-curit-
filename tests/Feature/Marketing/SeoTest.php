@@ -38,7 +38,11 @@ test('sitemap.xml lists public marketing pages', function () {
         ->toContain(url('/woocommerce'))
         ->toContain(url('/application-web'))
         ->toContain(url('/seo'))
-        ->toContain(url('/contact'));
+        ->toContain(url('/contact'))
+        ->toContain(url('/realisations'))
+        ->toContain(url('/realisations/sily-link'))
+        ->toContain(url('/politique-de-confidentialite'))
+        ->toContain(url('/mentions-legales'));
 });
 
 test('legacy site-wordpress url redirects to creation-site', function () {
@@ -64,6 +68,146 @@ test('sitemap.xml includes images for pages', function () {
     expect($response->getContent())->toContain('<image:image>');
 });
 
+test('sitemap.xml includes fresh lastmod dates from content sources', function () {
+    $response = $this->get(route('sitemap'));
+
+    $response->assertOk();
+
+    expect($response->headers->get('Cache-Control'))
+        ->toContain('no-cache')
+        ->toContain('no-store');
+
+    $content = $response->getContent();
+
+    expect($content)
+        ->toContain('<lastmod>')
+        ->toMatch('/<lastmod>\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/');
+
+    $homeSources = collect(config('seo.pages'))
+        ->firstWhere('path', '/')['sources'] ?? [];
+
+    $expectedLastmod = collect($homeSources)
+        ->map(fn (string $path): int => filemtime(base_path($path)))
+        ->max();
+
+    expect($content)->toContain(
+        '<lastmod>'.date('c', $expectedLastmod).'</lastmod>',
+    );
+});
+
+test('marketing pages include server rendered title and description', function () {
+    $response = $this->get(route('home'));
+
+    $response->assertOk();
+
+    expect($response->getContent())
+        ->toContain('Agence Web')
+        ->toContain('Applications')
+        ->toContain('rel="canonical"')
+        ->toContain('property="og:title"')
+        ->toContain('application/ld+json');
+});
+
+test('service pages render optimized server side title from seo config', function () {
+    $response = $this->get(route('creation-site'));
+
+    $response->assertOk();
+
+    $service = collect(config('seo.services'))->firstWhere('path', '/creation-site');
+
+    expect($response->getContent())
+        ->toContain($service['meta_title'])
+        ->toContain($service['meta_description']);
+});
+
+test('each service page has a distinct open graph image', function (string $routeName, string $expectedOgPath) {
+    $response = $this->get(route($routeName));
+
+    $response->assertOk();
+
+    expect($response->getContent())->toContain(url($expectedOgPath));
+})->with([
+    'application web' => ['application-web', '/images/aristech/services/conakry-women-app.png'],
+    'creation site' => ['creation-site', '/images/aristech/services/Sites-Internet.jpg'],
+    'woocommerce' => ['woocommerce', '/images/aristech/services/E-commerce.jpg'],
+    'integrateur' => ['integrateur-solutions', '/images/aristech/services/API.jpg'],
+    'seo' => ['seo', '/images/aristech/services/seo.jpg'],
+]);
+
+test('application web og image uses png mime type', function () {
+    $this->get(route('application-web'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('pageMeta.og_image_type', 'image/png')
+            ->where('pageMeta.og_image_alt', 'Application web et mobile sur mesure à Conakry — ArisTech')
+        );
+});
+
+test('creation site page includes service faq structured data', function () {
+    $response = $this->get(route('creation-site'));
+
+    expect($response->getContent())
+        ->toContain('FAQPage')
+        ->toContain(config('seo.services.1.faqs.0.question'));
+});
+
+test('case study pages are available', function () {
+    $this->get(route('realisations.show', 'sily-link'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('marketing/case-study')
+            ->where('study.slug', 'sily-link')
+        );
+});
+
+test('legal pages are available', function () {
+    $this->get(route('privacy'))->assertOk();
+    $this->get(route('legal'))->assertOk();
+});
+
+test('shared page meta is provided to inertia on marketing pages', function () {
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('pageMeta.title')
+            ->has('pageMeta.canonical')
+            ->where('pageMeta.title', collect(config('seo.pages'))->firstWhere('path', '/')['meta_title'])
+        );
+});
+
+test('marketing pages include server rendered structured data for contact and services', function () {
+    $response = $this->get(route('home'));
+
+    $response->assertOk();
+
+    expect($response->getContent())
+        ->toContain('application/ld+json')
+        ->toContain('ContactPoint')
+        ->toContain('ItemList')
+        ->toContain('hasOfferCatalog')
+        ->toContain(url('/application-web'))
+        ->toContain(config('aristech.email'))
+        ->toContain(config('aristech.phone'));
+});
+
+test('contact page structured data includes faq and contact page type', function () {
+    $response = $this->get(route('contact'));
+
+    expect($response->getContent())
+        ->toContain('ContactPage')
+        ->toContain('FAQPage')
+        ->toContain(config('seo.faqs.0.question'));
+});
+
+test('seo services include public paths for rich results', function () {
+    $this->get(route('home'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('seo.services.0.path', '/application-web')
+            ->where('seo.services.4.path', '/seo')
+        );
+});
+
 test('home seo meta includes local search terms', function () {
     $this->get(route('home'))
         ->assertOk()
@@ -73,7 +217,7 @@ test('home seo meta includes local search terms', function () {
             ->where('seo.knowsAbout', fn ($terms): bool => $terms->contains('agence web Conakry')
                 && $terms->contains('prix création site web Guinée')
                 && $terms->contains('agence web Afrique de l\'Ouest')
-                && $terms->contains('Intégrateur de solutions')
+                && $terms->contains('intégrateur de solutions Guinée')
                 && $terms->contains('Référencement SEO'))
             ->where('seo.services.3.name', 'Intégrateur de solutions')
         );

@@ -9,7 +9,7 @@ import { aristechImages } from '@/data/aristech-images';
 export default function MarketingAbout() {
     return (
         <>
-            <SeoHead page="about" />
+            <SeoHead />
 
             <PageHero
                 label="Qui sommes-nous"

@@ -17,7 +17,7 @@ export default function MarketingContact() {
 
     return (
         <>
-            <SeoHead page="contact" />
+            <SeoHead />
 
             <PageHero
                 label="Contact"

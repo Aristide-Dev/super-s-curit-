@@ -1,7 +1,8 @@
 import { usePage } from '@inertiajs/react';
 import { aristechImages } from '@/data/aristech-images';
 import type { AristechConfig } from '@/types/aristech';
-import { GithubIcon } from 'lucide-react';
+import { FacebookIcon, GithubIcon, InstagramIcon } from 'lucide-react';
+import { TwitterIcon } from 'lucide-react';
 
 type SharedPageProps = {
     aristech: AristechConfig;
@@ -14,7 +15,7 @@ export default function MarketingFooter() {
     return (
         <footer className="border-t border-aristech-border bg-aristech-surface-elevated py-16">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+                <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
                     <div>
                         <img
                             src={aristechImages.brand}
@@ -31,6 +32,38 @@ export default function MarketingFooter() {
                                 RCCM : {aristech.rccm}
                             </p>
                         )}
+                    </div>
+
+                    <div>
+                        <h3 className="font-heading text-sm font-semibold text-aristech-heading">
+                            Site
+                        </h3>
+                        <ul className="mt-4 space-y-3 text-sm">
+                            <li>
+                                <a
+                                    href="/realisations"
+                                    className="cursor-pointer transition-colors duration-200 hover:text-aristech-heading"
+                                >
+                                    Réalisations
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/politique-de-confidentialite"
+                                    className="cursor-pointer transition-colors duration-200 hover:text-aristech-heading"
+                                >
+                                    Confidentialité
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="/mentions-legales"
+                                    className="cursor-pointer transition-colors duration-200 hover:text-aristech-heading"
+                                >
+                                    Mentions légales
+                                </a>
+                            </li>
+                        </ul>
                     </div>
 
                     <div>
@@ -66,16 +99,17 @@ export default function MarketingFooter() {
                             aristech.social.instagram ||
                             aristech.social.linkedin ||
                             aristech.social.github) && (
-                            <ul className="mt-4 flex gap-4">
+                            <ul className="mt-4 flex flex-col gap-2">
                                 {aristech.social.facebook && (
                                     <li>
                                         <a
                                             href={aristech.social.facebook}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="cursor-pointer text-sm text-aristech-muted transition-colors duration-200 hover:text-aristech-accent"
+                                            className="flex items-center gap-2 cursor-pointer text-sm text-aristech-muted transition-colors duration-200 hover:text-aristech-accent"
                                         >
-                                            Facebook
+                                            <FacebookIcon className="h-4 w-4 text-blue-500" />
+                                            <span>Facebook</span>
                                         </a>
                                     </li>
                                 )}
@@ -85,9 +119,10 @@ export default function MarketingFooter() {
                                             href={aristech.social.twitter}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="cursor-pointer text-sm text-aristech-muted transition-colors duration-200 hover:text-aristech-accent"
+                                            className="flex items-center gap-2 cursor-pointer text-sm text-aristech-muted transition-colors duration-200 hover:text-aristech-accent"
                                         >
-                                            Twitter
+                                            <TwitterIcon className="h-4 w-4 text-blue-500" />
+                                            <span>Twitter</span>
                                         </a>
                                     </li>
                                 )}
@@ -97,9 +132,10 @@ export default function MarketingFooter() {
                                             href={aristech.social.instagram}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="cursor-pointer text-sm text-aristech-muted transition-colors duration-200 hover:text-aristech-accent"
+                                            className="flex items-center gap-2 cursor-pointer text-sm text-aristech-muted transition-colors duration-200 hover:text-aristech-accent"
                                         >
-                                            Instagram
+                                            <InstagramIcon className="h-4 w-4 text-red-500" />
+                                            <span>Instagram</span>
                                         </a>
                                     </li>
                                 )}

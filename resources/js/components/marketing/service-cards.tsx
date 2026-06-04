@@ -15,7 +15,7 @@ export default function ServiceCards() {
                             e-commerce
                         </span>
                     </h2>
-                    <p className="mt-4 text-sm leading-relaxed text-aristech-muted md:text-base">
+                    <p className="mt-4 text-sm leading-relaxed text-aristech-text md:text-base">
                         {aristechServices
                             .map((service) => service.title)
                             .slice(0, -1)

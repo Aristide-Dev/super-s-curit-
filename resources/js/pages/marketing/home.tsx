@@ -9,7 +9,7 @@ import TechMarquee from '@/components/marketing/tech-marquee';
 export default function MarketingHome() {
     return (
         <>
-            <SeoHead page="home" />
+            <SeoHead />
 
             <MarketingHero />
             <TechMarquee />

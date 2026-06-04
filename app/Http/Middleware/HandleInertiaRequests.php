@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Models\User;
+use App\Seo\SeoPageRegistry;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -36,8 +37,20 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $pageMeta = null;
+
+        $registry = app(SeoPageRegistry::class);
+        $pageFaqs = [];
+
+        if ($this->shouldSharePageMeta($request)) {
+            $pageMeta = $registry->resolve($request);
+            $pageFaqs = $registry->faqsForPath($registry->canonicalPath($request));
+        }
+
         return [
             ...parent::share($request),
+            'pageMeta' => $pageMeta,
+            'pageFaqs' => $pageFaqs,
             'name' => config('app.name'),
             'auth' => [
                 'user' => $request->user() ? $this->formatAuthUser($request->user()) : null,
@@ -63,6 +76,8 @@ class HandleInertiaRequests extends Middleware
                     config('aristech.social.facebook'),
                     config('aristech.social.twitter'),
                     config('aristech.social.instagram'),
+                    config('aristech.social.linkedin'),
+                    config('aristech.social.github'),
                 ])),
                 'services' => config('seo.services'),
                 'knowsAbout' => config('seo.knows_about'),
@@ -93,7 +108,33 @@ class HandleInertiaRequests extends Middleware
             'tracking' => [
                 'visitor_uuid' => $request->cookie('aristech_vid'),
             ],
+            'caseStudies' => collect(config('seo.case_studies', []))
+                ->map(fn (array $study): array => [
+                    'slug' => $study['slug'],
+                    'title' => $study['title'],
+                    'category' => $study['category'],
+                    'summary' => $study['summary'],
+                    'image' => $study['image'],
+                    'path' => $study['path'],
+                ])
+                ->values()
+                ->all(),
         ];
+    }
+
+    private function shouldSharePageMeta(Request $request): bool
+    {
+        if (! $request->isMethod('GET')) {
+            return false;
+        }
+
+        foreach (config('seo.robots_disallow', []) as $blockedPath) {
+            if (str_starts_with('/'.$request->path(), rtrim($blockedPath, '/'))) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

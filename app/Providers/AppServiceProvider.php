@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Seo\SeoPageRegistry;
+use App\Seo\StructuredDataBuilder;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 
@@ -24,6 +27,25 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+        $this->configureSeoViews();
+    }
+
+    protected function configureSeoViews(): void
+    {
+        View::composer('app', function ($view): void {
+            $request = request();
+
+            foreach (config('seo.robots_disallow', []) as $blockedPath) {
+                if (str_starts_with('/'.$request->path(), rtrim($blockedPath, '/'))) {
+                    return;
+                }
+            }
+
+            $registry = app(SeoPageRegistry::class);
+
+            $view->with('pageMeta', $registry->resolve($request));
+            $view->with('structuredData', app(StructuredDataBuilder::class)->build($request));
+        });
     }
 
     /**

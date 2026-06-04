@@ -56,6 +56,7 @@ export default function MarketingHero() {
                     <Reveal delay={120} className="mt-6">
                         <h1 className="font-heading text-4xl leading-[1.05] font-bold tracking-tight text-aristech-heading md:text-5xl lg:text-6xl xl:text-7xl">
                             <span className="block">
+                                {/* Agence web à Conakry —{' '} */}
                                 <RotatingWords words={verbs} /> votre{' '}
                                 <span className="relative inline-block">
                                     présence digitale
@@ -130,6 +131,7 @@ export default function MarketingHero() {
                     </Reveal>
 
                     <Reveal
+                        as="dl"
                         delay={560}
                         className="mt-14 grid grid-cols-3 gap-4 border-t border-aristech-border pt-8"
                     >

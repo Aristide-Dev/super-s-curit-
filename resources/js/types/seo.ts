@@ -22,6 +22,7 @@ export type SeoOrganization = {
 export type SeoService = {
     name: string;
     description: string;
+    path: string;
 };
 
 export type SeoGeo = {

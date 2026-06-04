@@ -110,7 +110,7 @@ export const aristechProjects: AristechProject[] = [
             'Plateforme de paiement sécurisée avec intégration multi-devises et vérification avancée.',
         image: '/images/aristech/projets/silylink.png',
         category: 'FinTech',
-        href: 'https://silylink.com/',
+        href: '/realisations/sily-link',
         featured: true,
     },
     {
@@ -127,7 +127,7 @@ export const aristechProjects: AristechProject[] = [
             "E-commerce complet avec paiement sécurisé et gestion d'inventaire en temps réel.",
         image: '/images/aristech/projets/7makiti.png',
         category: 'E-commerce',
-        href: '#projets',
+        href: '/realisations/7-makity',
     },
     {
         title: 'Drive Me',
@@ -135,7 +135,7 @@ export const aristechProjects: AristechProject[] = [
             'Covoiturage avec géolocalisation, notation et paiement intégré.',
         image: '/images/aristech/projets/driveme.png',
         category: 'Web & mobile',
-        href: '#projets',
+        href: '/realisations/drive-me',
     },
     {
         title: 'Eva',

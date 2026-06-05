@@ -10,6 +10,7 @@ import { index as devenirAgentIndex } from '@/routes/devenir-agent';
 import { about, contact, home } from '@/routes';
 import type { SuperSecuriteConfig } from '@/types/super-securite';
 import type { User } from '@/types/auth';
+import { isMarketingNavActive } from '@/lib/marketing-nav-active';
 import { cn } from '@/lib/utils';
 import type { CSSProperties } from 'react';
 
@@ -28,7 +29,7 @@ const primaryNavLinks = [
 ] as const;
 
 export default function MarketingHeader() {
-    const { props } = usePage<SharedPageProps>();
+    const { props, url } = usePage<SharedPageProps>();
     const { superSecurite } = props;
     const progress = useScrollProgress();
     const [scrolled, setScrolled] = useState(false);
@@ -59,29 +60,44 @@ export default function MarketingHeader() {
                     className="group flex shrink-0 cursor-pointer items-center gap-2 focus-visible:ring-2 focus-visible:ring-super-securite-accent focus-visible:outline-none"
                 >
                     <img
-                        src={superSecuriteImages.brand}
+                        src={superSecuriteImages.brandWhite}
                         alt="Super Sécurité"
-                        className="h-10 w-auto max-w-[200px] object-contain object-left transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100 sm:h-11 sm:max-w-[240px]"
+                        className="h-14 w-auto max-w-[200px] object-contain object-left transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100 sm:h-11 sm:max-w-[240px]"
                         width={240}
                         height={48}
                     />
                 </Link>
 
                 <ul className="hidden items-center gap-8 md:flex">
-                    {primaryNavLinks.map((item) => (
-                        <li key={item.label}>
-                            <Link
-                                href={item.href}
-                                className="group relative cursor-pointer text-sm font-medium text-super-securite-muted transition-colors duration-200 hover:text-super-securite-heading"
-                            >
-                                {item.label}
-                                <span
-                                    className="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-0 bg-super-securite-accent transition-transform duration-300 ease-out group-hover:scale-x-100 motion-reduce:transition-none"
-                                    aria-hidden
-                                />
-                            </Link>
-                        </li>
-                    ))}
+                    {primaryNavLinks.map((item) => {
+                        const active = isMarketingNavActive(item.href, url);
+
+                        return (
+                            <li key={item.label}>
+                                <Link
+                                    href={item.href}
+                                    aria-current={active ? 'page' : undefined}
+                                    className={cn(
+                                        'group relative cursor-pointer text-sm font-medium transition-colors duration-200',
+                                        active
+                                            ? 'font-semibold text-super-securite-accent'
+                                            : 'text-black hover:text-super-securite-heading',
+                                    )}
+                                >
+                                    {item.label}
+                                    <span
+                                        className={cn(
+                                            'absolute -bottom-1 left-0 h-0.5 w-full origin-left bg-super-securite-accent transition-transform duration-300 ease-out motion-reduce:transition-none',
+                                            active
+                                                ? 'scale-x-100'
+                                                : 'scale-x-0 group-hover:scale-x-100',
+                                        )}
+                                        aria-hidden
+                                    />
+                                </Link>
+                            </li>
+                        );
+                    })}
                 </ul>
 
                 <div className="flex items-center gap-2 sm:gap-3">

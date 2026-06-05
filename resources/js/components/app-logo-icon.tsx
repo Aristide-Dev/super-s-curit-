@@ -8,7 +8,7 @@ export default function AppLogoIcon({
 }: ImgHTMLAttributes<HTMLImageElement>) {
     return (
         <img
-            src={superSecuriteImages.brand}
+            src={superSecuriteImages.brandWhite}
             alt={alt}
             className={className ?? 'h-full w-auto object-contain'}
             {...props}

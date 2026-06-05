@@ -370,7 +370,7 @@ html.app-page {
         background: linear-gradient(
             90deg,
             var(--super-securite-accent) 0%,
-            #0ea5e9 100%
+            var(--super-securite-heading) 100%
         );
         transform-origin: left center;
         transform: scaleX(var(--scroll-progress, 0));

@@ -21,7 +21,7 @@ export default function MarketingFooter() {
                 <div className="grid grid-cols-1 gap-12 md:grid-cols-4">
                     <div>
                         <img
-                            src={superSecuriteImages.brand}
+                            src={superSecuriteImages.brandBlack}
                             alt="Super Sécurité"
                             className="h-12 w-auto max-w-[220px] object-contain object-left"
                             width={220}

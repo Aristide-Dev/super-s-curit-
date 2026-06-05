@@ -1,5 +1,6 @@
 <?php
 
+use App\Support\BusinessLocation;
 use Inertia\Testing\AssertableInertia as Assert;
 
 test('robots.txt is served dynamically with sitemap reference', function () {
@@ -104,6 +105,16 @@ test('contact page structured data includes faq and contact page type', function
         ->toContain('Place')
         ->toContain('hasMap')
         ->toContain(config('seo.faqs.0.question'));
+});
+
+test('map embed url uses coordinates to display office marker', function () {
+    $lat = config('super-securite.map.latitude');
+    $lng = config('super-securite.map.longitude');
+
+    expect(BusinessLocation::embedUrl())
+        ->toContain($lat)
+        ->toContain($lng)
+        ->toContain('output=embed');
 });
 
 test('contact page includes map section and local seo meta', function () {

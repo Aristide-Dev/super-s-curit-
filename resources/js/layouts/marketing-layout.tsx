@@ -1,4 +1,5 @@
 import { useEffect, type ReactNode } from 'react';
+import GlobalFullscreenLoader from '@/components/global-fullscreen-loader';
 import BackToTop from '@/components/marketing/back-to-top';
 import MarketingFooter from '@/components/marketing/marketing-footer';
 import MarketingHeader from '@/components/marketing/marketing-header';
@@ -37,6 +38,7 @@ export default function MarketingLayout({ children }: { children: ReactNode }) {
             </main>
             <MarketingFooter />
             <BackToTop />
+            <GlobalFullscreenLoader />
         </div>
     );
 }

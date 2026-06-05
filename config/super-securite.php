@@ -16,13 +16,13 @@ return [
     ),
 
     'map' => [
-        'latitude' => env('SUPER_SECURITE_MAP_LAT', '9.6412'),
-        'longitude' => env('SUPER_SECURITE_MAP_LNG', '-13.5784'),
+        'latitude' => env('SUPER_SECURITE_MAP_LAT', '9.644482'),
+        'longitude' => env('SUPER_SECURITE_MAP_LNG', '-13.609500'),
         'zoom' => (int) env('SUPER_SECURITE_MAP_ZOOM', 16),
     ],
 
     'social' => [
-        'facebook' => env('SUPER_SECURITE_FACEBOOK_URL'),
+        'facebook' => env('SUPER_SECURITE_FACEBOOK_URL', 'https://www.facebook.com/supersecurite'),
         'twitter' => env('SUPER_SECURITE_TWITTER_URL'),
         'youtube' => env('SUPER_SECURITE_YOUTUBE_URL'),
         'instagram' => env('SUPER_SECURITE_INSTAGRAM_URL'),

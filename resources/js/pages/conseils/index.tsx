@@ -17,6 +17,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
+import { useDebouncedCallback } from '@/hooks/use-debounced-callback';
 import { create, destroy, edit, index } from '@/routes/conseils';
 
 type UserRef = { id: number; name: string } | null;
@@ -103,6 +104,10 @@ export default function ConseilsIndex() {
 
         router.get(index.url(), next, { preserveState: true, replace: true });
     };
+
+    const debouncedSearch = useDebouncedCallback((search: string) => {
+        applyFilters({ search: search || undefined });
+    });
 
     const switchTab = (nextTab: SecurityTipTab) => {
         if (nextTab === 'pending') {
@@ -196,9 +201,7 @@ export default function ConseilsIndex() {
                             className="pl-9"
                             placeholder="Rechercher par titre..."
                             defaultValue={filters.search ?? ''}
-                            onChange={(e) =>
-                                applyFilters({ search: e.target.value })
-                            }
+                            onChange={(e) => debouncedSearch(e.target.value)}
                         />
                     </div>
                     <select

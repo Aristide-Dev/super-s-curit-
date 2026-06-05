@@ -16,6 +16,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { useDebouncedCallback } from '@/hooks/use-debounced-callback';
 import { cn } from '@/lib/utils';
 import { create, destroy, edit, index } from '@/routes/articles';
 
@@ -103,6 +104,10 @@ export default function ArticlesIndex() {
 
         router.get(index.url(), next, { preserveState: true, replace: true });
     };
+
+    const debouncedSearch = useDebouncedCallback((search: string) => {
+        applyFilters({ search: search || undefined });
+    });
 
     const switchTab = (nextTab: ArticleTab) => {
         if (nextTab === 'pending') {
@@ -196,9 +201,7 @@ export default function ArticlesIndex() {
                             className="pl-9"
                             placeholder="Rechercher par titre..."
                             defaultValue={filters.search ?? ''}
-                            onChange={(e) =>
-                                applyFilters({ search: e.target.value })
-                            }
+                            onChange={(e) => debouncedSearch(e.target.value)}
                         />
                     </div>
                     <select

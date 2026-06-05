@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import LocationCascadingSelects, {
     type LocationValues,
 } from '@/components/marketing/location-cascading-selects';
+import { useDebouncedCallback } from '@/hooks/use-debounced-callback';
 import { index, show } from '@/routes/candidatures-agents';
 import { useMemo, useState } from 'react';
 
@@ -94,6 +95,10 @@ export default function CandidaturesAgentsIndex() {
         router.get(index.url(), next, { preserveState: true, replace: true });
     };
 
+    const debouncedSearch = useDebouncedCallback((search: string) => {
+        applyFilters({ search: search || undefined });
+    });
+
     const applyLocationFilters = (nextLocation: LocationValues) => {
         setLocation(nextLocation);
         applyFilters({
@@ -133,9 +138,7 @@ export default function CandidaturesAgentsIndex() {
                                 className="pl-9"
                                 placeholder="Rechercher par nom, téléphone, e-mail..."
                                 defaultValue={filters.search ?? ''}
-                                onChange={(e) =>
-                                    applyFilters({ search: e.target.value })
-                                }
+                                onChange={(e) => debouncedSearch(e.target.value)}
                             />
                         </div>
                         <select

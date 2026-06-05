@@ -19,16 +19,17 @@ final class BusinessLocation
     public static function embedUrl(): string
     {
         $coordinates = self::coordinates();
-        $query = rawurlencode((string) config('super-securite.address'));
+        $latLng = $coordinates['latitude'].','.$coordinates['longitude'];
 
-        return 'https://maps.google.com/maps?q='.$query
+        return 'https://maps.google.com/maps?ll='.$latLng
             .'&hl=fr&z='.$coordinates['zoom']
             .'&output=embed';
     }
 
     public static function directionsUrl(): string
     {
-        $query = rawurlencode((string) config('super-securite.address'));
+        $coordinates = self::coordinates();
+        $query = rawurlencode($coordinates['latitude'].','.$coordinates['longitude']);
 
         return 'https://www.google.com/maps/search/?api=1&query='.$query;
     }

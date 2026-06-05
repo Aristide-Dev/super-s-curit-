@@ -177,6 +177,20 @@ return [
             ],
         ],
         [
+            'path' => '/devenir-agent',
+            'meta_title' => 'Devenir agent de sécurité | Super Sécurité — Guinée',
+            'meta_description' => 'Inscrivez-vous comme agent de sécurité à Conakry et en Guinée. Rejoignez le réseau Super Sécurité pour des missions de gardiennage et surveillance.',
+            'schema_type' => 'WebPage',
+            'changefreq' => 'monthly',
+            'priority' => 0.8,
+            'image' => '/web-app-manifest-512x512.png',
+            'og_image_alt' => 'Recrutement agents Super Sécurité — Guinée',
+            'sources' => [
+                'resources/js/pages/marketing/devenir-agent/index.tsx',
+                'config/seo.php',
+            ],
+        ],
+        [
             'path' => '/conseils-securite',
             'meta_title' => 'Conseils de sécurité | Super Sécurité — Conakry',
             'meta_description' => 'Conseils pratiques de Super Sécurité : prévention, gardiennage, surveillance et bonnes pratiques pour protéger vos locaux en Guinée.',
@@ -213,6 +227,7 @@ return [
         '/users',
         '/articles',
         '/conseils',
+        '/candidatures-agents',
         '/login',
         '/register',
         '/forgot-password',

@@ -3,7 +3,9 @@
 namespace App\Http\Middleware;
 
 use App\Enums\ArticleStatus;
+use App\Enums\SecurityAgentApplicationStatus;
 use App\Models\Article;
+use App\Models\SecurityAgentApplication;
 use App\Models\SecurityTip;
 use App\Models\User;
 use App\Seo\SeoPageRegistry;
@@ -64,6 +66,9 @@ class HandleInertiaRequests extends Middleware
                 : 0,
             'securityTipsPendingCount' => $request->user()?->isAdmin()
                 ? SecurityTip::query()->where('status', ArticleStatus::PendingApproval)->count()
+                : 0,
+            'securityAgentApplicationsPendingCount' => $request->user()?->isAdmin()
+                ? SecurityAgentApplication::query()->where('status', SecurityAgentApplicationStatus::Pending)->count()
                 : 0,
             'featuredSecurityTips' => SecurityTip::query()
                 ->published()

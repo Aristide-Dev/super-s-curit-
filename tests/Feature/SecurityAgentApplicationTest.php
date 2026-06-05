@@ -1,0 +1,115 @@
+<?php
+
+use App\Models\SecurityAgentApplication;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
+use Inertia\Testing\AssertableInertia as Assert;
+
+uses(RefreshDatabase::class);
+
+test('public can view agent registration form', function () {
+    $this->get(route('devenir-agent.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('marketing/devenir-agent/index')
+            ->has('availabilityOptions', 4)
+        );
+});
+
+test('public can submit a valid agent application in conakry', function () {
+    Mail::fake();
+
+    $payload = [
+        'first_name' => 'Mamadou',
+        'last_name' => 'Diallo',
+        'phone' => '+224612131314',
+        'email' => 'agent@example.com',
+        'experience_years' => 3,
+        'availability' => 'nuit',
+        'certifications' => 'Formation gardiennage',
+        'motivation' => 'Je souhaite rejoindre Super Sécurité.',
+        'region_id' => '1',
+        'prefecture_id' => '10',
+        'commune_id' => '104',
+        'quartier_id' => '10404',
+        'address_detail' => 'Face Cis Media',
+        'consent' => '1',
+    ];
+
+    $this->post(route('devenir-agent.store'), $payload)
+        ->assertRedirect(route('devenir-agent.merci'));
+
+    $application = SecurityAgentApplication::query()->first();
+
+    expect($application)->not->toBeNull()
+        ->and($application->first_name)->toBe('Mamadou')
+        ->and($application->prefecture_name)->toBe('Conakry')
+        ->and($application->commune_name)->toBe('Lambanyi')
+        ->and($application->quartier_name)->toBe('Kinifi')
+        ->and($application->status->value)->toBe('pending');
+});
+
+test('agent application requires commune when prefecture has communes', function () {
+    $this->post(route('devenir-agent.store'), [
+        'first_name' => 'Test',
+        'last_name' => 'Agent',
+        'phone' => '+224600000000',
+        'region_id' => '1',
+        'prefecture_id' => '10',
+        'consent' => '1',
+    ])->assertSessionHasErrors('commune_id');
+});
+
+test('agent application requires quartier when commune has quartiers', function () {
+    $this->post(route('devenir-agent.store'), [
+        'first_name' => 'Test',
+        'last_name' => 'Agent',
+        'phone' => '+224600000000',
+        'region_id' => '1',
+        'prefecture_id' => '10',
+        'commune_id' => '104',
+        'consent' => '1',
+    ])->assertSessionHasErrors('quartier_id');
+});
+
+test('agent application rejects invalid location hierarchy', function () {
+    $this->post(route('devenir-agent.store'), [
+        'first_name' => 'Test',
+        'last_name' => 'Agent',
+        'phone' => '+224600000000',
+        'region_id' => '1',
+        'prefecture_id' => '10',
+        'commune_id' => '210',
+        'consent' => '1',
+    ])->assertSessionHasErrors('commune_id');
+});
+
+test('agent application rejects quartier not matching commune', function () {
+    $this->post(route('devenir-agent.store'), [
+        'first_name' => 'Test',
+        'last_name' => 'Agent',
+        'phone' => '+224600000000',
+        'region_id' => '1',
+        'prefecture_id' => '10',
+        'commune_id' => '100',
+        'quartier_id' => '10404',
+        'consent' => '1',
+    ])->assertSessionHasErrors('quartier_id');
+});
+
+test('thank you page is accessible', function () {
+    $this->get(route('devenir-agent.merci'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('marketing/devenir-agent/merci')
+        );
+});
+
+test('devenir agent page has seo metadata configured', function () {
+    $this->get(route('devenir-agent.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('pageMeta.path', '/devenir-agent')
+            ->where('pageMeta.title', fn ($title) => str_contains($title, 'agent'))
+        );
+});

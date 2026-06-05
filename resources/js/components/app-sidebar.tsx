@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BarChart3, BookOpen, FolderGit2, LayoutGrid, Newspaper, Shield, Users } from 'lucide-react';
+import { BarChart3, BookOpen, FolderGit2, LayoutGrid, Newspaper, Shield, UserPlus, Users } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -17,6 +17,7 @@ import { dashboard } from '@/routes';
 import { index as analyticsIndex } from '@/routes/analytics';
 import { index as articlesIndex } from '@/routes/articles';
 import { index as conseilsIndex } from '@/routes/conseils';
+import { index as candidaturesAgentsIndex } from '@/routes/candidatures-agents';
 import { index as usersIndex } from '@/routes/users';
 import type { Auth, NavItem } from '@/types';
 
@@ -46,6 +47,11 @@ function buildMainNavItems(isAdmin: boolean): NavItem[] {
             icon: Shield,
         });
         items.push({
+            title: 'Candidatures agents',
+            href: candidaturesAgentsIndex.url(),
+            icon: UserPlus,
+        });
+        items.push({
             title: 'Utilisateurs',
             href: usersIndex.url(),
             icon: Users,
@@ -72,6 +78,7 @@ type SidebarPageProps = {
     auth: Auth;
     articlesPendingCount?: number;
     securityTipsPendingCount?: number;
+    securityAgentApplicationsPendingCount?: number;
 };
 
 export function AppSidebar() {
@@ -79,6 +86,7 @@ export function AppSidebar() {
         auth,
         articlesPendingCount = 0,
         securityTipsPendingCount = 0,
+        securityAgentApplicationsPendingCount = 0,
     } = usePage<SidebarPageProps>().props;
     const mainNavItems = buildMainNavItems(auth.user?.is_admin ?? false).map(
         (item) => {
@@ -87,6 +95,9 @@ export function AppSidebar() {
             }
             if (item.title === 'Conseils') {
                 return { ...item, badge: securityTipsPendingCount };
+            }
+            if (item.title === 'Candidatures agents') {
+                return { ...item, badge: securityAgentApplicationsPendingCount };
             }
             return item;
         },

@@ -4,6 +4,7 @@ import { superSecuriteImages } from '@/data/super-securite-images';
 import { superSecuriteNavLinks } from '@/data/super-securite-nav';
 import { index as actualitesIndex } from '@/routes/actualites';
 import { index as conseilsIndex } from '@/routes/conseils-securite';
+import { index as devenirAgentIndex } from '@/routes/devenir-agent';
 import { about, contact, home } from '@/routes';
 import type { SuperSecuriteConfig } from '@/types/super-securite';
 import {
@@ -25,6 +26,7 @@ const primaryLinks = [
     { href: about.url(), label: 'Pourquoi nous' },
     { href: actualitesIndex.url(), label: 'Actualités' },
     { href: conseilsIndex.url(), label: 'Conseils' },
+    { href: devenirAgentIndex.url(), label: 'Devenir agent' },
     { href: contact.url(), label: 'Nous contacter' },
 ] as const;
 

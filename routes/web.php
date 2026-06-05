@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
+use App\Http\Controllers\Admin\SecurityAgentApplicationController as AdminSecurityAgentApplicationController;
 use App\Http\Controllers\Admin\SecurityTipController as AdminSecurityTipController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Marketing\ArticleController as MarketingArticleController;
+use App\Http\Controllers\Marketing\SecurityAgentApplicationController as MarketingSecurityAgentApplicationController;
 use App\Http\Controllers\Marketing\SecurityTipController as MarketingSecurityTipController;
 use App\Http\Controllers\RobotsController;
 use App\Http\Controllers\SitemapController;
@@ -45,6 +47,11 @@ Route::get('/actualites', [MarketingArticleController::class, 'index'])->name('a
 Route::get('/actualites/{article:slug}', [MarketingArticleController::class, 'show'])->name('actualites.show');
 Route::get('/conseils-securite', [MarketingSecurityTipController::class, 'index'])->name('conseils-securite.index');
 Route::get('/conseils-securite/{securityTip:slug}', [MarketingSecurityTipController::class, 'show'])->name('conseils-securite.show');
+Route::get('/devenir-agent', [MarketingSecurityAgentApplicationController::class, 'create'])->name('devenir-agent.index');
+Route::post('/devenir-agent', [MarketingSecurityAgentApplicationController::class, 'store'])
+    ->middleware('throttle:5,1')
+    ->name('devenir-agent.store');
+Route::get('/devenir-agent/merci', [MarketingSecurityAgentApplicationController::class, 'thankYou'])->name('devenir-agent.merci');
 Route::inertia('/contact', 'marketing/contact')->name('contact');
 Route::inertia('/politique-de-confidentialite', 'marketing/privacy')->name('privacy');
 Route::inertia('/mentions-legales', 'marketing/legal')->name('legal');
@@ -59,6 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('users', UserController::class)->except(['show']);
         Route::resource('articles', AdminArticleController::class)->except(['show']);
         Route::resource('conseils', AdminSecurityTipController::class)->except(['show']);
+        Route::resource('candidatures-agents', AdminSecurityAgentApplicationController::class)->only(['index', 'show', 'update']);
         Route::get('analytics', [AnalyticsController::class, 'index'])->name('analytics.index');
     });
 });

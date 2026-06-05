@@ -302,6 +302,15 @@ html.app-page {
         @apply bg-linear-to-r from-[#d32f2f] to-[#0f172a] bg-clip-text text-transparent;
     }
 
+    .marketing-hero-viewport {
+        --marketing-header-offset: var(--marketing-header-height, 5.5rem);
+        margin-top: calc(-1 * var(--marketing-header-offset));
+        height: 100dvh;
+        max-height: 100dvh;
+        padding-top: var(--marketing-header-offset);
+        box-sizing: border-box;
+    }
+
     .marketing-reveal {
         opacity: 0;
         transform: translate3d(0, 24px, 0);

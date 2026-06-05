@@ -42,8 +42,36 @@ export default function MarketingHeader() {
         return () => window.removeEventListener('scroll', onScroll);
     }, []);
 
+    useEffect(() => {
+        const header = document.getElementById('marketing-header');
+
+        if (!header) {
+            return;
+        }
+
+        const syncHeaderHeight = () => {
+            document.documentElement.style.setProperty(
+                '--marketing-header-height',
+                `${header.offsetHeight}px`,
+            );
+        };
+
+        syncHeaderHeight();
+
+        const observer = new ResizeObserver(syncHeaderHeight);
+        observer.observe(header);
+
+        return () => {
+            observer.disconnect();
+            document.documentElement.style.removeProperty(
+                '--marketing-header-height',
+            );
+        };
+    }, []);
+
     return (
         <header
+            id="marketing-header"
             className={cn(
                 'sticky top-0 z-40 transition-[background-color,box-shadow,backdrop-filter] duration-300',
                 scrolled

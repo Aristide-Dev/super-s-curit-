@@ -1,7 +1,7 @@
 import { usePage } from '@inertiajs/react';
 import SeoHead from '@/components/marketing/seo-head';
 import CtaBand from '@/components/marketing/cta-band';
-import MarketingHero from '@/components/marketing/marketing-hero';
+import MarketingHeroCarousel from '@/components/marketing/marketing-hero-carousel';
 import SecurityTipsSection from '@/components/marketing/security-tips-section';
 import ServiceCards from '@/components/marketing/service-cards';
 import TestimonialsSection from '@/components/marketing/testimonials-section';
@@ -31,7 +31,7 @@ export default function MarketingHome() {
         <>
             <SeoHead />
 
-            <MarketingHero />
+            <MarketingHeroCarousel />
 
             <div className="marketing-section-band-alt">
                 <WelcomeSection />

@@ -151,8 +151,8 @@
     --super-securite-surface-elevated: #e2e8f0;
     --super-securite-text: #334155;
     --super-securite-heading: #0f172a;
-    --super-securite-accent: #d32f2f;
-    --super-securite-accent-hover: #b71c1c;
+    --super-securite-accent: #ff001b;
+    --super-securite-accent-hover: #cc0016;
     --super-securite-muted: #4a5668;
     --super-securite-border: #b8c5d4;
 }
@@ -299,7 +299,7 @@ html.app-page {
     }
 
     .marketing-text-gradient {
-        @apply bg-linear-to-r from-[#d32f2f] to-[#0f172a] bg-clip-text text-transparent;
+        @apply bg-linear-to-r from-super-securite-accent to-super-securite-heading bg-clip-text text-transparent;
     }
 
     .marketing-hero-viewport {

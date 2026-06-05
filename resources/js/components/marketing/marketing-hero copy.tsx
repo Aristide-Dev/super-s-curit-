@@ -76,7 +76,10 @@ export default function MarketingHero() {
                                             x2="1"
                                             y2="0"
                                         >
-                                            <stop offset="0" stopColor="#d32f2f" />
+                                            <stop
+                                                offset="0"
+                                                stopColor="var(--super-securite-accent)"
+                                            />
                                             <stop offset="1" stopColor="#0f172a" />
                                         </linearGradient>
                                     </defs>

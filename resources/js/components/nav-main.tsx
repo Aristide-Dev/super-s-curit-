@@ -1,4 +1,5 @@
 import { Link } from '@inertiajs/react';
+import { Badge } from '@/components/ui/badge';
 import {
     SidebarGroup,
     SidebarGroupLabel,
@@ -26,6 +27,14 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                             <Link href={item.href} prefetch>
                                 {item.icon && <item.icon />}
                                 <span>{item.title}</span>
+                                {item.badge && item.badge > 0 ? (
+                                    <Badge
+                                        variant="destructive"
+                                        className="ml-auto size-5 justify-center rounded-full px-0 text-[10px]"
+                                    >
+                                        {item.badge > 9 ? '9+' : item.badge}
+                                    </Badge>
+                                ) : null}
                             </Link>
                         </SidebarMenuButton>
                     </SidebarMenuItem>

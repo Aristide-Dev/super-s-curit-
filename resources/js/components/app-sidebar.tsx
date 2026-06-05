@@ -1,5 +1,5 @@
 import { Link, usePage } from '@inertiajs/react';
-import { BarChart3, BookOpen, FolderGit2, LayoutGrid, Users } from 'lucide-react';
+import { BarChart3, BookOpen, FolderGit2, LayoutGrid, Newspaper, Users } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/sidebar';
 import { dashboard } from '@/routes';
 import { index as analyticsIndex } from '@/routes/analytics';
+import { index as articlesIndex } from '@/routes/articles';
 import { index as usersIndex } from '@/routes/users';
 import type { Auth, NavItem } from '@/types';
 
@@ -32,6 +33,11 @@ function buildMainNavItems(isAdmin: boolean): NavItem[] {
             title: 'Analytics',
             href: analyticsIndex.url(),
             icon: BarChart3,
+        });
+        items.push({
+            title: 'Actualités',
+            href: articlesIndex.url(),
+            icon: Newspaper,
         });
         items.push({
             title: 'Utilisateurs',
@@ -56,9 +62,20 @@ const footerNavItems: NavItem[] = [
     },
 ];
 
+type SidebarPageProps = {
+    auth: Auth;
+    articlesPendingCount?: number;
+};
+
 export function AppSidebar() {
-    const { auth } = usePage<{ auth: Auth }>().props;
-    const mainNavItems = buildMainNavItems(auth.user?.is_admin ?? false);
+    const { auth, articlesPendingCount = 0 } =
+        usePage<SidebarPageProps>().props;
+    const mainNavItems = buildMainNavItems(auth.user?.is_admin ?? false).map(
+        (item) =>
+            item.title === 'Actualités'
+                ? { ...item, badge: articlesPendingCount }
+                : item,
+    );
 
     return (
         <Sidebar collapsible="icon" variant="inset">

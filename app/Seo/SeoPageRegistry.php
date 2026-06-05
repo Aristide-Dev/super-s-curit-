@@ -2,7 +2,9 @@
 
 namespace App\Seo;
 
+use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class SeoPageRegistry
 {
@@ -89,6 +91,27 @@ class SeoPageRegistry
                 'og_image_alt' => ($caseStudy['title'] ?? '').' — réalisation Super Sécurité Guinée',
                 'schema_type' => 'WebPage',
             ];
+        }
+
+        if (preg_match('#^/actualites/([a-z0-9\-]+)$#', $path, $matches) === 1) {
+            $article = Article::query()
+                ->published()
+                ->where('slug', $matches[1])
+                ->first();
+
+            if ($article !== null) {
+                $description = $article->excerpt
+                    ?? Str::limit(Article::extractTextFromContent($article->content), 160);
+
+                return [
+                    'title' => $article->title.' | '.config('seo.site_name'),
+                    'description' => $description,
+                    'og_image' => $article->image_url ?? config('seo.default_og_image'),
+                    'og_image_alt' => $article->title.' — '.config('seo.site_name'),
+                    'og_type' => 'article',
+                    'schema_type' => 'Article',
+                ];
+            }
         }
 
         $legal = collect(config('seo.legal_pages', []))->firstWhere('path', $path);

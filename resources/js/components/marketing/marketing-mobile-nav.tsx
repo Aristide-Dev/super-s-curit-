@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react';
 import { ArrowRight, Mail, Menu, Phone, X } from 'lucide-react';
 import { superSecuriteImages } from '@/data/super-securite-images';
 import { superSecuriteNavLinks } from '@/data/super-securite-nav';
+import { index as actualitesIndex } from '@/routes/actualites';
 import { about, contact, home } from '@/routes';
 import type { SuperSecuriteConfig } from '@/types/super-securite';
 import {
@@ -21,6 +22,7 @@ type MarketingMobileNavProps = {
 const primaryLinks = [
     { href: home.url(), label: 'Accueil' },
     { href: about.url(), label: 'Pourquoi nous' },
+    { href: actualitesIndex.url(), label: 'Actualités' },
     { href: contact.url(), label: 'Nous contacter' },
 ] as const;
 

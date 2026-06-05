@@ -163,6 +163,20 @@ return [
             ],
         ],
         [
+            'path' => '/actualites',
+            'meta_title' => 'Actualités | Super Sécurité — Sécurité privée à Conakry',
+            'meta_description' => 'Découvrez les dernières actualités de Super Sécurité : gardiennage, surveillance, événements et conseils sécurité en Guinée.',
+            'schema_type' => 'CollectionPage',
+            'changefreq' => 'weekly',
+            'priority' => 0.8,
+            'image' => '/web-app-manifest-512x512.png',
+            'og_image_alt' => 'Actualités Super Sécurité — Conakry',
+            'sources' => [
+                'resources/js/pages/marketing/articles/index.tsx',
+                'config/seo.php',
+            ],
+        ],
+        [
             'path' => '/contact',
             'meta_title' => 'Contact & plan d\'accès | Super Sécurité — Lambanyi, Conakry',
             'meta_description' => 'Contactez Super Sécurité à Lambanyi (face Cis Media), Conakry : +224 612 13 13 14, contact@supersecurite.com. Formulaire, FAQ et plan Google Maps.',
@@ -183,6 +197,7 @@ return [
         '/dashboard',
         '/analytics',
         '/users',
+        '/articles',
         '/login',
         '/register',
         '/forgot-password',

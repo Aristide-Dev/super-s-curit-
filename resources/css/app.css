@@ -202,6 +202,11 @@ html.app-page {
     color-scheme: light;
 }
 
+.marketing-page {
+    --font-heading: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    --font-marketing: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+}
+
 @layer components {
     .app-site {
         @apply min-h-svh bg-background font-sans text-foreground antialiased;

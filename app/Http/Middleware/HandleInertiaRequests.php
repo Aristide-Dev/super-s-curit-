@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Enums\ArticleStatus;
+use App\Models\Article;
 use App\Models\User;
 use App\Seo\SeoPageRegistry;
 use App\Support\BusinessLocation;
@@ -56,6 +58,9 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user() ? $this->formatAuthUser($request->user()) : null,
             ],
+            'articlesPendingCount' => $request->user()?->isAdmin()
+                ? Article::query()->where('status', ArticleStatus::PendingApproval)->count()
+                : 0,
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'superSecurite' => [
                 'email' => config('super-securite.email'),

@@ -1,4 +1,5 @@
 import { usePage } from '@inertiajs/react';
+import { index as actualitesIndex } from '@/routes/actualites';
 import { superSecuriteImages } from '@/data/super-securite-images';
 import { superSecuriteFooterServices } from '@/data/super-securite-content';
 import type { SuperSecuriteConfig } from '@/types/super-securite';
@@ -40,6 +41,14 @@ export default function MarketingFooter() {
                                     className="cursor-pointer transition-colors duration-200 hover:text-super-securite-heading"
                                 >
                                     Pourquoi nous choisir
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href={actualitesIndex.url()}
+                                    className="cursor-pointer transition-colors duration-200 hover:text-super-securite-heading"
+                                >
+                                    Actualités
                                 </a>
                             </li>
                             <li>

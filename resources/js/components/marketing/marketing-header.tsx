@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import MarketingMobileNav from '@/components/marketing/marketing-mobile-nav';
 import { superSecuriteImages } from '@/data/super-securite-images';
 import { useScrollProgress } from '@/hooks/use-scroll-progress';
+import { index as actualitesIndex } from '@/routes/actualites';
 import { about, contact, home } from '@/routes';
 import type { SuperSecuriteConfig } from '@/types/super-securite';
 import type { User } from '@/types/auth';
@@ -18,6 +19,7 @@ type SharedPageProps = {
 const primaryNavLinks = [
     { href: home.url(), label: 'Accueil' },
     { href: about.url(), label: 'Pourquoi nous' },
+    { href: actualitesIndex.url(), label: 'Actualités' },
     { href: contact.url(), label: 'Nous contacter' },
 ] as const;
 

@@ -2,6 +2,8 @@
 
 namespace App\Seo;
 
+use App\Models\Article;
+
 class SitemapEntries
 {
     /**
@@ -37,11 +39,25 @@ class SitemapEntries
             ])
             ->all();
 
+        $articlePages = Article::query()
+            ->published()
+            ->orderByDesc('published_at')
+            ->get()
+            ->map(fn (Article $article): array => [
+                'path' => '/actualites/'.$article->slug,
+                'changefreq' => 'monthly',
+                'priority' => 0.7,
+                'image' => $article->image_url ?? config('seo.default_og_image'),
+                'sources' => ['database/articles'],
+                'lastmod' => $article->updated_at?->toAtomString(),
+            ])
+            ->all();
+
         $existingPaths = collect($pages)->pluck('path')->all();
 
         $merged = $pages;
 
-        foreach ([...$servicePages, ...$caseStudies, ...$legal] as $entry) {
+        foreach ([...$servicePages, ...$caseStudies, ...$legal, ...$articlePages] as $entry) {
             if (! in_array($entry['path'], $existingPaths, true)) {
                 $merged[] = $entry;
                 $existingPaths[] = $entry['path'];

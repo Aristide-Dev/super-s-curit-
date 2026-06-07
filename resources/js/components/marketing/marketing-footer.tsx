@@ -3,7 +3,7 @@ import { index as actualitesIndex } from '@/routes/actualites';
 import { index as conseilsIndex } from '@/routes/conseils-securite';
 import { index as devenirAgentIndex } from '@/routes/devenir-agent';
 import { superSecuriteImages } from '@/data/super-securite-images';
-import { superSecuriteFooterServices, superSecuriteServices } from '@/data/super-securite-content';
+import { superSecuriteServices } from '@/data/super-securite-content';
 import type { SuperSecuriteConfig } from '@/types/super-securite';
 import { FacebookIcon, InstagramIcon, TwitterIcon, Youtube } from 'lucide-react';
 
@@ -69,24 +69,6 @@ export default function MarketingFooter() {
                                     Devenir agent
                                 </a>
                             </li>
-                            <li>
-                                <a
-                                    href="/#services"
-                                    className="cursor-pointer transition-colors duration-200 hover:text-white"
-                                >
-                                    Nos services
-                                </a>
-                            </li>
-                            {superSecuriteServices.map((service) => (
-                                <li key={service.id}>
-                                    <a
-                                        href={service.path}
-                                        className="cursor-pointer transition-colors duration-200 hover:text-white"
-                                    >
-                                        {service.title}
-                                    </a>
-                                </li>
-                            ))}
                         </ul>
                     </div>
 
@@ -95,9 +77,6 @@ export default function MarketingFooter() {
                             Services
                         </h3>
                         <ul className="mt-4 space-y-3 text-sm">
-                            {superSecuriteFooterServices.map((service) => (
-                                <li key={service}>{service}</li>
-                            ))}
                             {superSecuriteServices.map((service) => (
                                 <li key={`link-${service.id}`}>
                                     <a

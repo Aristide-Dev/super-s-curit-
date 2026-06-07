@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Exceptions\MarketingErrorRenderer;
 use App\Http\Middleware\EnsureUserIsAdmin;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\TrackVisit;
@@ -34,5 +35,5 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->respond(app(MarketingErrorRenderer::class));
     })->create();

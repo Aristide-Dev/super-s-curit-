@@ -40,6 +40,7 @@ createInertiaApp({
     layout: (name) => {
         switch (true) {
             case name.startsWith('marketing/'):
+            case name.startsWith('errors/'):
                 return MarketingLayout;
             case name.startsWith('auth/'):
                 return AuthLayout;
@@ -50,7 +51,9 @@ createInertiaApp({
         }
     },
     withApp(app) {
-        if (initialPageComponent().startsWith('marketing/')) {
+        const page = initialPageComponent();
+
+        if (page.startsWith('marketing/') || page.startsWith('errors/')) {
             return app;
         }
 

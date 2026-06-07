@@ -486,6 +486,26 @@ html.app-page {
         box-sizing: border-box;
     }
 
+    .marketing-error-page-bg {
+        background-color: var(--super-securite-bg);
+        background-image:
+            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64' fill='none'%3E%3Cpath d='M32 8 L46 14 V28 C46 38 32 50 32 50 C32 50 18 38 18 28 V14 Z' stroke='%23ff001b' stroke-opacity='0.06'/%3E%3Cpath d='M8 32 H56 M32 8 V56' stroke='%230f172a' stroke-opacity='0.04'/%3E%3C/svg%3E"),
+            radial-gradient(
+                circle at 50% 0%,
+                color-mix(in oklab, var(--super-securite-accent) 8%, transparent),
+                transparent 55%
+            );
+        background-size:
+            4rem 4rem,
+            100% 100%;
+    }
+
+    .marketing-error-code-ring {
+        box-shadow:
+            0 0 0 8px color-mix(in oklab, var(--super-securite-accent) 8%, transparent),
+            0 12px 32px color-mix(in oklab, var(--super-securite-heading) 8%, transparent);
+    }
+
     .marketing-reveal {
         opacity: 0;
         transform: translate3d(0, 24px, 0);

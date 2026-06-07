@@ -9,7 +9,7 @@ use App\Models\SecurityAgentApplication;
 use App\Models\SecurityTip;
 use App\Models\User;
 use App\Seo\SeoPageRegistry;
-use App\Support\BusinessLocation;
+use App\Support\SuperSecuriteSharedData;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -80,20 +80,7 @@ class HandleInertiaRequests extends Middleware
                 ->values()
                 ->all(),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
-            'superSecurite' => [
-                'email' => config('super-securite.email'),
-                'phone' => config('super-securite.phone'),
-                'phone_secondary' => config('super-securite.phone_secondary'),
-                'phone_href' => config('super-securite.phone_href'),
-                'address' => config('super-securite.address'),
-                'rccm' => config('super-securite.rccm'),
-                'social' => config('super-securite.social'),
-                'map' => [
-                    ...BusinessLocation::coordinates(),
-                    'embedUrl' => BusinessLocation::embedUrl(),
-                    'directionsUrl' => BusinessLocation::directionsUrl(),
-                ],
-            ],
+            'superSecurite' => SuperSecuriteSharedData::contact(),
             'seo' => [
                 'siteName' => config('seo.site_name'),
                 'siteUrl' => rtrim((string) config('app.url'), '/'),
@@ -167,19 +154,6 @@ class HandleInertiaRequests extends Middleware
      */
     private function formatAuthUser(User $user): array
     {
-        return [
-            'id' => $user->id,
-            'uuid' => $user->uuid,
-            'name' => $user->name,
-            'email' => $user->email,
-            'phone' => $user->phone,
-            'role' => $user->role->value,
-            'role_label' => $user->role->label(),
-            'is_admin' => $user->isAdmin(),
-            'email_verified_at' => $user->email_verified_at,
-            'two_factor_enabled' => $user->two_factor_secret !== null,
-            'created_at' => $user->created_at,
-            'updated_at' => $user->updated_at,
-        ];
+        return SuperSecuriteSharedData::authUser($user);
     }
 }

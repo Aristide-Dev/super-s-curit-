@@ -24,8 +24,12 @@ import { about, contact, home } from '@/routes';
 import type { SuperSecuriteConfig } from '@/types/super-securite';
 import { index as devenirAgentIndex } from '@/routes/devenir-agent';
 
+type SharedPageProps = {
+    superSecurite?: SuperSecuriteConfig;
+};
+
 type MarketingMobileNavProps = {
-    superSecurite: SuperSecuriteConfig;
+    superSecurite?: SuperSecuriteConfig;
     open: boolean;
     onOpenChange: (open: boolean) => void;
 };
@@ -39,11 +43,12 @@ const primaryLinks = [
 ] as const;
 
 export default function MarketingMobileNav({
-    superSecurite,
+    superSecurite: superSecuriteProp,
     open,
     onOpenChange,
 }: MarketingMobileNavProps) {
-    const { url } = usePage();
+    const { url, props } = usePage<SharedPageProps>();
+    const superSecurite = superSecuriteProp ?? props.superSecurite;
     const [servicesOpen, setServicesOpen] = useState(false);
     const close = () => onOpenChange(false);
 
@@ -169,39 +174,43 @@ export default function MarketingMobileNav({
                         </span>
                     </a>
 
-                    <div className="flex items-center gap-3 rounded-xl border border-super-securite-border/80 bg-super-securite-surface px-4 py-3">
-                        <Phone
-                            className="size-4 shrink-0 text-super-securite-accent"
-                            aria-hidden
-                        />
-                        <a
-                            href={superSecurite.phone_href}
-                            className="min-w-0 truncate text-sm font-medium text-super-securite-heading transition-colors hover:text-super-securite-accent"
-                        >
-                            {superSecurite.phone}
-                        </a>
-                    </div>
+                    {superSecurite ? (
+                        <>
+                            <div className="flex items-center gap-3 rounded-xl border border-super-securite-border/80 bg-super-securite-surface px-4 py-3">
+                                <Phone
+                                    className="size-4 shrink-0 text-super-securite-accent"
+                                    aria-hidden
+                                />
+                                <a
+                                    href={superSecurite.phone_href}
+                                    className="min-w-0 truncate text-sm font-medium text-super-securite-heading transition-colors hover:text-super-securite-accent"
+                                >
+                                    {superSecurite.phone}
+                                </a>
+                            </div>
 
-                    <div className="flex items-center gap-3 rounded-xl border border-super-securite-border/80 bg-super-securite-surface px-4 py-3">
-                        <Mail
-                            className="size-4 shrink-0 text-super-securite-accent"
-                            aria-hidden
-                        />
-                        <a
-                            href={`mailto:${superSecurite.email}`}
-                            className="min-w-0 truncate text-sm font-medium text-super-securite-heading transition-colors hover:text-super-securite-accent"
-                        >
-                            {superSecurite.email}
-                        </a>
-                    </div>
+                            <div className="flex items-center gap-3 rounded-xl border border-super-securite-border/80 bg-super-securite-surface px-4 py-3">
+                                <Mail
+                                    className="size-4 shrink-0 text-super-securite-accent"
+                                    aria-hidden
+                                />
+                                <a
+                                    href={`mailto:${superSecurite.email}`}
+                                    className="min-w-0 truncate text-sm font-medium text-super-securite-heading transition-colors hover:text-super-securite-accent"
+                                >
+                                    {superSecurite.email}
+                                </a>
+                            </div>
 
-                    <p className="flex items-start gap-2 px-1 text-xs leading-relaxed text-super-securite-muted">
-                        <MapPin
-                            className="mt-0.5 size-3.5 shrink-0 text-super-securite-accent"
-                            aria-hidden
-                        />
-                        {superSecurite.address}
-                    </p>
+                            <p className="flex items-start gap-2 px-1 text-xs leading-relaxed text-super-securite-muted">
+                                <MapPin
+                                    className="mt-0.5 size-3.5 shrink-0 text-super-securite-accent"
+                                    aria-hidden
+                                />
+                                {superSecurite.address}
+                            </p>
+                        </>
+                    ) : null}
                 </div>
             </SheetContent>
         </Sheet>

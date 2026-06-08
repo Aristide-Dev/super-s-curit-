@@ -306,6 +306,60 @@ html.app-page {
         contain-intrinsic-size: auto 600px;
     }
 
+    .marketing-hero-cinematic {
+        background-color: #0b1222;
+    }
+
+    .marketing-hero-overlay-side {
+        background: linear-gradient(
+            100deg,
+            rgb(2 6 23 / 0.94) 0%,
+            rgb(15 23 42 / 0.78) 40%,
+            rgb(30 58 95 / 0.28) 68%,
+            transparent 100%
+        );
+    }
+
+    .marketing-hero-overlay-base {
+        background: linear-gradient(
+            to top,
+            rgb(2 6 23 / 0.88) 0%,
+            rgb(15 23 42 / 0.32) 42%,
+            transparent 100%
+        );
+    }
+
+    @media (min-width: 1024px) {
+        .marketing-hero-overlay-base {
+            background: linear-gradient(
+                to top,
+                rgb(15 23 42 / 0.22) 0%,
+                transparent 45%
+            );
+        }
+    }
+
+    .service-chantiers-bg {
+        background-color: #f8fafc;
+        background-image: repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 14px,
+            color-mix(in oklab, var(--super-securite-accent) 7%, transparent) 14px,
+            color-mix(in oklab, var(--super-securite-accent) 7%, transparent) 15px
+        );
+    }
+
+    .service-zones-bg {
+        background-color: #ffffff;
+        background-image: linear-gradient(
+            165deg,
+            color-mix(in oklab, var(--super-securite-accent) 6%, #ffffff) 0%,
+            #ffffff 45%,
+            color-mix(in oklab, var(--super-securite-heading) 4%, #ffffff) 100%
+        );
+    }
+
     .marketing-site h1,
     .marketing-site h2,
     .marketing-site h3,
@@ -577,6 +631,14 @@ html.app-page {
         transform-origin: left center;
         animation: underline-slide 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.45s
             forwards;
+    }
+
+    .marketing-underline-slide-dark {
+        background: linear-gradient(
+            90deg,
+            var(--super-securite-accent) 0%,
+            #ffffff 100%
+        );
     }
 
     .marketing-underline-grow {

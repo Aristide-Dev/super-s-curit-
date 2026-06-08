@@ -8,7 +8,7 @@ import {
     Shield,
     Star,
 } from 'lucide-react';
-import MarketingSplitHero from '@/components/marketing/marketing-split-hero';
+import MarketingFullscreenHero from '@/components/marketing/marketing-fullscreen-hero';
 import ContentShareButton from '@/components/content-share-button';
 import SeoHead from '@/components/marketing/seo-head';
 import { marketingPageHeroes } from '@/data/marketing-page-heroes';
@@ -136,7 +136,7 @@ export default function MarketingConseilsSecuriteIndex() {
             <SeoHead />
             <Head title="Conseils de sécurité" />
 
-            <MarketingSplitHero {...marketingPageHeroes.conseils} />
+            <MarketingFullscreenHero {...marketingPageHeroes.conseils} />
 
             <section className="marketing-section-band marketing-below-fold py-16">
                 <div className="container mx-auto max-w-6xl px-4">

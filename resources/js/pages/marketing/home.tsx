@@ -34,20 +34,18 @@ export default function MarketingHome() {
                 <ServiceCards />
             </div>
 
-            <div className="marketing-section-white">
+            <WhyUsSection />
+
+            <div className="marketing-section-band">
                 <ArticlesSection articles={featuredArticles} />
+            </div>
+
+            <div className="marketing-section-white">
+                <PartnersSection />
             </div>
 
             <div className="marketing-section-band">
                 <SecurityTipsSection tips={featuredSecurityTips} />
-            </div>
-
-            <div className="marketing-section-white">
-                <WhyUsSection />
-            </div>
-
-            <div className="marketing-section-band">
-                <PartnersSection />
             </div>
 
             <div className="marketing-section-white">

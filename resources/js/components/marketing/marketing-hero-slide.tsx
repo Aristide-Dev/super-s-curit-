@@ -166,15 +166,13 @@ function HeroImage({
     className,
     imageClassName,
     framed = true,
-    badge = true,
     accentEdge = false,
 }: {
     variant: MarketingHeroVariant;
     className?: string;
     imageClassName?: string;
     framed?: boolean;
-    badge?: boolean;
-    accentEdge?: boolean;
+    accentEdge?: 'left' | 'right' | false;
 }) {
     return (
         <Reveal delay={300} variant="fade" className={className}>
@@ -188,11 +186,13 @@ function HeroImage({
                     className={cn(
                         'overflow-hidden shadow-xl shadow-slate-900/10',
                         framed &&
-                            'rounded-3xl border border-super-securite-border',
+                            'rounded-3xl border border-super-securite-border ring-4 ring-super-securite-accent/15',
                         !framed &&
                             'h-full rounded-2xl border border-super-securite-border lg:rounded-none lg:border-y-0 lg:border-r-0',
-                        accentEdge &&
-                            'ring-4 ring-super-securite-accent/15 lg:rounded-l-none lg:border-l-4 lg:border-l-super-securite-accent',
+                        accentEdge === 'left' &&
+                            'lg:rounded-l-none lg:border-l-4 lg:border-l-super-securite-accent',
+                        accentEdge === 'right' &&
+                            'lg:rounded-r-none lg:border-r-4 lg:border-r-super-securite-accent',
                     )}
                 >
                     <img
@@ -269,8 +269,7 @@ function SplitLayout({
             <HeroImage
                 variant={variant}
                 framed
-                badge
-                accentEdge={imagePosition === 'left'}
+                accentEdge={imagePosition}
                 className={cn(
                     'lg:col-span-6 xl:col-span-5',
                     imageFirst ? 'lg:order-1' : 'lg:order-2',

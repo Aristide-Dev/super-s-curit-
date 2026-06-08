@@ -4,14 +4,21 @@ import { cn } from '@/lib/utils';
 type HeroTitleUnderlineProps = {
     variant: MarketingPageHeroUnderline;
     gradientId: string;
+    tone?: 'light' | 'dark';
 };
 
-function UnderlineGradient({ id }: { id: string }) {
+function UnderlineGradient({
+    id,
+    endColor,
+}: {
+    id: string;
+    endColor: string;
+}) {
     return (
         <defs>
             <linearGradient id={id} x1="0" y1="0" x2="1" y2="0">
                 <stop offset="0" stopColor="var(--super-securite-accent)" />
-                <stop offset="1" stopColor="#0f172a" />
+                <stop offset="1" stopColor={endColor} />
             </linearGradient>
         </defs>
     );
@@ -20,7 +27,9 @@ function UnderlineGradient({ id }: { id: string }) {
 export default function HeroTitleUnderline({
     variant,
     gradientId,
+    tone = 'light',
 }: HeroTitleUnderlineProps) {
+    const endColor = tone === 'dark' ? '#ffffff' : '#0f172a';
     const svgClassName =
         'absolute -bottom-3 left-0 w-full sm:-bottom-4';
 
@@ -29,6 +38,7 @@ export default function HeroTitleUnderline({
             <span
                 className={cn(
                     'marketing-underline-slide absolute -bottom-2 left-0 block h-1 w-full rounded-full sm:-bottom-3',
+                    tone === 'dark' && 'marketing-underline-slide-dark',
                 )}
                 aria-hidden
             />
@@ -50,7 +60,7 @@ export default function HeroTitleUnderline({
                     strokeWidth="3"
                     strokeLinecap="round"
                 />
-                <UnderlineGradient id={gradientId} />
+                <UnderlineGradient id={gradientId} endColor={endColor} />
             </svg>
         );
     }
@@ -77,7 +87,7 @@ export default function HeroTitleUnderline({
                     strokeLinecap="round"
                     strokeOpacity="0.55"
                 />
-                <UnderlineGradient id={gradientId} />
+                <UnderlineGradient id={gradientId} endColor={endColor} />
             </svg>
         );
     }
@@ -97,7 +107,7 @@ export default function HeroTitleUnderline({
                     strokeWidth="3"
                     strokeLinecap="round"
                 />
-                <UnderlineGradient id={gradientId} />
+                <UnderlineGradient id={gradientId} endColor={endColor} />
             </svg>
         );
     }
@@ -116,7 +126,7 @@ export default function HeroTitleUnderline({
                 strokeWidth="3"
                 strokeLinecap="round"
             />
-            <UnderlineGradient id={gradientId} />
+            <UnderlineGradient id={gradientId} endColor={endColor} />
         </svg>
     );
 }

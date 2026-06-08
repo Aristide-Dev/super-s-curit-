@@ -1,12 +1,19 @@
 import { Link } from '@inertiajs/react';
 import {
     ArrowRight,
+    ChevronDown,
     Mail,
     MapPin,
     Menu,
     Phone,
     X,
 } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import {
+    Collapsible,
+    CollapsibleContent,
+    CollapsibleTrigger,
+} from '@/components/ui/collapsible';
 import {
     Sheet,
     SheetClose,
@@ -19,7 +26,10 @@ import {
     marketingPrimaryNavLinks,
     marketingServiceNavLinks,
 } from '@/data/marketing-nav';
-import { isMarketingNavActive } from '@/lib/marketing-nav-active';
+import {
+    isMarketingNavActive,
+    isMarketingServicesNavActive,
+} from '@/lib/marketing-nav-active';
 import { cn } from '@/lib/utils';
 import { index as devenirAgentIndex } from '@/routes/devenir-agent';
 import { home } from '@/routes';
@@ -39,6 +49,14 @@ export default function MarketingMobileNav({
     onOpenChange,
 }: MarketingMobileNavProps) {
     const close = () => onOpenChange(false);
+    const servicesActive = isMarketingServicesNavActive(pathname);
+    const [servicesOpen, setServicesOpen] = useState(servicesActive);
+
+    useEffect(() => {
+        if (servicesActive) {
+            setServicesOpen(true);
+        }
+    }, [servicesActive, pathname]);
 
     return (
         <Sheet open={open} onOpenChange={onOpenChange}>
@@ -133,51 +151,69 @@ export default function MarketingMobileNav({
                         })}
                     </ul>
 
-                    <p className="marketing-label mt-8 mb-3">Services</p>
-                    <ul className="space-y-3">
-                        {marketingServiceNavLinks.map((service, index) => {
-                            const active = isMarketingNavActive(
-                                service.href,
-                                pathname,
-                            );
+                    <Collapsible
+                        open={servicesOpen}
+                        onOpenChange={setServicesOpen}
+                        className="mt-2"
+                    >
+                        <CollapsibleTrigger asChild>
+                            <button
+                                type="button"
+                                aria-expanded={servicesOpen}
+                                className={cn(
+                                    'flex w-full cursor-pointer items-center justify-between rounded-2xl border px-4 py-3.5 font-heading text-base font-semibold transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-super-securite-accent focus-visible:outline-none',
+                                    servicesActive
+                                        ? 'border-super-securite-accent/30 bg-super-securite-accent/10 text-super-securite-accent'
+                                        : 'border-super-securite-border bg-white text-super-securite-heading hover:border-super-securite-accent/30',
+                                )}
+                            >
+                                Services
+                                <ChevronDown
+                                    className={cn(
+                                        'size-4 shrink-0 opacity-60 transition-transform duration-200',
+                                        servicesOpen && 'rotate-180',
+                                    )}
+                                    aria-hidden
+                                />
+                            </button>
+                        </CollapsibleTrigger>
 
-                            return (
-                                <li key={service.href}>
-                                    <Link
-                                        href={service.href}
-                                        onClick={close}
-                                        aria-current={
-                                            active ? 'page' : undefined
-                                        }
-                                        className={cn(
-                                            'group block rounded-2xl border p-4 transition-all duration-200',
-                                            active
-                                                ? 'border-super-securite-accent/40 bg-super-securite-accent/10'
-                                                : 'border-super-securite-border bg-white hover:border-super-securite-accent/30 hover:shadow-md hover:shadow-slate-900/5',
-                                        )}
-                                    >
-                                        <div className="flex items-start justify-between gap-3">
-                                            <div>
-                                                <span className="font-heading text-xs font-bold text-super-securite-accent">
-                                                    {String(index + 1).padStart(
-                                                        2,
-                                                        '0',
-                                                    )}
-                                                </span>
-                                                <p className="mt-1 font-heading text-sm font-semibold text-super-securite-heading">
+                        <CollapsibleContent className="mt-2 overflow-hidden data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-top-1 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-top-1">
+                            <ul
+                                className="space-y-1 rounded-2xl border border-super-securite-border bg-white p-2"
+                                role="list"
+                            >
+                                {marketingServiceNavLinks.map((service) => {
+                                    const active = isMarketingNavActive(
+                                        service.href,
+                                        pathname,
+                                    );
+
+                                    return (
+                                        <li key={service.href}>
+                                            <Link
+                                                href={service.href}
+                                                onClick={close}
+                                                aria-current={
+                                                    active ? 'page' : undefined
+                                                }
+                                                className={cn(
+                                                    'block rounded-xl px-3 py-2.5 transition-colors duration-200',
+                                                    active
+                                                        ? 'bg-super-securite-accent/10 text-super-securite-accent'
+                                                        : 'text-super-securite-heading hover:bg-super-securite-surface',
+                                                )}
+                                            >
+                                                <span className="font-heading text-sm font-semibold">
                                                     {service.label}
-                                                </p>
-                                            </div>
-                                            <ArrowRight
-                                                className="mt-1 size-4 shrink-0 text-super-securite-muted transition-transform duration-200 group-hover:translate-x-0.5 group-hover:text-super-securite-accent"
-                                                aria-hidden
-                                            />
-                                        </div>
-                                    </Link>
-                                </li>
-                            );
-                        })}
-                    </ul>
+                                                </span>
+                                            </Link>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </CollapsibleContent>
+                    </Collapsible>
                 </nav>
 
                 <div className="shrink-0 space-y-3 border-t border-super-securite-border/80 bg-super-securite-bg p-4">

@@ -1,50 +1,63 @@
+import HeroTitleUnderline from '@/components/marketing/hero-title-underline';
 import Reveal from '@/components/marketing/reveal';
 import { superSecuriteValues } from '@/data/super-securite-about';
 import { superSecuriteStock } from '@/data/super-securite-stock';
 
 export default function ValuesSection() {
     return (
-        <section className="py-10">
+        <section className="marketing-section-band border-t border-super-securite-border py-14 md:py-20">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-                {/* ── Header ── */}
-                <Reveal className="mb-16 grid items-end gap-10 lg:grid-cols-2 lg:gap-16">
-                    <div>
-                        <p className="marketing-label mb-4 flex items-center gap-2 before:block before:h-px before:w-6 before:bg-super-securite-accent">
+                <Reveal className="mb-14 grid items-center gap-10 lg:mb-16 lg:grid-cols-12 lg:gap-14">
+                    <div className="lg:col-span-6 xl:col-span-7">
+                        <p className="marketing-label mb-3 flex items-center gap-2 before:block before:h-px before:w-6 before:bg-super-securite-accent sm:mb-4">
                             Nos valeurs
                         </p>
-                        <h2 className="marketing-heading-section mb-4">
+                        <h2 className="font-heading text-3xl leading-[1.08] font-bold tracking-tight text-super-securite-heading sm:text-4xl md:text-[2.75rem]">
                             Ce qui nous{' '}
-                            <em className="marketing-text-gradient not-italic">
+                            <span className="relative inline-block text-super-securite-accent">
                                 guide au quotidien
-                            </em>
+                                <HeroTitleUnderline
+                                    variant="draw"
+                                    gradientId="values-section-underline"
+                                    tone="light"
+                                />
+                            </span>
                         </h2>
-                        <p className="text-base leading-relaxed text-super-securite-text max-w-md">
+                        <p className="mt-5 max-w-lg text-sm leading-relaxed text-super-securite-muted sm:text-base md:text-lg">
                             Quatre principes simples qui structurent chaque
                             décision, de la première discussion à la mise en
-                            production.
+                            production sur le terrain.
                         </p>
                     </div>
 
-                    {/* Image avec coins asymétriques */}
-                    <div className="relative">
-                        <div className="relative overflow-hidden rounded-tl rounded-tr-3xl rounded-bl-3xl rounded-br aspect-[4/3]">
-                            <img
-                                src={superSecuriteStock.about.valuesBanner}
-                                alt="Équipe Super Sécurité"
-                                width={800}
-                                height={600}
-                                loading="lazy"
-                                className="w-full h-full object-cover"
+                    <Reveal
+                        delay={120}
+                        variant="fade"
+                        className="lg:col-span-6 xl:col-span-5"
+                    >
+                        <div className="relative mx-auto w-full max-w-md lg:ml-auto lg:max-w-none">
+                            <div
+                                className="pointer-events-none absolute -inset-3"
+                                aria-hidden
                             />
+                            <div className="relative overflow-hidden">
+                                <div className="relative aspect-[4/5] sm:aspect-square">
+                                    <img
+                                        src={superSecuriteStock.about.valuesBanner}
+                                        alt="Équipe Super Sécurité — nos valeurs sur le terrain"
+                                        width={800}
+                                        height={800}
+                                        loading="lazy"
+                                        decoding="async"
+                                        className="size-full object-cover object-center"
+                                    />
+                                </div>
+                            </div>
                         </div>
-                        {/* Décoration en écho */}
-                        <div className="pointer-events-none absolute -bottom-4 -right-4 h-20 w-20 rounded-tl rounded-tr-3xl rounded-bl-3xl rounded-br border-2 border-super-securite-accent" />
-                    </div>
+                    </Reveal>
                 </Reveal>
 
-                {/* ── Grille de cartes ── */}
-                <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-super-securite-accent/15 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid grid-cols-1 overflow-hidden rounded-2xl border border-super-securite-border bg-white shadow-sm shadow-slate-900/5 sm:grid-cols-2 lg:grid-cols-4">
                     {superSecuriteValues.map((value, index) => {
                         const Icon = value.icon;
 
@@ -54,17 +67,14 @@ export default function ValuesSection() {
                                 delay={index * 100}
                                 className="h-full"
                             >
-                                <article className="group relative flex h-full flex-col border-r border-super-securite-accent/15 bg-white p-8 transition-colors duration-300 hover:bg-super-securite-surface last:border-r-0">
-                                    {/* Barre latérale au hover */}
-                                    <span className="absolute left-0 top-[20%] bottom-[20%] w-0.5 rounded-full bg-super-securite-accent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                                <article className="group relative flex h-full flex-col border-b border-super-securite-border p-7 transition-colors duration-300 hover:bg-super-securite-surface/60 sm:border-r sm:border-b-0 sm:last:border-r-0 md:p-8">
+                                    <span className="absolute top-0 left-0 h-1 w-0 bg-super-securite-accent transition-all duration-300 group-hover:w-full" />
 
-                                    {/* Numéro */}
-                                    <p className="mb-7 font-mono text-[11px] tracking-[0.15em] text-super-securite-accent/40">
-                                        {String(index + 1).padStart(2, '0')} /
+                                    <p className="mb-6 font-mono text-[11px] tracking-[0.15em] text-super-securite-accent/50">
+                                        {String(index + 1).padStart(2, '0')}
                                     </p>
 
-                                    {/* Icône */}
-                                    <div className="mb-6 inline-flex size-12 items-center justify-center rounded-full border border-super-securite-accent/15 bg-super-securite-accent/10 transition-colors duration-300 group-hover:border-super-securite-accent group-hover:bg-super-securite-accent/20">
+                                    <div className="mb-5 inline-flex size-12 items-center justify-center rounded-full border border-super-securite-accent/20 bg-super-securite-accent/10 transition-colors duration-300 group-hover:border-super-securite-accent group-hover:bg-super-securite-accent/15">
                                         <Icon
                                             className="size-5 text-super-securite-accent"
                                             strokeWidth={1.8}
@@ -72,10 +82,10 @@ export default function ValuesSection() {
                                         />
                                     </div>
 
-                                    <h3 className="mb-3 font-heading text-lg font-normal text-super-securite-heading">
+                                    <h3 className="mb-3 font-heading text-lg font-semibold text-super-securite-heading">
                                         {value.title}
                                     </h3>
-                                    <p className="flex-1 text-sm leading-relaxed text-super-securite-text">
+                                    <p className="flex-1 text-sm leading-relaxed text-super-securite-muted">
                                         {value.description}
                                     </p>
                                 </article>
@@ -83,7 +93,6 @@ export default function ValuesSection() {
                         );
                     })}
                 </div>
-
             </div>
         </section>
     );

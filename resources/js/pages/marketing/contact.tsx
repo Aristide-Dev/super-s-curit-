@@ -4,7 +4,7 @@ import ContactChannels from '@/components/marketing/contact-channels';
 import ContactMapSection from '@/components/marketing/contact-map-section';
 import ContactFaq from '@/components/marketing/contact-faq';
 import ContactForm from '@/components/marketing/contact-form';
-import MarketingSplitHero from '@/components/marketing/marketing-split-hero';
+import MarketingFullscreenHero from '@/components/marketing/marketing-fullscreen-hero';
 import Reveal from '@/components/marketing/reveal';
 import { marketingPageHeroes } from '@/data/marketing-page-heroes';
 import type { SuperSecuriteConfig } from '@/types/super-securite';
@@ -20,7 +20,7 @@ export default function MarketingContact() {
         <>
             <SeoHead />
 
-            <MarketingSplitHero {...marketingPageHeroes.contact} />
+            <MarketingFullscreenHero {...marketingPageHeroes.contact} />
 
             <section className="py-10 marketing-section-band">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

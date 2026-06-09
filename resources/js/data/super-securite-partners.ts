@@ -12,27 +12,27 @@ const partnerLogo = (filename: string) =>
 
 export const superSecuritePartners: readonly SuperSecuritePartner[] = [
     {
-        name: 'Global Archer',
-        logo: partnerLogo('global-archer.svg'),
+        name: 'AKIBA',
+        logo: partnerLogo('akiba.jpeg'),
     },
     {
-        name: 'DGI',
-        logo: partnerLogo('dgi.svg'),
+        name: 'Djolof Kitchen',
+        logo: partnerLogo('Djolof.jpeg'),
     },
     {
-        name: 'Partenaire 3',
-        logo: partnerLogo('partenaire-3.svg'),
+        name: 'Heroes Coffee',
+        logo: partnerLogo('Heroescoffee.jpeg'),
     },
     {
-        name: 'Partenaire 4',
-        logo: partnerLogo('partenaire-4.svg'),
+        name: 'Ashapura',
+        logo: partnerLogo('Ashapura.jpeg'),
     },
     {
-        name: 'Partenaire 5',
-        logo: partnerLogo('partenaire-5.svg'),
+        name: 'TGCC',
+        logo: partnerLogo('TGCC.jpeg'),
     },
     {
-        name: 'Partenaire 6',
-        logo: partnerLogo('partenaire-6.svg'),
+        name: 'BANKI TRUCK',
+        logo: partnerLogo('banki.jpeg'),
     },
 ] as const;

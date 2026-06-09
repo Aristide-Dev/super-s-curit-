@@ -133,12 +133,14 @@ function HeroCopy({ variant }: { variant: MarketingHeroVariant }) {
                         />
                     </a>
                 )}
-                <a
-                    href={variant.secondaryCta.href}
-                    className="marketing-cta-secondary marketing-magnetic px-6 py-3 text-sm"
-                >
-                    {variant.secondaryCta.label}
-                </a>
+                {variant.secondaryCta ? (
+                    <a
+                        href={variant.secondaryCta.href}
+                        className="marketing-cta-secondary marketing-magnetic px-6 py-3 text-sm"
+                    >
+                        {variant.secondaryCta.label}
+                    </a>
+                ) : null}
             </Reveal>
 
             <Reveal

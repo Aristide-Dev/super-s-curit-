@@ -1,3 +1,4 @@
+import { superSecuriteContactHeroCopy } from '@/data/super-securite-contact';
 import { superSecuriteStock } from '@/data/super-securite-stock';
 import { superSecuriteHoursLong, superSecuriteHoursShort } from '@/data/super-securite-hours';
 import { superSecuriteZoneLabel } from '@/data/super-securite-zone';
@@ -101,12 +102,7 @@ export const marketingPageHeroes = {
         pattern: 'contact',
         layout: 'reverse',
         underline: 'double',
-        label: 'Devis & urgence',
-        titleLead: 'Sécurisons votre',
-        titleHighlight: 'projet',
-        titleTrail: 'ensemble',
-        description:
-            'Entreprise, résidence, chantier ou zone minière — décrivez votre besoin et obtenez une réponse rapide de nos experts à Lambanyi, Conakry.',
+        ...superSecuriteContactHeroCopy,
         image: superSecuriteStock.pages.contact2,
         imageAlt: 'Contact Super Sécurité — Lambanyi, Conakry',
         stats: [

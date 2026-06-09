@@ -87,6 +87,22 @@ export const superSecuriteAdvantages: readonly SuperSecuriteAdvantage[] = [
     },
 ] as const;
 
+export const superSecuriteWhyUsModern = {
+    title: 'Une sécurité moderne, transparente et efficace',
+    intro:
+        "Nous combinons l'expertise humaine et la technologie pour offrir à nos clients un service de sécurité performant et réactif.",
+    appLead: 'Notre application dédiée permet notamment à nos clients de :',
+    appFeatures: [
+        'Signaler rapidement un incident ou un manquement',
+        'Suivre le traitement des demandes en temps réel',
+        'Communiquer directement avec nos équipes',
+        'Accéder aux informations et rapports liés à leur site',
+        "Bénéficier d'un meilleur suivi de la qualité de service",
+    ],
+    conclusion:
+        'Cette approche garantit davantage de transparence, de réactivité et de contrôle.',
+} as const;
+
 export type SuperSecuriteTestimonial = {
     quote: string;
     author: string;
@@ -119,9 +135,10 @@ export const superSecuriteFooterServices = [
 ] as const;
 
 export const superSecuriteWelcome = {
-    title: 'Bienvenue chez Super SÉCURITÉ',
+    title: 'Votre partenaire de confiance en sécurité privée en Guinée',
     paragraphs: [
-        'La sécurité est un besoin fondamental, et chez Super Sécurité, nous nous engageons à protéger ce qui compte le plus pour vous. Que vous soyez une entreprise, un particulier ou un site sensible, nous avons les solutions adaptées à vos besoins.',
-        `Super Sécurité, c’est une équipe d’experts en sécurité privée, prêts à intervenir ${superSecuriteHoursLong} pour garantir votre protection et celle de vos biens.`,
+        'La sécurité est un enjeu majeur pour les entreprises, les résidences, les chantiers et les sites industriels. Chez Super Sécurité, nous mettons à votre disposition des solutions de sécurité fiables, professionnelles et adaptées aux réalités du terrain en Guinée.',
+        "Entreprise légalement établie et titulaire de l'ensemble des agréments et autorisations requis pour l'exercice des activités de sécurité privée en République de Guinée, Super Sécurité accompagne ses clients avec le plus haut niveau de professionnalisme et de conformité réglementaire.",
+        "Grâce à nos agents qualifiés, à notre encadrement opérationnel rigoureux et à nos outils technologiques modernes, nous assurons la protection des personnes, des biens et des infrastructures stratégiques sur l'ensemble du territoire national.",
     ],
 } as const;

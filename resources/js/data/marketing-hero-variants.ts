@@ -1,11 +1,6 @@
 import { superSecuriteImages } from '@/data/super-securite-images';
 import { superSecuriteStock } from '@/data/super-securite-stock';
 import { superSecuriteServices } from '@/data/super-securite-content';
-import {
-    superSecuriteHoursLong,
-    superSecuriteHoursShort,
-} from '@/data/super-securite-hours';
-import { superSecuriteZoneLabel } from '@/data/super-securite-zone';
 import { contact } from '@/routes';
 
 export type HeroSlideLayout = 'split-right' | 'split-left';
@@ -24,7 +19,7 @@ export type MarketingHeroVariant = {
         label: string;
         href: string;
     };
-    secondaryCta: {
+    secondaryCta?: {
         label: string;
         href: string;
     };
@@ -39,55 +34,98 @@ export type MarketingHeroVariant = {
 
 const serviceImages = superSecuriteStock.home.services;
 
-const serviceSlideConfigs: Record<
-    string,
-    Pick<
-        MarketingHeroVariant,
-        'layout' | 'typography' | 'title' | 'highlight' | 'stats'
-    >
-> = {
+type ServiceSlideConfig = Pick<
+    MarketingHeroVariant,
+    'layout' | 'typography' | 'title' | 'highlight' | 'stats'
+> & {
+    description?: string;
+    primaryCta?: MarketingHeroVariant['primaryCta'];
+    secondaryCta?: MarketingHeroVariant['secondaryCta'] | null;
+};
+
+const serviceSlideConfigs: Record<string, ServiceSlideConfig> = {
     entreprise: {
         layout: 'split-left',
-        typography: 'gradient',
-        title: 'Protégez vos locaux',
-        highlight: 'professionnels',
+        typography: 'accent-block',
+        title: 'Sécurité des entreprises et des',
+        highlight: 'sites professionnels',
+        description:
+            "Assurez la protection de vos collaborateurs, visiteurs, équipements et infrastructures grâce à des solutions de sécurité adaptées à vos besoins. Nos agents qualifiés veillent à la sécurité de vos bureaux, commerces, entrepôts, restaurants et sites d'exploitation, 24h/24 et 7j/7.",
+        primaryCta: {
+            label: 'Découvrir nos solutions',
+            href: '/entreprise',
+        },
+        secondaryCta: null,
         stats: [
-            { label: 'Surveillance', value: 'Continue' },
-            { label: 'Zone', value: superSecuriteZoneLabel },
-            { label: 'Équipes', value: 'Formées & certifiées' },
+            { label: 'Surveillance', value: '24h/24 • 7j/7' },
+            { label: 'Couverture', value: 'Conakry & Toute la Guinée' },
+            { label: 'Professionnalisme', value: 'Agents qualifiés et encadrés' },
         ],
     },
     chantiers: {
         layout: 'split-left',
         typography: 'accent-block',
-        title: 'Vos chantiers',
-        highlight: 'sous contrôle',
+        title: 'Sécurisez vos chantiers,',
+        highlight: 'protégez vos investissements',
+        description:
+            'Super Sécurité assure la protection de vos chantiers de construction grâce à des agents qualifiés, un contrôle rigoureux des accès et des rondes régulières. Prévenez les vols, les intrusions et les actes de vandalisme tout au long de vos travaux.',
+        primaryCta: {
+            label: 'Nous contacter',
+            href: contact.url(),
+        },
+        secondaryCta: {
+            label: 'En savoir plus',
+            href: '/chantiers',
+        },
         stats: [
-            { label: 'Secteurs', value: 'BTP & travaux' },
-            { label: 'Patrouilles', value: 'Régulières' },
-            { label: 'Réactivité', value: superSecuriteHoursShort },
+            { label: 'Secteurs', value: 'BTP & infrastructures' },
+            { label: 'Surveillance', value: "Rondes et contrôle d'accès" },
+            { label: 'Disponibilité', value: '24h/24 • 7j/7' },
         ],
     },
     'zones-minieres': {
         layout: 'split-right',
-        typography: 'underline',
-        title: 'Sites miniers',
-        highlight: 'sécurisés',
+        typography: 'accent-block',
+        title: 'Sécurisation renforcée de vos',
+        highlight: 'sites miniers',
+        description:
+            'Super Sécurité assure la protection de vos zones minières et sites sensibles grâce à des dispositifs de surveillance avancés, des équipes spécialisées et des protocoles de sécurité stricts adaptés aux environnements à haut risque. Nous garantissons la continuité de vos opérations et la protection de vos ressources.',
+        primaryCta: {
+            label: 'Nous contacter',
+            href: contact.url(),
+        },
+        secondaryCta: {
+            label: 'En savoir plus',
+            href: '/zones-minieres',
+        },
         stats: [
             { label: 'Secteurs', value: 'Mines & sites sensibles' },
-            { label: 'Protocoles', value: 'Sur mesure' },
-            { label: 'Expertise', value: 'Terrain' },
+            { label: 'Protocoles', value: 'Stricts et adaptés au terrain' },
+            {
+                label: 'Expertise',
+                value: 'Sécurité en environnements à haut risque',
+            },
         ],
     },
     residence: {
         layout: 'split-right',
         typography: 'accent-block',
-        title: 'Sécurisez votre',
-        highlight: 'résidence',
+        title: 'Offrez à votre famille une',
+        highlight: "tranquillité d'esprit permanente",
+        description:
+            'Super Sécurité assure la protection de vos résidences, villas et immeubles grâce à une présence humaine fiable, des contrôles rigoureux et une surveillance continue, de jour comme de nuit.',
+        primaryCta: {
+            label: 'Demander une protection',
+            href: contact.url(),
+        },
+        secondaryCta: {
+            label: 'Découvrir nos solutions',
+            href: '/residence',
+        },
         stats: [
-            { label: 'Protection', value: 'Villas & immeubles' },
-            { label: 'Présence', value: 'Dissuasive' },
-            { label: 'Disponibilité', value: superSecuriteHoursShort },
+            { label: 'Résidences', value: 'Villas & immeubles' },
+            { label: 'Surveillance', value: 'Jour et nuit' },
+            { label: 'Disponibilité', value: '24h/24 • 7j/7' },
         ],
     },
 };
@@ -105,15 +143,18 @@ const serviceSlides: MarketingHeroVariant[] = superSecuriteServices.map(
             label: service.title,
             title: config.title,
             highlight: config.highlight,
-            description: service.description,
-            primaryCta: {
+            description: config.description ?? service.description,
+            primaryCta: config.primaryCta ?? {
                 label: 'Nous contacter',
                 href: contact.url(),
             },
-            secondaryCta: {
-                label: 'En savoir plus',
-                href: service.path,
-            },
+            secondaryCta:
+                config.secondaryCta === null
+                    ? undefined
+                    : (config.secondaryCta ?? {
+                          label: 'En savoir plus',
+                          href: service.path,
+                      }),
             image: `/${imagePath}`,
             imageAlt: `${service.title} — Super Sécurité`,
             backgroundImage: imagePath,
@@ -126,12 +167,12 @@ export const marketingHeroSlides: readonly MarketingHeroVariant[] = [
     {
         id: 'excellence',
         layout: 'split-right',
-        typography: 'underline',
+        typography: 'accent-block',
         label: 'Super SÉCURITÉ',
-        title: 'Confiez votre sécurité',
-        highlight: "à l'excellence",
+        title: 'Votre partenaire de confiance pour une',
+        highlight: 'sécurité sans compromis',
         description:
-            `Sécurité privée à ${superSecuriteZoneLabel} : entreprise, résidence, chantiers et zones minières. Intervention ${superSecuriteHoursLong}.`,
+            'Super Sécurité accompagne les entreprises, résidences, chantiers et sites stratégiques à travers toute la Guinée avec des solutions de sécurité fiables, réactives et adaptées à chaque environnement.',
         primaryCta: {
             label: 'Nous contacter',
             href: contact.url(),
@@ -141,12 +182,13 @@ export const marketingHeroSlides: readonly MarketingHeroVariant[] = [
             href: '#services',
         },
         image: superSecuriteStock.home.welcome,
-        imageAlt: `Super Sécurité — agents de sécurité à ${superSecuriteZoneLabel}`,
+        imageAlt:
+            'Super Sécurité — partenaire de confiance en sécurité privée en Guinée',
         backgroundImage: superSecuriteStock.hero.background,
         stats: [
-            { label: 'Disponibilité', value: superSecuriteHoursShort },
-            { label: 'Zone', value: superSecuriteZoneLabel },
-            { label: 'Expertise', value: 'Sécurité privée' },
+            { label: 'Disponibilité', value: '24h/24 • 7j/7' },
+            { label: 'Couverture', value: 'Conakry & Toute la Guinée' },
+            { label: 'Expertise', value: 'Gardiennage & Sécurité Privée' },
         ],
     },
     ...serviceSlides,
@@ -154,7 +196,7 @@ export const marketingHeroSlides: readonly MarketingHeroVariant[] = [
 
 export const marketingHeroSlideLabels = marketingHeroSlides.map((slide) => {
     if (slide.id === 'excellence') {
-        return 'Excellence';
+        return 'Confiance';
     }
 
     const service = superSecuriteServices.find((item) => item.id === slide.id);

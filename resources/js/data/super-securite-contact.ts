@@ -1,6 +1,15 @@
 import { superSecuriteHoursLong } from '@/data/super-securite-hours';
 import { superSecuriteZoneLabel } from '@/data/super-securite-zone';
 
+export const superSecuriteContactHeroCopy = {
+    label: 'Nous contacter',
+    titleLead: 'Parlons de votre',
+    titleHighlight: 'sécurité',
+    titleTrail: '',
+    description:
+        'Vous recherchez une solution de gardiennage, de surveillance ou de sécurité privée en Guinée ? Décrivez-nous vos besoins et nos équipes vous contacteront dans les plus brefs délais pour vous proposer une solution adaptée.',
+} as const;
+
 export const superSecuriteProjectTypes = [
     'Sécurité entreprise',
     'Sécurité résidence',

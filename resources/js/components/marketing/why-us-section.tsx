@@ -13,12 +13,23 @@ const whyUsStats = [
     { label: 'Expertise', value: 'Sécurité privée' },
 ] as const;
 
-export default function WhyUsSection() {
+type WhyUsSectionProps = {
+    showCinematicHero?: boolean;
+};
+
+export default function WhyUsSection({
+    showCinematicHero = true,
+}: WhyUsSectionProps) {
     return (
         <section
             id="pourquoi"
-            className="marketing-hero-cinematic relative overflow-hidden"
+            className={
+                showCinematicHero
+                    ? 'marketing-hero-cinematic relative overflow-hidden'
+                    : 'bg-white'
+            }
         >
+            {showCinematicHero ? (
             <div className="relative mx-auto flex min-h-[100dvh] w-full max-w-[1920px] items-end overflow-hidden lg:items-center">
                 <img
                     src={superSecuriteStock.home.whyUsBannerTransparent}
@@ -124,8 +135,9 @@ export default function WhyUsSection() {
                     </div>
                 </div>
             </div>
+            ) : null}
 
-            <div className="bg-white py-12 md:py-16">
+            <div className={showCinematicHero ? 'bg-white py-12 md:py-16' : 'py-12 md:py-16'}>
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <Reveal delay={80} className="mx-auto mb-10 max-w-2xl text-center md:mb-14">
                         <p className="marketing-label mb-2">Nos atouts</p>

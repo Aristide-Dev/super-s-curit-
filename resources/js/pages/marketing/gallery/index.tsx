@@ -1,9 +1,8 @@
-import { Head, Link, router, usePage } from '@inertiajs/react';
+import { Head, router, usePage } from '@inertiajs/react';
 import { Images } from 'lucide-react';
+import GalleryBentoGrid from '@/components/marketing/gallery-bento-grid';
 import { useGalleryLightbox } from '@/components/marketing/gallery-lightbox';
-import MarketingContentImage from '@/components/marketing/marketing-content-image';
 import MarketingFullscreenHero from '@/components/marketing/marketing-fullscreen-hero';
-import Reveal from '@/components/marketing/reveal';
 import SeoHead from '@/components/marketing/seo-head';
 import { marketingPageHeroes } from '@/data/marketing-page-heroes';
 import { index as galerieIndex } from '@/routes/galerie';
@@ -108,48 +107,10 @@ export default function MarketingGalleryIndex() {
                     </div>
 
                     {images.length > 0 ? (
-                        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-                            {images.map((image, index) => (
-                                <Reveal key={image.id} delay={index * 40}>
-                                    <figure className="group overflow-hidden rounded-2xl bg-white shadow-sm shadow-slate-900/5">
-                                        <button
-                                            type="button"
-                                            onClick={() => openAt(index)}
-                                            className="relative aspect-[4/3] w-full cursor-zoom-in overflow-hidden"
-                                            aria-label={`Agrandir : ${image.alt}`}
-                                        >
-                                            <MarketingContentImage
-                                                src={image.src}
-                                                source={image.image_source}
-                                                alt={image.alt}
-                                                className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                            />
-                                            <span className="absolute top-3 left-3 rounded-full bg-black/55 px-3 py-1 text-[11px] font-medium text-white backdrop-blur-sm">
-                                                {image.service_label}
-                                            </span>
-                                        </button>
-                                        <figcaption className="space-y-2 px-3 py-3">
-                                            <p className="font-heading text-sm font-semibold text-super-securite-heading">
-                                                {image.alt}
-                                            </p>
-                                            {image.caption ? (
-                                                <p className="text-xs leading-snug text-super-securite-muted">
-                                                    {image.caption}
-                                                </p>
-                                            ) : null}
-                                            {image.service_path ? (
-                                                <Link
-                                                    href={image.service_path}
-                                                    className="inline-flex text-xs font-semibold text-super-securite-accent hover:underline"
-                                                >
-                                                    Voir le service
-                                                </Link>
-                                            ) : null}
-                                        </figcaption>
-                                    </figure>
-                                </Reveal>
-                            ))}
-                        </div>
+                        <GalleryBentoGrid
+                            images={images}
+                            onImageClick={openAt}
+                        />
                     ) : (
                         <div className="marketing-card flex flex-col items-center gap-3 py-16 text-center">
                             <Images className="size-10 text-super-securite-muted" />

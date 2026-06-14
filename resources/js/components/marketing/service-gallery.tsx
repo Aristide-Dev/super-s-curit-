@@ -53,7 +53,7 @@ function GalleryFigure({
                     className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
             </button>
-            {image.caption ? (
+            {/* {image.caption ? (
                 <figcaption
                     className={cn(
                         'px-3 py-2.5 text-xs leading-snug text-super-securite-muted sm:text-sm',
@@ -62,7 +62,7 @@ function GalleryFigure({
                 >
                     {image.caption}
                 </figcaption>
-            ) : null}
+            ) : null} */}
         </figure>
     );
 }

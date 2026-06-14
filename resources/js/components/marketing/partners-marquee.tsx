@@ -4,18 +4,23 @@ export default function PartnersMarquee() {
     const items = [...superSecuritePartners, ...superSecuritePartners];
 
     return (
-        <div
-            className="marketing-marquee-paused relative overflow-hidden border-y border-super-securite-border bg-super-securite-surface/60 py-6"
-            aria-label="Partenaires Super Sécurité"
+        <section
+            className="border-b border-super-securite-border bg-white"
+            aria-labelledby="partners-heading"
         >
+            <div className="mx-auto max-w-7xl px-4 py-6 text-center sm:px-6 lg:px-8">
+                <h2
+                    id="partners-heading"
+                    className="font-heading text-lg font-semibold tracking-tight text-super-securite-heading sm:text-xl"
+                >
+                    Ils nous font confiance
+                </h2>
+            </div>
+
             <div
-                className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-linear-to-r from-super-securite-bg to-transparent"
-                aria-hidden
-            />
-            <div
-                className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-linear-to-l from-super-securite-bg to-transparent"
-                aria-hidden
-            />
+                className="marketing-marquee-paused relative overflow-hidden border-none py-6"
+                aria-label="Logos des partenaires Super Sécurité"
+            >
 
             <ul
                 className="marketing-marquee flex w-max items-center gap-12 pr-12"
@@ -42,6 +47,7 @@ export default function PartnersMarquee() {
                     </li>
                 ))}
             </ul>
-        </div>
+            </div>
+        </section>
     );
 }

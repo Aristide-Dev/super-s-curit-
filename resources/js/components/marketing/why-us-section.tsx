@@ -13,6 +13,7 @@ import { cn } from '@/lib/utils';
 type WhyUsSectionProps = {
     showCinematicHero?: boolean;
     showAppFeatures?: boolean;
+    showAppSection?: boolean;
 };
 
 type WhyUsTone = 'light' | 'dark';
@@ -165,6 +166,7 @@ function WhyUsMobileAppImage({ className }: { className?: string }) {
 export default function WhyUsSection({
     showCinematicHero = true,
     showAppFeatures = false,
+    showAppSection = false,
 }: WhyUsSectionProps) {
     return (
         <section
@@ -250,45 +252,47 @@ export default function WhyUsSection({
                         </Reveal>
                     ) : null}
 
-                    <Reveal
-                        delay={showCinematicHero ? 80 : 120}
-                        className="mb-12 md:mb-16"
-                    >
-                        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
-                            <WhyUsMobileAppImage className="lg:justify-self-center" />
-                            <div>
-                                {showAppFeatures ? (
-                                    <>
-                                        <p className="marketing-label mb-3">
-                                            Innovation
-                                        </p>
-                                        <h3 className="font-heading text-2xl font-bold tracking-tight text-super-securite-heading sm:text-3xl">
-                                            {superSecuriteWhyUsModern.appSectionTitle}
-                                        </h3>
-                                        <div className="mt-6">
-                                            <WhyUsAppFeatures />
-                                        </div>
-                                    </>
-                                ) : (
-                                    <>
-                                        <p className="marketing-label mb-3">
-                                            Innovation
-                                        </p>
-                                        <h3 className="font-heading text-2xl font-bold tracking-tight text-super-securite-heading sm:text-3xl">
-                                            {superSecuriteWhyUsModern.appSectionTitle}
-                                        </h3>
-                                        <p className="mt-4 text-sm leading-relaxed text-super-securite-muted md:text-base">
-                                            Suivez vos sites, signalez un incident
-                                            et échangez avec nos équipes depuis
-                                            votre smartphone. Découvrez toutes les
-                                            fonctionnalités sur notre page dédiée.
-                                        </p>
-                                        <WhyUsAboutButton />
-                                    </>
-                                )}
+                    {showAppSection ? (
+                        <Reveal
+                            delay={showCinematicHero ? 80 : 120}
+                            className="mb-12 md:mb-16"
+                        >
+                            <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+                                <WhyUsMobileAppImage className="lg:justify-self-center" />
+                                <div>
+                                    {showAppFeatures ? (
+                                        <>
+                                            <p className="marketing-label mb-3">
+                                                Innovation
+                                            </p>
+                                            <h3 className="font-heading text-2xl font-bold tracking-tight text-super-securite-heading sm:text-3xl">
+                                                {superSecuriteWhyUsModern.appSectionTitle}
+                                            </h3>
+                                            <div className="mt-6">
+                                                <WhyUsAppFeatures />
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <p className="marketing-label mb-3">
+                                                Innovation
+                                            </p>
+                                            <h3 className="font-heading text-2xl font-bold tracking-tight text-super-securite-heading sm:text-3xl">
+                                                {superSecuriteWhyUsModern.appSectionTitle}
+                                            </h3>
+                                            <p className="mt-4 text-sm leading-relaxed text-super-securite-muted md:text-base">
+                                                Suivez vos sites, signalez un incident
+                                                et échangez avec nos équipes depuis
+                                                votre smartphone. Découvrez toutes les
+                                                fonctionnalités sur notre page dédiée.
+                                            </p>
+                                            <WhyUsAboutButton />
+                                        </>
+                                    )}
+                                </div>
                             </div>
-                        </div>
-                    </Reveal>
+                        </Reveal>
+                    ) : null}
 
                     <Reveal
                         delay={80}

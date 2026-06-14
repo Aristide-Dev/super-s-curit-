@@ -30,12 +30,6 @@ export default function MarketingHome() {
 
             <MarketingHeroCarousel />
 
-            <Suspense fallback={null}>
-                <div className="marketing-below-fold">
-                    <PartnersMarquee />
-                </div>
-            </Suspense>
-
             <div className="marketing-section-white">
                 <WelcomeSection />
             </div>
@@ -44,7 +38,13 @@ export default function MarketingHome() {
                 <ServiceCards />
             </div>
 
-            <WhyUsSection />
+            <Suspense fallback={null}>
+                <div className="marketing-below-fold">
+                    <PartnersMarquee />
+                </div>
+            </Suspense>
+
+            <WhyUsSection showAppSection={false} />
 
             <div className="marketing-section-band">
                 <ArticlesSection articles={featuredArticles} />

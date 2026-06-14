@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
+use App\Http\Controllers\Admin\GalleryImageController as AdminGalleryImageController;
 use App\Http\Controllers\Admin\SecurityAgentApplicationController as AdminSecurityAgentApplicationController;
 use App\Http\Controllers\Admin\SecurityTipController as AdminSecurityTipController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Marketing\ArticleController as MarketingArticleController;
+use App\Http\Controllers\Marketing\GalleryController as MarketingGalleryController;
 use App\Http\Controllers\Marketing\SecurityAgentApplicationController as MarketingSecurityAgentApplicationController;
 use App\Http\Controllers\Marketing\SecurityTipController as MarketingSecurityTipController;
 use App\Http\Controllers\Marketing\ServiceController;
@@ -38,6 +40,7 @@ Route::get('/entreprise', [ServiceController::class, 'show'])->name('services.en
 Route::get('/residence', [ServiceController::class, 'show'])->name('services.residence');
 Route::get('/chantiers', [ServiceController::class, 'show'])->name('services.chantiers');
 Route::get('/zones-minieres', [ServiceController::class, 'show'])->name('services.zones-minieres');
+Route::get('/galerie', [MarketingGalleryController::class, 'index'])->name('galerie.index');
 Route::inertia('/a-propos', 'marketing/about')->name('about');
 Route::redirect('/pourquoi-nous', '/a-propos', 301);
 Route::get('/actualites', [MarketingArticleController::class, 'index'])->name('actualites.index');
@@ -58,6 +61,8 @@ Route::get('/analytics/duration', fn () => redirect()->route('analytics.index'))
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
+
+    Route::resource('gallery-images', AdminGalleryImageController::class);
 
     Route::resource('articles', AdminArticleController::class)
         ->parameters(['articles' => 'article:slug']);

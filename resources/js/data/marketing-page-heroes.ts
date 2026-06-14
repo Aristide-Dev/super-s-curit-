@@ -130,6 +130,25 @@ export const marketingPageHeroes = {
             { label: 'Engagement', value: 'Équipe certifiée' },
         ],
     },
+    galerie: {
+        id: 'galerie',
+        pattern: 'actualites',
+        layout: 'reverse',
+        underline: 'draw',
+        label: 'Nos missions en images',
+        titleLead: 'Découvrez notre',
+        titleHighlight: 'galerie',
+        titleTrail: 'sur le terrain',
+        description:
+            'Photos de nos équipes en action : entreprises, résidences, chantiers et zones minières partout en Guinée.',
+        image: superSecuriteStock.pages.about,
+        imageAlt: 'Galerie Super Sécurité — missions sur le terrain',
+        stats: [
+            { label: 'Services', value: '4 expertises' },
+            { label: 'Zone', value: superSecuriteZoneLabel },
+            { label: 'Terrain', value: 'Photos réelles' },
+        ],
+    },
 } satisfies Record<string, MarketingPageHeroConfig>;
 
 export type MarketingPageHeroKey = keyof typeof marketingPageHeroes;

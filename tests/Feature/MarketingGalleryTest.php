@@ -1,0 +1,83 @@
+<?php
+
+use App\Enums\ServiceId;
+use App\Models\GalleryImage;
+use Database\Seeders\GalleryImageSeeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Inertia\Testing\AssertableInertia as Assert;
+
+uses(RefreshDatabase::class);
+
+test('public can view gallery page with all published images', function () {
+    $this->seed(GalleryImageSeeder::class);
+
+    $this->get(route('galerie.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('marketing/gallery/index')
+            ->has('images', 18)
+            ->has('services', 4)
+            ->where('countsByService.general', 2)
+        );
+});
+
+test('gallery page can filter general images only', function () {
+    $this->seed(GalleryImageSeeder::class);
+
+    $this->get(route('galerie.index', ['service' => 'general']))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('images', 2)
+            ->where('filters.service', 'general')
+            ->where('images.0.service_label', 'Galerie générale')
+            ->where('images.0.service_path', null)
+        );
+});
+
+test('gallery page can filter images by service', function () {
+    $this->seed(GalleryImageSeeder::class);
+
+    $this->get(route('galerie.index', ['service' => ServiceId::Chantiers->value]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->has('images', 4)
+            ->where('filters.service', ServiceId::Chantiers->value)
+        );
+});
+
+test('service page receives gallery images from database', function () {
+    GalleryImage::factory()->count(2)->create([
+        'service_id' => ServiceId::Entreprise,
+        'is_published' => true,
+    ]);
+
+    GalleryImage::factory()->unpublished()->create([
+        'service_id' => ServiceId::Entreprise,
+    ]);
+
+    GalleryImage::factory()->create([
+        'service_id' => ServiceId::Residence,
+        'is_published' => true,
+    ]);
+
+    GalleryImage::factory()->general()->create([
+        'is_published' => true,
+    ]);
+
+    $this->get(route('services.entreprise'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('marketing/service-page')
+            ->where('serviceId', 'entreprise')
+            ->has('galleryImages', 2)
+        );
+});
+
+test('gallery page seo metadata is configured', function () {
+    $this->get(route('galerie.index'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('pageMeta.path', '/galerie')
+            ->where('pageMeta.title', fn ($title) => str_contains($title, 'Galerie'))
+        );
+});

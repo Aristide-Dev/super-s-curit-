@@ -6,13 +6,32 @@ import Reveal from '@/components/marketing/reveal';
 import type { ServicePageLayoutProps } from '@/components/marketing/service-layouts/types';
 import { cn } from '@/lib/utils';
 
+import type { SuperSecuriteServiceGalleryImage } from '@/data/super-securite-services';
+import type { GalleryImagePublic } from '@/types/gallery';
+
+function toGalleryFigures(
+    images: readonly GalleryImagePublic[],
+): SuperSecuriteServiceGalleryImage[] {
+    return images.map((image) => ({
+        src: image.src,
+        alt: image.alt,
+        caption: image.caption ?? undefined,
+    }));
+}
+
 export default function ServicePageSections({
     content,
     faqs,
+    serviceGalleryImages = [],
 }: ServicePageLayoutProps) {
-    const spotlight = content.gallery[0];
+    const figures =
+        serviceGalleryImages.length > 0
+            ? toGalleryFigures(serviceGalleryImages)
+            : [...content.gallery];
+
+    const spotlight = figures[0];
     const galleryImages =
-        content.gallery.length > 1 ? content.gallery.slice(1) : content.gallery;
+        figures.length > 1 ? figures.slice(1) : figures;
 
     return (
         <>

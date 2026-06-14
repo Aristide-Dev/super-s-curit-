@@ -5,11 +5,16 @@ import type { ServicePageLayoutProps } from '@/components/marketing/service-layo
 export default function ServicePageLayout({
     content,
     faqs,
+    serviceGalleryImages,
 }: ServicePageLayoutProps) {
     return (
         <>
             <MarketingFullscreenHero {...content.hero} />
-            <ServicePageSections content={content} faqs={faqs} />
+            <ServicePageSections
+                content={content}
+                faqs={faqs}
+                serviceGalleryImages={serviceGalleryImages}
+            />
         </>
     );
 }

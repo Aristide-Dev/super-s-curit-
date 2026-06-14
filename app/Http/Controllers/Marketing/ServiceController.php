@@ -2,29 +2,33 @@
 
 namespace App\Http\Controllers\Marketing;
 
+use App\Enums\ServiceId;
 use App\Http\Controllers\Controller;
+use App\Models\GalleryImage;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ServiceController extends Controller
 {
-    /** @var list<string> */
-    private const SERVICES = [
-        'entreprise',
-        'residence',
-        'chantiers',
-        'zones-minieres',
-    ];
-
     public function show(Request $request): Response
     {
         $serviceId = basename($request->path());
 
-        abort_unless(in_array($serviceId, self::SERVICES, true), 404);
+        abort_unless(in_array($serviceId, ServiceId::values(), true), 404);
+
+        $galleryImages = GalleryImage::query()
+            ->published()
+            ->forService($serviceId)
+            ->ordered()
+            ->get()
+            ->map(fn (GalleryImage $image) => $image->toPublicArray())
+            ->values()
+            ->all();
 
         return Inertia::render('marketing/service-page', [
             'serviceId' => $serviceId,
+            'galleryImages' => $galleryImages,
         ]);
     }
 }

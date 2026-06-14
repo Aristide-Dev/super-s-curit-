@@ -6,20 +6,28 @@ import {
 } from '@/data/super-securite-service-pages';
 import type { SuperSecuriteServiceId } from '@/data/super-securite-services';
 
+import type { GalleryImagePublic } from '@/types/gallery';
+
 type PageProps = {
     pageFaqs: { question: string; answer: string }[];
     serviceId: SuperSecuriteServiceId;
+    galleryImages: GalleryImagePublic[];
 };
 
 export default function ServicePage() {
-    const { serviceId, pageFaqs } = usePage<PageProps>().props;
+    const { serviceId, pageFaqs, galleryImages } =
+        usePage<PageProps>().props;
     const content = superSecuriteServicePages[serviceId];
     const Layout = servicePageLayouts[serviceId];
 
     return (
         <>
             <SeoHead />
-            <Layout content={content} faqs={pageFaqs} />
+            <Layout
+                content={content}
+                faqs={pageFaqs}
+                serviceGalleryImages={galleryImages}
+            />
         </>
     );
 }

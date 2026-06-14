@@ -1,4 +1,5 @@
 import Reveal from '@/components/marketing/reveal';
+import { useGalleryLightbox } from '@/components/marketing/gallery-lightbox';
 import type { SuperSecuriteServiceGalleryImage } from '@/data/super-securite-services';
 import { cn } from '@/lib/utils';
 
@@ -17,11 +18,13 @@ function GalleryFigure({
     className,
     imageClassName,
     captionClassName,
+    onOpen,
 }: {
     image: SuperSecuriteServiceGalleryImage;
     className?: string;
     imageClassName?: string;
     captionClassName?: string;
+    onOpen?: () => void;
 }) {
     return (
         <figure
@@ -30,7 +33,16 @@ function GalleryFigure({
                 className,
             )}
         >
-            <div className={cn('relative overflow-hidden', imageClassName)}>
+            <button
+                type="button"
+                onClick={onOpen}
+                className={cn(
+                    'relative block w-full overflow-hidden text-left',
+                    onOpen && 'cursor-zoom-in',
+                    imageClassName,
+                )}
+                aria-label={`Agrandir : ${image.alt}`}
+            >
                 <img
                     src={image.src}
                     alt={image.alt}
@@ -40,7 +52,7 @@ function GalleryFigure({
                     decoding="async"
                     className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-            </div>
+            </button>
             {image.caption ? (
                 <figcaption
                     className={cn(
@@ -62,6 +74,8 @@ export default function ServiceGallery({
     variant = 'grid',
     className,
 }: ServiceGalleryProps) {
+    const { openAt, lightbox } = useGalleryLightbox(images);
+
     if (images.length === 0) {
         return null;
     }
@@ -69,13 +83,14 @@ export default function ServiceGallery({
     const [featured, ...rest] = images;
 
     return (
-        <section
-            className={cn(
-                'border-t border-super-securite-border bg-super-securite-surface py-14 md:py-16',
-                className,
-            )}
-        >
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <>
+            <section
+                className={cn(
+                    'border-t border-super-securite-border bg-super-securite-surface py-14 md:py-16',
+                    className,
+                )}
+            >
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <Reveal className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
                     <p className="marketing-label mb-2">Galerie</p>
                     <h2 className="font-heading text-2xl font-bold tracking-tight text-super-securite-heading sm:text-3xl">
@@ -94,6 +109,7 @@ export default function ServiceGallery({
                             <GalleryFigure
                                 image={featured}
                                 imageClassName="aspect-[16/10]"
+                                onOpen={() => openAt(0)}
                             />
                         </Reveal>
                         <div className="grid gap-4 sm:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
@@ -102,6 +118,7 @@ export default function ServiceGallery({
                                     <GalleryFigure
                                         image={image}
                                         imageClassName="aspect-[16/10] lg:aspect-[16/9]"
+                                        onOpen={() => openAt(index + 1)}
                                     />
                                 </Reveal>
                             ))}
@@ -117,6 +134,7 @@ export default function ServiceGallery({
                                     image={featured}
                                     className="h-full"
                                     imageClassName="aspect-square h-full min-h-[240px] md:min-h-full md:aspect-auto"
+                                    onOpen={() => openAt(0)}
                                 />
                             </Reveal>
                         ) : null}
@@ -125,6 +143,7 @@ export default function ServiceGallery({
                                 <GalleryFigure
                                     image={image}
                                     imageClassName="aspect-[4/3]"
+                                    onOpen={() => openAt(index + 1)}
                                 />
                             </Reveal>
                         ))}
@@ -142,6 +161,7 @@ export default function ServiceGallery({
                                 <GalleryFigure
                                     image={image}
                                     imageClassName="aspect-[3/4]"
+                                    onOpen={() => openAt(index)}
                                 />
                             </Reveal>
                         ))}
@@ -155,12 +175,15 @@ export default function ServiceGallery({
                                 <GalleryFigure
                                     image={image}
                                     imageClassName="aspect-[4/3]"
+                                    onOpen={() => openAt(index)}
                                 />
                             </Reveal>
                         ))}
                     </div>
                 ) : null}
-            </div>
-        </section>
+                </div>
+            </section>
+            {lightbox}
+        </>
     );
 }

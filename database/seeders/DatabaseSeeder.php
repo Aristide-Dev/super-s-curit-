@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
             RoleUserSeeder::class,
             ArticleSeeder::class,
             SecurityTipSeeder::class,
+            GalleryImageSeeder::class,
         ]);
     }
 }

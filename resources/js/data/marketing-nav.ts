@@ -1,6 +1,7 @@
 import { superSecuriteServiceDefinitions } from '@/data/super-securite-services';
 import { index as actualitesIndex } from '@/routes/actualites';
 import { index as conseilsIndex } from '@/routes/conseils-securite';
+import { index as galerieIndex } from '@/routes/galerie';
 import { about, contact, home } from '@/routes';
 
 export const marketingPrimaryNavLinks = [
@@ -8,6 +9,7 @@ export const marketingPrimaryNavLinks = [
     { href: about.url(), label: 'Pourquoi nous' },
     { href: actualitesIndex.url(), label: 'Actualités' },
     { href: conseilsIndex.url(), label: 'Conseils' },
+    { href: galerieIndex.url(), label: 'Galerie' },
     { href: contact.url(), label: 'Nous contacter' },
 ] as const;
 

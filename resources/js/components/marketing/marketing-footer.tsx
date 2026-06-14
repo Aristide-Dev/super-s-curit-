@@ -1,4 +1,5 @@
 import { usePage } from '@inertiajs/react';
+import { index as galerieIndex } from '@/routes/galerie';
 import { index as actualitesIndex } from '@/routes/actualites';
 import { index as conseilsIndex } from '@/routes/conseils-securite';
 import { index as devenirAgentIndex } from '@/routes/devenir-agent';
@@ -60,6 +61,14 @@ export default function MarketingFooter() {
                                     className="cursor-pointer transition-colors duration-200 hover:text-white"
                                 >
                                     Conseils de sécurité
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href={galerieIndex.url()}
+                                    className="cursor-pointer transition-colors duration-200 hover:text-white"
+                                >
+                                    Galerie
                                 </a>
                             </li>
                             <li>

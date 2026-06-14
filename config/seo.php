@@ -420,6 +420,20 @@ return [
             ],
         ],
         [
+            'path' => '/galerie',
+            'meta_title' => 'Galerie photos | Super Sécurité — Missions terrain',
+            'meta_description' => 'Découvrez en images les missions Super Sécurité : gardiennage entreprise, résidence, chantiers et zones minières en Guinée.',
+            'schema_type' => 'CollectionPage',
+            'changefreq' => 'monthly',
+            'priority' => 0.8,
+            'image' => '/images/super-securite/pages/524511.jpg',
+            'og_image_alt' => 'Galerie Super Sécurité — photos terrain',
+            'sources' => [
+                'resources/js/pages/marketing/gallery/index.tsx',
+                'config/seo.php',
+            ],
+        ],
+        [
             'path' => '/contact',
             'meta_title' => 'Contact & plan d\'accès | Super Sécurité — Lambanyi, Conakry',
             'meta_description' => 'Contactez Super Sécurité à Lambanyi (face Cis Media), Conakry : +224 612 13 13 14, contact@supersecurite.com. Formulaire, FAQ et plan Google Maps.',

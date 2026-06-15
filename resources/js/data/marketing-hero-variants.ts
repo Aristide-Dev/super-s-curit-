@@ -89,7 +89,7 @@ const serviceSlideConfigs: Record<string, ServiceSlideConfig> = {
         title: 'Sécurisation renforcée de vos',
         highlight: 'sites miniers',
         description:
-            'Super Sécurité assure la protection de vos zones minières et sites sensibles grâce à des dispositifs de surveillance avancés, des équipes spécialisées et des protocoles de sécurité stricts adaptés aux environnements à haut risque. Nous garantissons la continuité de vos opérations et la protection de vos ressources.',
+            'Super Sécurité assure la protection de vos zones minières et sites sensibles grâce à des dispositifs de surveillance avancés, des équipes spécialisées et des protocoles de sécurité stricts adaptés aux environnements à haut risque.',
         primaryCta: {
             label: 'Nous contacter',
             href: contact.url(),

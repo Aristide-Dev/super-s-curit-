@@ -129,7 +129,7 @@ export default function MarketingMobileNav({
                             <img
                                 src={superSecuriteImages.brandBlackTransparent}
                                 alt="Super Sécurité"
-                                className="h-16 w-auto max-w-[200px] object-contain object-left"
+                                className="h-12 w-auto max-w-[200px] object-contain object-left"
                                 width={200}
                                 height={36}
                             />

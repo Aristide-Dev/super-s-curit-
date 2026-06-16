@@ -88,7 +88,7 @@ export default function MarketingHeader() {
                     <img
                         src={superSecuriteImages.brandBlackTransparent}
                         alt="Super Sécurité"
-                        className="h-16 w-auto max-w-[200px] object-contain object-left transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100 md:hidden"
+                        className="h-12 w-auto max-w-[200px] object-contain object-left transition-transform duration-300 group-hover:scale-[1.02] motion-reduce:transition-none motion-reduce:group-hover:scale-100 md:hidden"
                         width={200}
                         height={48}
                     />

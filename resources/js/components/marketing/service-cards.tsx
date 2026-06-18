@@ -10,7 +10,7 @@ const serviceImages = superSecuriteStock.home.services;
 
 export default function ServiceCards() {
     return (
-        <section id="services" className="py-10 md:py-16">
+        <section id="services" className="py-16 md:py-24">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <Reveal className="mb-14 max-w-2xl">
                     <p className="marketing-label mb-3">

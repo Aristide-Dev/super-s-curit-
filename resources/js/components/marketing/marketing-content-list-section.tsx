@@ -35,7 +35,7 @@ export default function MarketingContentListSection({
     }
 
     return (
-        <section id={id} className="py-10 md:py-16">
+        <section id={id} className="py-16 md:py-24">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <Reveal className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                     <div className="max-w-2xl">

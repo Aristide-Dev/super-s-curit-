@@ -12,12 +12,14 @@ export const superSecuriteStock = {
         welcome2: '/images/super-securite/IMG_9008-scaled.jpg',
         whyUsBannerTransparent: '/images/super-securite/why-choose-us-2.jpeg',
         services: {
-            entreprise: 'images/super-securite/services/IMG_9598.jpg',
-            residence: 'images/super-securite/IMG_9008-scaled.jpg',
+            entreprise:
+                'images/super-securite/agents-super-securite-ronde-site-exterieur.jpeg',
+            residence:
+                'images/super-securite/agents-securite-equipe.jpeg',
             chantiers:
-                'images/super-securite/services/Foreman-engineer-male-supervisor.jpg',
+                'images/super-securite/chantier-structure-beton-echafaudage-equipe.jpeg',
             'zones-minieres':
-                'images/super-securite/services/Side-view-of-young-black-man-in-workwear-and-safety.jpg',
+                'images/super-securite/installation-industrielle-convoyeurs-miniers.jpeg',
         },
         testimonialAvatar: '/images/super-securite/placeholder.svg',
     },

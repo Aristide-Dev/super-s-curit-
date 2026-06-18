@@ -233,7 +233,7 @@ export default function WhyUsSection({
 
             <div
                 className={
-                    showCinematicHero ? 'bg-white py-12 md:py-16' : 'py-12 md:py-16'
+                    showCinematicHero ? 'bg-white py-16 md:py-24' : 'py-16 md:py-24'
                 }
             >
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

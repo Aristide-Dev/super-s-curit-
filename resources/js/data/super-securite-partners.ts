@@ -35,4 +35,8 @@ export const superSecuritePartners: readonly SuperSecuritePartner[] = [
         name: 'BANKI TRUCK',
         logo: partnerLogo('banki.jpeg'),
     },
+    {
+        name: 'Diare Groupe Industrie',
+        logo: partnerLogo('DGI.jpeg'),
+    },
 ] as const;

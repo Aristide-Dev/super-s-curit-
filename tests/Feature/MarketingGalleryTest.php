@@ -15,7 +15,7 @@ test('public can view gallery page with all published images', function () {
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
             ->component('marketing/gallery/index')
-            ->has('images', 18)
+            ->has('images', 24)
             ->has('services', 4)
             ->where('countsByService.general', 2)
         );
@@ -40,7 +40,7 @@ test('gallery page can filter images by service', function () {
     $this->get(route('galerie.index', ['service' => ServiceId::Chantiers->value]))
         ->assertOk()
         ->assertInertia(fn (Assert $page) => $page
-            ->has('images', 4)
+            ->has('images', 6)
             ->where('filters.service', ServiceId::Chantiers->value)
         );
 });

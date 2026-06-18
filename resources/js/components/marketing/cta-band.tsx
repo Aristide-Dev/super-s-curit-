@@ -13,7 +13,7 @@ export default function CtaBand() {
     const { superSecurite } = usePage<SharedPageProps>().props;
 
     return (
-        <section className="py-10">
+        <section className="py-16 md:py-24">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <Reveal>
                     <div className="relative overflow-hidden rounded-3xl border border-super-securite-border bg-super-securite-surface px-6 py-12 shadow-lg shadow-slate-900/5 md:px-12 md:py-16">

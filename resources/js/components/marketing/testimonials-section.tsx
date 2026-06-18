@@ -5,7 +5,7 @@ import Reveal from '@/components/marketing/reveal';
 
 export default function TestimonialsSection() {
     return (
-        <section id="temoignages" className="py-10">
+        <section id="temoignages" className="py-16 md:py-24">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <Reveal className="mb-14 max-w-2xl">
                     <p className="marketing-label mb-3">Témoignages</p>

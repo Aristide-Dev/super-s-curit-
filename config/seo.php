@@ -53,7 +53,7 @@ return [
             'path' => '/entreprise',
             'meta_title' => 'Sécurité entreprise Conakry | Super Sécurité',
             'meta_description' => 'Sécurité entreprise à Conakry et région : gardiennage et surveillance pour bureaux, commerces et entrepôts, 24h/24 et 7j/7.',
-            'og_image' => '/images/super-securite/services/IMG_9598.jpg',
+            'og_image' => '/images/super-securite/agents-super-securite-ronde-site-exterieur.jpeg',
             'og_image_alt' => 'Sécurité entreprise — Super Sécurité Conakry',
             'faqs' => [
                 [
@@ -92,7 +92,7 @@ return [
             'path' => '/residence',
             'meta_title' => 'Sécurité résidence Conakry | Super Sécurité',
             'meta_description' => 'Gardiennage et surveillance de résidences à Conakry et région : villas, immeubles et lotissements protégés 24h/24 et 7j/7.',
-            'og_image' => '/images/super-securite/IMG_9008-scaled.jpg',
+            'og_image' => '/images/super-securite/agents-securite-equipe.jpeg',
             'og_image_alt' => 'Sécurité résidence — Super Sécurité Conakry',
             'faqs' => [
                 [
@@ -131,7 +131,7 @@ return [
             'path' => '/chantiers',
             'meta_title' => 'Sécurité chantiers BTP | Super Sécurité — Conakry et région',
             'meta_description' => 'Sécurité de chantiers BTP à Conakry et région : protection du matériel, contrôle des accès et patrouilles sur site.',
-            'og_image' => '/images/super-securite/services/Foreman-engineer-male-supervisor.jpg',
+            'og_image' => '/images/super-securite/chantier-structure-beton-echafaudage-equipe.jpeg',
             'og_image_alt' => 'Sécurité chantiers — Super Sécurité Conakry et région',
             'faqs' => [
                 [
@@ -170,7 +170,7 @@ return [
             'path' => '/zones-minieres',
             'meta_title' => 'Sécurité zones minières | Super Sécurité — Conakry et région',
             'meta_description' => 'Sécurité des zones minières à Conakry et région : équipes formées aux protocoles les plus exigeants.',
-            'og_image' => '/images/super-securite/services/Side-view-of-young-black-man-in-workwear-and-safety.jpg',
+            'og_image' => '/images/super-securite/installation-industrielle-convoyeurs-miniers.jpeg',
             'og_image_alt' => 'Sécurité zones minières — Super Sécurité Conakry et région',
             'faqs' => [
                 [

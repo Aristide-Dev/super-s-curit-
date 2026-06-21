@@ -426,7 +426,7 @@ return [
             'schema_type' => 'CollectionPage',
             'changefreq' => 'monthly',
             'priority' => 0.8,
-            'image' => '/images/super-securite/pages/524511.jpg',
+            'image' => '/images/super-securite/agents-intervention-patrouille-pickup.jpeg',
             'og_image_alt' => 'Galerie Super Sécurité — photos terrain',
             'sources' => [
                 'resources/js/pages/marketing/gallery/index.tsx',

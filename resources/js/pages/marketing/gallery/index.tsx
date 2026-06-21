@@ -1,8 +1,9 @@
 import { Head, router, usePage } from '@inertiajs/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Images } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import GalleryBentoGrid from '@/components/marketing/gallery-bento-grid';
 import { useGalleryLightbox } from '@/components/marketing/gallery-lightbox';
-import MarketingFullscreenHero from '@/components/marketing/marketing-fullscreen-hero';
 import SeoHead from '@/components/marketing/seo-head';
 import { marketingPageHeroes } from '@/data/marketing-page-heroes';
 import { index as galerieIndex } from '@/routes/galerie';
@@ -23,6 +24,22 @@ type PageProps = {
 export default function MarketingGalleryIndex() {
     const { images, services, countsByService, filters } =
         usePage<PageProps>().props;
+
+    const [slideIndex, setSlideIndex] = useState(0);
+
+    useEffect(() => {
+        setSlideIndex(0);
+    }, [images]);
+
+    useEffect(() => {
+        if (images.length <= 1) {
+            return;
+        }
+        const interval = setInterval(() => {
+            setSlideIndex((prev) => (prev + 1) % images.length);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, [images.length]);
 
     const lightboxImages = images.map((image) => ({
         src: image.src,
@@ -49,7 +66,49 @@ export default function MarketingGalleryIndex() {
             <SeoHead />
             <Head title="Galerie" />
 
-            <MarketingFullscreenHero {...marketingPageHeroes.galerie} />
+            <section className="marketing-hero-cinematic relative overflow-hidden">
+                <div className="relative mx-auto flex min-h-[90dvh] w-full max-w-[1920px] items-end overflow-hidden lg:items-center">
+                    {images.length > 0 ? (
+                        <AnimatePresence mode="wait" initial={false}>
+                            <motion.img
+                                key={slideIndex}
+                                src={images[slideIndex].src}
+                                alt={images[slideIndex].alt}
+                                width={1920}
+                                height={1080}
+                                fetchPriority="high"
+                                loading="eager"
+                                decoding="async"
+                                className="absolute inset-0 size-full max-w-full object-cover"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                transition={{ duration: 1, ease: 'easeInOut' }}
+                            />
+                        </AnimatePresence>
+                    ) : (
+                        <img
+                            src={marketingPageHeroes.galerie.image}
+                            alt={marketingPageHeroes.galerie.imageAlt}
+                            width={1920}
+                            height={1080}
+                            fetchPriority="high"
+                            loading="eager"
+                            decoding="async"
+                            className="absolute inset-0 size-full max-w-full object-cover"
+                        />
+                    )}
+
+                    <div
+                        className="marketing-hero-overlay-base pointer-events-none absolute inset-0"
+                        aria-hidden
+                    />
+                    <div
+                        className="absolute inset-y-0 left-0 w-1 bg-super-securite-accent sm:w-1.5"
+                        aria-hidden
+                    />
+                </div>
+            </section>
 
             <section className="marketing-section-band marketing-below-fold py-14 md:py-20">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -66,22 +125,20 @@ export default function MarketingGalleryIndex() {
                             <button
                                 type="button"
                                 onClick={() => applyServiceFilter('all')}
-                                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                                    filters.service === 'all'
-                                        ? 'border-super-securite-accent bg-super-securite-accent text-white'
-                                        : 'border-super-securite-border bg-white text-super-securite-heading hover:border-super-securite-accent/40'
-                                }`}
+                                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${filters.service === 'all'
+                                    ? 'border-super-securite-accent bg-super-securite-accent text-white'
+                                    : 'border-super-securite-border bg-white text-super-securite-heading hover:border-super-securite-accent/40'
+                                    }`}
                             >
                                 Tous ({totalCount})
                             </button>
                             <button
                                 type="button"
                                 onClick={() => applyServiceFilter('general')}
-                                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                                    filters.service === 'general'
-                                        ? 'border-super-securite-accent bg-super-securite-accent text-white'
-                                        : 'border-super-securite-border bg-white text-super-securite-heading hover:border-super-securite-accent/40'
-                                }`}
+                                className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${filters.service === 'general'
+                                    ? 'border-super-securite-accent bg-super-securite-accent text-white'
+                                    : 'border-super-securite-border bg-white text-super-securite-heading hover:border-super-securite-accent/40'
+                                    }`}
                             >
                                 Galerie générale (
                                 {countsByService.general ?? 0})
@@ -93,11 +150,10 @@ export default function MarketingGalleryIndex() {
                                     onClick={() =>
                                         applyServiceFilter(service.value)
                                     }
-                                    className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                                        filters.service === service.value
-                                            ? 'border-super-securite-accent bg-super-securite-accent text-white'
-                                            : 'border-super-securite-border bg-white text-super-securite-heading hover:border-super-securite-accent/40'
-                                    }`}
+                                    className={`rounded-full border px-4 py-2 text-sm font-medium transition-colors ${filters.service === service.value
+                                        ? 'border-super-securite-accent bg-super-securite-accent text-white'
+                                        : 'border-super-securite-border bg-white text-super-securite-heading hover:border-super-securite-accent/40'
+                                        }`}
                                 >
                                     {service.label} (
                                     {countsByService[service.value] ?? 0})

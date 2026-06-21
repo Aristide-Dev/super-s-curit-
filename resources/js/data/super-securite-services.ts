@@ -184,6 +184,26 @@ const serviceMeta: Record<
                 alt: 'Zone de stockage technique et ferraille sur site industriel',
                 caption: 'Surveillance des zones de stockage et prévention des vols de métaux',
             },
+            {
+                src: '/images/super-securite/agents-intervention-patrouille-pickup.jpeg',
+                alt: 'Véhicule pickup de patrouille et d\'intervention rapide',
+                caption: 'Équipes d\'intervention mobile prêtes à être déployées sur vos sites',
+            },
+            {
+                src: '/images/super-securite/agents-securite-site-bankitruck-large.jpeg',
+                alt: 'Agents de sécurité postés sur le site industriel Bankitruck',
+                caption: 'Surveillance et contrôle d\'accès sur le site logistique de notre partenaire Bankitruck',
+            },
+            {
+                src: '/images/super-securite/agents-securite-site-bankitruck-medium.jpeg',
+                alt: 'Équipe d\'agents devant les bureaux de Bankitruck',
+                caption: 'Gardiennage professionnel et accueil sécurisé des visiteurs et transporteurs',
+            },
+            {
+                src: '/images/super-securite/agents-securite-site-bankitruck-portrait.jpeg',
+                alt: 'Agent de sécurité en position de surveillance chez Bankitruck',
+                caption: 'Vigilance continue de nos agents pour sécuriser les flux de transport',
+            },
         ],
     },
     residence: {
@@ -491,9 +511,14 @@ const serviceMeta: Record<
                 caption: 'Encadrement sécuritaire lors des opérations d\'assemblage et de montage',
             },
             {
-                src: '/images/super-securite/why-choose-us-2.jpeg',
+                src: '/images/super-securite/securite-installation-convoyeur-minier.jpeg',
                 alt: 'Agent de sécurité sur site d\'exploitation',
                 caption: 'Présence continue de nos agents formés aux environnements miniers',
+            },
+            {
+                src: '/images/super-securite/securite-installation-convoyeur-minier.jpeg',
+                alt: 'Sécurisation des installations de convoyeurs sur site minier',
+                caption: 'Vigilance accrue et contrôle de sécurité autour des infrastructures minières',
             },
         ],
     },

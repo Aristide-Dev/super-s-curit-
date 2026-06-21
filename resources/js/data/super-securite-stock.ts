@@ -10,7 +10,7 @@ export const superSecuriteStock = {
     home: {
         welcome: '/images/super-securite/IMG_9007-scaled.jpg',
         welcome2: '/images/super-securite/IMG_9008-scaled.jpg',
-        whyUsBannerTransparent: '/images/super-securite/why-choose-us-2.jpeg',
+        whyUsBannerTransparent: '/images/super-securite/securite-installation-convoyeur-minier.jpeg',
         services: {
             entreprise:
                 'images/super-securite/agents-super-securite-ronde-site-exterieur.jpeg',
@@ -30,7 +30,7 @@ export const superSecuriteStock = {
         devenirAgent: '/images/super-securite/pages/devenir-agent-hero.jpg',
         contact: '/images/super-securite/pages/contact-hero.jpg',
         contact2: '/images/super-securite/hero/Close-up.jpg',
-        about: '/images/super-securite/pages/524511.jpg',
+        about: '/images/super-securite/agents-intervention-patrouille-pickup.jpeg',
     },
 
     about: {

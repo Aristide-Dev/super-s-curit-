@@ -12,7 +12,7 @@ return [
         ],
         'category' => 'Prévention',
         'tags' => ['agrément', 'réglementation', 'guinée', 'prestataire'],
-        'image' => '/images/super-securite/pages/524511.jpg',
+        'image' => '/images/super-securite/agents-intervention-patrouille-pickup.jpeg',
         'featured' => true,
         'published_days_ago' => 7,
         'views' => 156,

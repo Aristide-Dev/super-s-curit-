@@ -8,6 +8,8 @@ import { cn } from '@/lib/utils';
 
 import type { SuperSecuriteServiceGalleryImage } from '@/data/super-securite-services';
 import type { GalleryImagePublic } from '@/types/gallery';
+import VideoGallery from '@/components/marketing/video-gallery';
+import { superSecuriteVideos } from '@/data/super-securite-videos';
 
 function toGalleryFigures(
     images: readonly GalleryImagePublic[],
@@ -32,6 +34,11 @@ export default function ServicePageSections({
     const spotlight = figures[0];
     const galleryImages =
         figures.length > 1 ? figures.slice(1) : figures;
+
+    const serviceVideos = [
+        ...superSecuriteVideos.filter((video) => video.serviceId === content.hero.id),
+        ...superSecuriteVideos.filter((video) => video.serviceId === 'general'),
+    ].slice(0, 3);
 
     return (
         <>
@@ -230,6 +237,25 @@ export default function ServicePageSections({
                                 ))}
                             </ul>
                         </div>
+                    </div>
+                </section>
+            ) : null}
+
+            {serviceVideos.length > 0 ? (
+                <section className="bg-slate-50/50 border-t border-super-securite-border/60 py-14 md:py-20">
+                    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                        <Reveal className="mx-auto max-w-3xl text-center mb-10 md:mb-12">
+                            <h2 className="font-heading text-2xl font-bold text-super-securite-heading sm:text-3xl">
+                                Démonstrations & Formations
+                            </h2>
+                            <p className="mt-4 text-sm leading-relaxed text-super-securite-muted sm:text-base">
+                                Découvrez nos agents en action à travers nos interventions réelles et nos sessions d'entraînement.
+                            </p>
+                        </Reveal>
+
+                        <Reveal delay={100}>
+                            <VideoGallery videos={serviceVideos} />
+                        </Reveal>
                     </div>
                 </section>
             ) : null}

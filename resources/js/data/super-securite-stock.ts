@@ -14,13 +14,13 @@ export const superSecuriteStock = {
         whyUsBannerTransparent2: '/images/super-securite/agents.jpeg',
         services: {
             entreprise:
-                'images/super-securite/agents-super-securite-ronde-site-exterieur.jpeg',
+                'images/super-securite/agents.jpeg',
             residence:
                 'images/super-securite/formation-extincteur-instruction.jpeg',
             chantiers:
                 'images/super-securite/chantier-structure-beton-echafaudage-equipe.jpeg',
             'zones-minieres':
-                'images/super-securite/installation-industrielle-convoyeurs-miniers.jpeg',
+                'images/super-securite/services/Side-view-of-young-black-man-in-workwear-and-safety.jpg',
         },
         testimonialAvatar: '/images/super-securite/placeholder.svg',
     },
@@ -40,7 +40,7 @@ export const superSecuriteStock = {
         valuesBanner:
             '/images/super-securite/about/Happy-young-woman-pointing-fingers.png',
         mobileApp:
-            '/images/super-securite/about/closeup-hand-holding-mobile-phone-dark-red-color-background.jpg',
+            '/images/super-securite/about/super-secu-App.jpeg',
     },
 
     contact: {

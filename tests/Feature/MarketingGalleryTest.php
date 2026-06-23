@@ -73,6 +73,21 @@ test('service page receives gallery images from database', function () {
         );
 });
 
+test('service page receives at most 12 gallery images from database', function () {
+    GalleryImage::factory()->count(15)->create([
+        'service_id' => ServiceId::Entreprise,
+        'is_published' => true,
+    ]);
+
+    $this->get(route('services.entreprise'))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->component('marketing/service-page')
+            ->where('serviceId', 'entreprise')
+            ->has('galleryImages', 12)
+        );
+});
+
 test('gallery page seo metadata is configured', function () {
     $this->get(route('galerie.index'))
         ->assertOk()

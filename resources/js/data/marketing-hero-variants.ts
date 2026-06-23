@@ -52,7 +52,7 @@ const serviceSlideConfigs: Record<string, ServiceSlideConfig> = {
         description:
             "Assurez la protection de vos collaborateurs, visiteurs, équipements et infrastructures grâce à des solutions de sécurité adaptées à vos besoins. Nos agents qualifiés veillent à la sécurité de vos bureaux, commerces, entrepôts, restaurants et sites d'exploitation, 24h/24 et 7j/7.",
         primaryCta: {
-            label: 'Découvrir nos solutions',
+            label: 'Découvrir',
             href: '/entreprise',
         },
         secondaryCta: null,
@@ -119,7 +119,7 @@ const serviceSlideConfigs: Record<string, ServiceSlideConfig> = {
             href: contact.url(),
         },
         secondaryCta: {
-            label: 'Découvrir nos solutions',
+            label: 'Découvrir',
             href: '/residence',
         },
         stats: [

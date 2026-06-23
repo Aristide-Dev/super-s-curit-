@@ -103,7 +103,7 @@ export const marketingPageHeroes = {
         layout: 'reverse',
         underline: 'double',
         ...superSecuriteContactHeroCopy,
-        image: superSecuriteStock.pages.contact2,
+        image: superSecuriteStock.pages.contact,
         imageAlt: 'Contact Super Sécurité — Lambanyi, Conakry',
         stats: [
             { label: 'Réponse', value: 'Sous 24h ouvrées' },

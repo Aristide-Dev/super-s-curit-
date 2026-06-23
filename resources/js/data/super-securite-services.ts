@@ -498,7 +498,7 @@ const serviceMeta: Record<
             'Aperçu en images de nos prestations de sécurisation et de surveillance sur des installations minières complexes.',
         gallery: [
             {
-                src: '/images/super-securite/installation-industrielle-convoyeurs-miniers.jpeg',
+                src: '/images/super-securite/services/Side-view-of-young-black-man-in-workwear-and-safety.jpg',
                 alt: 'Installation industrielle avec convoyeurs miniers',
                 caption: 'Sécurisation des convoyeurs et des installations de traitement du minerai',
             },

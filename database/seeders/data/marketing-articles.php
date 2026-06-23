@@ -12,7 +12,7 @@ return [
         ],
         'category' => 'Innovation',
         'tags' => ['application', 'innovation', 'suivi', 'transparence'],
-        'image' => '/images/super-securite/about/closeup-hand-holding-mobile-phone-dark-red-color-background.jpg',
+        'image' => '/images/super-securite/about/super-secu-App.jpeg',
         'featured' => true,
         'published_days_ago' => 5,
         'views' => 214,

@@ -21,6 +21,7 @@ class ServiceController extends Controller
             ->published()
             ->forService($serviceId)
             ->ordered()
+            ->limit(12)
             ->get()
             ->map(fn (GalleryImage $image) => $image->toPublicArray())
             ->values()

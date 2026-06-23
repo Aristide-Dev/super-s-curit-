@@ -8,7 +8,7 @@ export default function ValuesSection() {
         <section className="marketing-section-band border-t border-super-securite-border py-14 md:py-20">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <Reveal className="mb-14 grid items-center gap-10 lg:mb-16 lg:grid-cols-12 lg:gap-14">
-                    <div className="lg:col-span-6 xl:col-span-7">
+                    <div className="hidden lg:block lg:col-span-6 xl:col-span-7">
                         <p className="marketing-label mb-3 flex items-center gap-2 before:block before:h-px before:w-6 before:bg-super-securite-accent sm:mb-4">
                             Nos valeurs
                         </p>
@@ -40,7 +40,7 @@ export default function ValuesSection() {
                                 className="pointer-events-none absolute -inset-3"
                                 aria-hidden
                             />
-                            <div className="relative overflow-hidden">
+                            <div className="relative overflow-hidden rounded-2xl">
                                 <div className="relative aspect-[4/5] sm:aspect-square">
                                     <img
                                         src={superSecuriteStock.about.valuesBanner}
@@ -51,6 +51,18 @@ export default function ValuesSection() {
                                         decoding="async"
                                         className="size-full object-cover object-center"
                                     />
+                                    {/* Mobile-only overlay to display title on the image */}
+                                    <div className="absolute inset-0 flex flex-col justify-start bg-gradient-to-b from-slate-950/95 via-slate-950/60 to-transparent p-6 text-white lg:hidden">
+                                        <p className="text-xs font-bold uppercase tracking-wider text-super-securite-accent mb-2">
+                                            Nos valeurs
+                                        </p>
+                                        <h2 className="font-heading text-2xl font-bold tracking-tight text-white leading-tight">
+                                            Ce qui nous guide au quotidien
+                                        </h2>
+                                        <p className="mt-2 text-xs leading-relaxed text-slate-300">
+                                            Quatre principes simples qui structurent chaque décision, de la première discussion à la mise en production sur le terrain.
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -26,10 +26,11 @@ export default function ServicePageSections({
     faqs,
     serviceGalleryImages = [],
 }: ServicePageLayoutProps) {
-    const figures =
+    const figures = (
         serviceGalleryImages.length > 0
             ? toGalleryFigures(serviceGalleryImages)
-            : [...content.gallery];
+            : [...content.gallery]
+    ).slice(0, 12);
 
     // Ensure the first image (spotlight) is different from the hero image
     const heroImageSrc = content.hero.image;

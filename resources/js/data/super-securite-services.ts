@@ -425,7 +425,7 @@ const serviceMeta: Record<
             description:
                 "Une protection adaptée aux exigences de l'industrie minière",
             image: `/${serviceImages['zones-minieres']}`,
-            imageAlt: 'Sécurité des sites miniers — Super Sécurité Guinée',
+            imageAlt: 'Chargeuse et camion benne sur site minier — Super Sécurité Guinée',
             underline: 'scan',
             stats: [
                 { label: 'Secteurs', value: 'Mines & sites sensibles' },
@@ -498,14 +498,14 @@ const serviceMeta: Record<
             'Aperçu en images de nos prestations de sécurisation et de surveillance sur des installations minières complexes.',
         gallery: [
             {
-                src: '/images/super-securite/services/Side-view-of-young-black-man-in-workwear-and-safety.jpg',
-                alt: 'Installation industrielle avec convoyeurs miniers',
-                caption: 'Sécurisation des convoyeurs et des installations de traitement du minerai',
+                src: '/images/super-securite/zone-miniere-chargeuse-camion-benne-terre-rouge.jpeg',
+                alt: 'Chargeuse Caterpillar et camion benne Komatsu sur site minier',
+                caption: 'Sécurisation des opérations de chargement et des flux de véhicules lourds sur site minier',
             },
             {
-                src: '/images/super-securite/site-industriel-groupe-electrogene-zone-technique.jpeg',
-                alt: 'Groupe électrogène en zone technique de site industriel',
-                caption: 'Surveillance rigoureuse des infrastructures critiques et zones techniques',
+                src: '/images/super-securite/installation-industrielle-convoyeurs-miniers.jpeg',
+                alt: 'Installation industrielle avec convoyeurs miniers',
+                caption: 'Sécurisation des convoyeurs et des installations de traitement du minerai',
             },
             {
                 src: '/images/super-securite/equipe-technique-assemblage-structure-metallique.jpeg',

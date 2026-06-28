@@ -159,9 +159,9 @@ return [
     ],
     [
         'service_id' => ServiceId::ZonesMinieres->value,
-        'image' => '/images/super-securite/installation-industrielle-convoyeurs-miniers.jpeg',
-        'alt' => 'Installation industrielle avec convoyeurs miniers',
-        'caption' => 'Sécurisation des convoyeurs et des installations de traitement du minerai',
+        'image' => '/images/super-securite/zone-miniere-chargeuse-camion-benne-terre-rouge.jpeg',
+        'alt' => 'Chargeuse Caterpillar et camion benne Komatsu sur site minier',
+        'caption' => 'Sécurisation des opérations de chargement et des flux de véhicules lourds sur site minier',
         'sort_order' => 1,
     ],
     [

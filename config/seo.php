@@ -170,8 +170,8 @@ return [
             'path' => '/zones-minieres',
             'meta_title' => 'Sécurité zones minières | Super Sécurité — Conakry et région',
             'meta_description' => 'Sécurité des zones minières à Conakry et région : équipes formées aux protocoles les plus exigeants.',
-            'og_image' => '/images/super-securite/installation-industrielle-convoyeurs-miniers.jpeg',
-            'og_image_alt' => 'Sécurité zones minières — Super Sécurité Conakry et région',
+            'og_image' => '/images/super-securite/zone-miniere-chargeuse-camion-benne-terre-rouge.jpeg',
+            'og_image_alt' => 'Chargeuse et camion benne sur site minier — Super Sécurité Guinée',
             'faqs' => [
                 [
                     'question' => 'Pourquoi la sécurité est-elle essentielle sur un site minier en Guinée ?',

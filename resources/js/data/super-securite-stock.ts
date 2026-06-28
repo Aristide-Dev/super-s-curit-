@@ -20,7 +20,7 @@ export const superSecuriteStock = {
             chantiers:
                 'images/super-securite/chantier-structure-beton-echafaudage-equipe.jpeg',
             'zones-minieres':
-                'images/super-securite/services/Side-view-of-young-black-man-in-workwear-and-safety.jpg',
+                'images/super-securite/zone-miniere-chargeuse-camion-benne-terre-rouge.jpeg',
         },
         testimonialAvatar: '/images/super-securite/placeholder.svg',
     },

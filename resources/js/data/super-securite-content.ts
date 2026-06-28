@@ -202,7 +202,7 @@ export const superSecuriteWhyUsDetails: readonly SuperSecuriteWhyUsDetail[] = [
         description:
             'Chaque secteur présente des risques et des exigences spécifiques. Grâce à notre expérience auprès de sociétés minières, d’entreprises, de résidences privées, de commerces et de chantiers, nous sommes en mesure de proposer des solutions adaptées à chaque environnement. Nos équipes mettent en œuvre des procédures éprouvées pour prévenir les intrusions, protéger les biens, contrôler les accès et contribuer à la sérénité de nos clients. Cette expertise multisectorielle fait de Super Sécurité un partenaire de confiance pour tous vos besoins en sécurité privée en Guinée.',
         image: superSecuriteStock.home.services['zones-minieres'],
-        imageAlt: 'Sécurité Super Sécurité sur site minier',
+        imageAlt: 'Chargeuse et camion benne sur site minier — Super Sécurité',
     },
 ] as const;
 

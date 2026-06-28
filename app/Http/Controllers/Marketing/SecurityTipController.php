@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Marketing;
 
 use App\Http\Controllers\Controller;
 use App\Models\SecurityTip;
+use App\Support\PublicContentSort;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -23,8 +24,9 @@ class SecurityTipController extends Controller
             $query->where('title', 'like', '%'.$search.'%');
         }
 
+        PublicContentSort::apply($query, $request);
+
         $securityTips = $query
-            ->orderByDesc('published_at')
             ->paginate(12)
             ->withQueryString()
             ->through(fn (SecurityTip $securityTip) => $securityTip->toPublicArray());
@@ -52,7 +54,7 @@ class SecurityTipController extends Controller
             'securityTips' => $securityTips,
             'featuredSecurityTips' => $featuredSecurityTips,
             'categories' => $categories,
-            'filters' => $request->only(['search', 'category']),
+            'filters' => $request->only(['search', 'category', 'sort_by', 'sort_direction']),
         ]);
     }
 

@@ -21,6 +21,44 @@ test('public can view published security tips index', function () {
         );
 });
 
+test('public security tips index can be sorted by views', function () {
+    $lowViews = SecurityTip::factory()->create(['views' => 5, 'title' => 'Peu consulté']);
+    $highViews = SecurityTip::factory()->create(['views' => 300, 'title' => 'Très consulté']);
+
+    $this->get(route('conseils-securite.index', [
+        'sort_by' => 'views',
+        'sort_direction' => 'desc',
+    ]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('securityTips.data.0.slug', $highViews->slug)
+            ->where('securityTips.data.1.slug', $lowViews->slug)
+            ->where('filters.sort_by', 'views')
+            ->where('filters.sort_direction', 'desc')
+        );
+});
+
+test('public security tips index can be sorted by publication date ascending', function () {
+    $older = SecurityTip::factory()->create([
+        'title' => 'Conseil ancien',
+        'published_at' => now()->subDays(14),
+    ]);
+    $newer = SecurityTip::factory()->create([
+        'title' => 'Conseil récent',
+        'published_at' => now()->subDays(2),
+    ]);
+
+    $this->get(route('conseils-securite.index', [
+        'sort_by' => 'published_at',
+        'sort_direction' => 'asc',
+    ]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('securityTips.data.0.slug', $older->slug)
+            ->where('securityTips.data.1.slug', $newer->slug)
+        );
+});
+
 test('public can view a published security tip', function () {
     $securityTip = SecurityTip::factory()->create([
         'title' => 'Conseil public test',

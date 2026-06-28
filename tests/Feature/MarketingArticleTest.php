@@ -21,6 +21,44 @@ test('public can view published articles index', function () {
         );
 });
 
+test('public articles index can be sorted by views', function () {
+    $lowViews = Article::factory()->create(['views' => 10, 'title' => 'Peu lu']);
+    $highViews = Article::factory()->create(['views' => 500, 'title' => 'Très lu']);
+
+    $this->get(route('actualites.index', [
+        'sort_by' => 'views',
+        'sort_direction' => 'desc',
+    ]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('articles.data.0.slug', $highViews->slug)
+            ->where('articles.data.1.slug', $lowViews->slug)
+            ->where('filters.sort_by', 'views')
+            ->where('filters.sort_direction', 'desc')
+        );
+});
+
+test('public articles index can be sorted by publication date ascending', function () {
+    $older = Article::factory()->create([
+        'title' => 'Plus ancien',
+        'published_at' => now()->subDays(10),
+    ]);
+    $newer = Article::factory()->create([
+        'title' => 'Plus récent',
+        'published_at' => now()->subDay(),
+    ]);
+
+    $this->get(route('actualites.index', [
+        'sort_by' => 'published_at',
+        'sort_direction' => 'asc',
+    ]))
+        ->assertOk()
+        ->assertInertia(fn (Assert $page) => $page
+            ->where('articles.data.0.slug', $older->slug)
+            ->where('articles.data.1.slug', $newer->slug)
+        );
+});
+
 test('public can view a published article', function () {
     $article = Article::factory()->create([
         'title' => 'Article public test',

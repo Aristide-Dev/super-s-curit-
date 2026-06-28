@@ -4,9 +4,9 @@ import {
     Calendar,
     Clock,
     Eye,
-    Search,
     Star,
 } from 'lucide-react';
+import MarketingContentFilters from '@/components/marketing/marketing-content-filters';
 import MarketingFullscreenHero from '@/components/marketing/marketing-fullscreen-hero';
 import MarketingContentImage from '@/components/marketing/marketing-content-image';
 import ContentShareButton from '@/components/content-share-button';
@@ -43,6 +43,8 @@ type PageProps = {
     filters: {
         search?: string;
         category?: string;
+        sort_by?: string;
+        sort_direction?: string;
     };
 };
 
@@ -125,14 +127,6 @@ export default function MarketingArticlesIndex() {
     const { articles, featuredArticles, categories, filters } =
         usePage<PageProps>().props;
 
-    const applyFilters = (updates: Record<string, string>) => {
-        router.get(
-            actualitesIndex.url(),
-            { ...filters, ...updates },
-            { preserveState: true, replace: true },
-        );
-    };
-
     return (
         <>
             <SeoHead />
@@ -142,34 +136,12 @@ export default function MarketingArticlesIndex() {
 
             <section className="marketing-section-band marketing-below-fold py-16">
                 <div className="container mx-auto max-w-6xl px-4">
-                    <div className="mb-10 flex flex-col gap-4 md:flex-row">
-                        <div className="relative flex-1">
-                            <Search className="text-super-securite-muted absolute top-1/2 left-4 size-4 -translate-y-1/2" />
-                            <input
-                                type="search"
-                                placeholder="Rechercher un article..."
-                                defaultValue={filters.search ?? ''}
-                                onChange={(e) =>
-                                    applyFilters({ search: e.target.value })
-                                }
-                                className="w-full rounded-xl border border-super-securite-border bg-white/70 py-3 pr-4 pl-11 text-super-securite-heading backdrop-blur-sm focus:ring-2 focus:ring-super-securite-accent focus:outline-none"
-                            />
-                        </div>
-                        <select
-                            defaultValue={filters.category ?? 'all'}
-                            onChange={(e) =>
-                                applyFilters({ category: e.target.value })
-                            }
-                            className="rounded-xl border border-super-securite-border bg-white/70 px-4 py-3 text-super-securite-heading focus:ring-2 focus:ring-super-securite-accent focus:outline-none"
-                        >
-                            <option value="all">Toutes les catégories</option>
-                            {categories.map((category) => (
-                                <option key={category} value={category}>
-                                    {category}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
+                    <MarketingContentFilters
+                        filters={filters}
+                        categories={categories}
+                        indexUrl={actualitesIndex.url()}
+                        searchPlaceholder="Rechercher un article..."
+                    />
 
                     {featuredArticles.length > 0 ? (
                         <div className="mb-12">

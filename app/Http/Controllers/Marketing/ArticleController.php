@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Marketing;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Support\PublicContentSort;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -23,8 +24,9 @@ class ArticleController extends Controller
             $query->where('title', 'like', '%'.$search.'%');
         }
 
+        PublicContentSort::apply($query, $request);
+
         $articles = $query
-            ->orderByDesc('published_at')
             ->paginate(12)
             ->withQueryString()
             ->through(fn (Article $article) => $article->toPublicArray());
@@ -52,7 +54,7 @@ class ArticleController extends Controller
             'articles' => $articles,
             'featuredArticles' => $featuredArticles,
             'categories' => $categories,
-            'filters' => $request->only(['search', 'category']),
+            'filters' => $request->only(['search', 'category', 'sort_by', 'sort_direction']),
         ]);
     }
 
